@@ -8,6 +8,7 @@ import Home from "./routes/Home";
 import NotFound from "./routes/NotFound";
 import ErrorPage from "./routes/ErrorPage";
 import Register from "./routes/Register";
+import Panel from "./routes/Panel";
 
 const App: React.FC = () => {
   const router = createBrowserRouter([
@@ -23,6 +24,10 @@ const App: React.FC = () => {
         {
           path: "register",
           element: <Register />,
+        },
+        {
+          path: "panel",
+          element: <Panel />,
         },
         {
           path: "*",
