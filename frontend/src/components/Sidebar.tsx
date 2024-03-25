@@ -117,7 +117,7 @@ export default function Sidebar() {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar>
+        <Toolbar sx={{ bgcolor: "#d985af" }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -143,7 +143,7 @@ export default function Sidebar() {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
+        <List sx={{ bgcolor: "#968382", height: 760, color: "#fff" }}>
           {["Time and Order", "Text", "Upload Image", "Another Feature"].map(
             (text, index) => (
               <ListItem
@@ -164,6 +164,7 @@ export default function Sidebar() {
                       minWidth: 0,
                       mr: open ? 3 : "auto",
                       justifyContent: "center",
+                      color: "#fff",
                     }}
                   >
                     {index === 0 && <HourglassEmptyIcon />}
@@ -179,29 +180,36 @@ export default function Sidebar() {
           )}
         </List>
       </Drawer>
-      <Box component="main" sx={{ width: 250 }}>
-        {slideIndex === 0 && (
-          /* This is the place for the first icons component etc...*/
-          <Typography paragraph>
-            This is the slide for the icon #{slideIndex + 1}
-          </Typography>
-        )}
-        {slideIndex === 1 && (
-          <Typography paragraph>
-            This is the slide for the icon #{slideIndex + 1}
-          </Typography>
-        )}
-        {slideIndex === 2 && (
-          <Typography paragraph>
-            This is the slide for the icon #{slideIndex + 1}
-          </Typography>
-        )}
-        {slideIndex === 3 && (
-          <Typography paragraph>
-            This is the slide for the icon #{slideIndex + 1}
-          </Typography>
-        )}
-      </Box>
+      {slideIndex !== null && (
+        <Box
+          component="main"
+          mt={8}
+          p={1}
+          sx={{ width: 250, height: 760, bgcolor: "#534342", color: "#fff" }}
+        >
+          {slideIndex === 0 && (
+            /* This is the place for the first icons component etc...*/
+            <Typography paragraph>
+              This is the slide for the icon #{slideIndex + 1}
+            </Typography>
+          )}
+          {slideIndex === 1 && (
+            <Typography paragraph>
+              This is the slide for the icon #{slideIndex + 1}
+            </Typography>
+          )}
+          {slideIndex === 2 && (
+            <Typography paragraph>
+              This is the slide for the icon #{slideIndex + 1}
+            </Typography>
+          )}
+          {slideIndex === 3 && (
+            <Typography paragraph>
+              This is the slide for the icon #{slideIndex + 1}
+            </Typography>
+          )}
+        </Box>
+      )}
     </Box>
   );
 }
