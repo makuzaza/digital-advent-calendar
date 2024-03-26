@@ -1,0 +1,55 @@
+.sidebar-sounds {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.75rem;
+}
+
+.sidebar-sounds h2 {
+  font-size: 1rem;
+}
+
+.sidebar-sounds .add-music {
+  margin: 5px 0 20px 0;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.sidebar-sounds .flex {
+  display: flex;
+}
+
+.sidebar-sounds .two-col {
+  display: flex;
+  margin-left: auto;
+  gap: 16px;
+  font-size: 0.625rem;
+}
+
+.sidebar-sounds .btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin: 4px;
+  border: none;
+  background-color: #f8f9fa;
+  color: #495057;
+  transition: all 0.15s;
+}
+
+.sidebar-sounds .btn:hover {
+  color: #d985af;
+  cursor: pointer;
+}
+
+.sidebar-sounds .music-choices {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
