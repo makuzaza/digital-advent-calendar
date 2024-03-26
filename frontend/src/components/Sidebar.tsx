@@ -17,6 +17,8 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
+import AudiotrackIcon from "@mui/icons-material/Audiotrack";
+import SidebarSounds from "./SidebarSounds/SidebarSounds";
 import Texts from "./Texts";
 
 const drawerWidth = 220;
@@ -157,7 +159,7 @@ export default function Sidebar() {
         </DrawerHeader>
         <Divider />
         <List sx={{ bgcolor: "#968382", height: 760, color: "#fff" }}>
-          {["Time and Order", "Text", "Upload Image", "Another Feature"].map(
+          {["Time and Order", "Text", "Upload Image", "Sounds"].map(
             (text, index) => (
               <ListItem
                 onClick={() => toggleSlideOpen(index)}
@@ -184,7 +186,7 @@ export default function Sidebar() {
                     {/* change the icon here */}
                     {index === 1 && <HourglassEmptyIcon />}
                     {index === 2 && <HourglassEmptyIcon />}
-                    {index === 3 && <HourglassEmptyIcon />}
+                    {index === 3 && <AudiotrackIcon />}
                   </ListItemIcon>
                   <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
                 </ListItemButton>
@@ -219,11 +221,7 @@ export default function Sidebar() {
               This is the slide for the icon #{slideIndex + 1}
             </Typography>
           )}
-          {slideIndex === 3 && (
-            <Typography paragraph>
-              This is the slide for the icon #{slideIndex + 1}
-            </Typography>
-          )}
+            {slideIndex === 3 && <SidebarSounds />}
         </Box>
       )}
     </Box>
