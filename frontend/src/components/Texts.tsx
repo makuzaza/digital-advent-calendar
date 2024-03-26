@@ -41,7 +41,8 @@ interface CustomComponentProps {
     // Initialize state for title font, subtitle font, and font size
     const [titleFont, setTitleFont] = useState<string>(fontOptions[0]);
     const [subtitleFont, setSubtitleFont] = useState<string>(fontOptions[0]);
-    const [fontSize, setFontSize] = useState<number>(fontSizeOptions[0]);
+    const [titleFontSize, setTitleFontSize] = useState<number>(fontSizeOptions[0]);
+    const [subTitleFontSize, setSubTitleFontSize] = useState<number>(fontSizeOptions[0]);
   
     // Event handler for title font change
     const handleTitleFontChange = (event: SelectChangeEvent<string>) => {
@@ -54,8 +55,12 @@ interface CustomComponentProps {
       };
   
     // Event handler for font size change
-    const handleFontSizeChange = (event: any, newValue: number | number[]) => {
-      setFontSize(newValue as number);
+    const handleTitleFontSizeChange = (event: any, newValue: number | number[]) => {
+      setTitleFontSize(newValue as number);
+    };
+
+    const handleSubtitleFontSizeChange = (event: any, newValue: number | number[]) => {
+      setSubTitleFontSize(newValue as number);
     };
   
     return (
@@ -66,7 +71,7 @@ interface CustomComponentProps {
           <Input
             value={title}
             onChange={onTitleChange}
-            style={{ backgroundColor: '#f5f5f5', borderRadius: '4px', fontFamily: titleFont, fontSize: fontSize }}
+            style={{ backgroundColor: '#f5f5f5', borderRadius: '4px', fontFamily: titleFont, fontSize: titleFontSize }}
           />
         </FormControl>
         {/* Input field for subtitle with selected font and font size */}
@@ -75,7 +80,7 @@ interface CustomComponentProps {
           <Input
             value={subtitle}
             onChange={onSubtitleChange}
-            style={{ backgroundColor: '#f5f5f5', borderRadius: '4px', fontFamily: titleFont, fontSize: fontSize }}
+            style={{ backgroundColor: '#f5f5f5', borderRadius: '4px', fontFamily: subtitleFont, fontSize: subTitleFontSize }}
           />
         </FormControl>
           {/* Dropdown to select title font */}
@@ -86,10 +91,10 @@ interface CustomComponentProps {
               id="title-font-select"
               value={titleFont}
               onChange={handleTitleFontChange}
-              style={{ color: 'white' }}
+              style={{ color: 'white', fontFamily: titleFont }}
             >
               {fontOptions.map((font, index) => (
-                <MenuItem key={index} value={font}>
+                <MenuItem key={index} value={font} style={{ fontFamily: font }}>
                   {font}
                 </MenuItem>
               ))}
@@ -103,10 +108,10 @@ interface CustomComponentProps {
               id="subtitle-font-select"
               value={subtitleFont}
               onChange={handleSubtitleFontChange}
-              style={{ color: 'white' }}
+              style={{ color: 'white', fontFamily: subtitleFont}}
             >
               {fontOptions.map((font, index) => (
-                <MenuItem key={index} value={font}>
+                <MenuItem key={index} value={font} style={{ fontFamily: font }}>
                   {font}
                 </MenuItem>
               ))}
@@ -115,14 +120,28 @@ interface CustomComponentProps {
           {/* Slider to select font size */}
           <div className={classes.slider}>
             <Typography id="font-size-slider" gutterBottom>
-              Font Size
+              Title Font Size
             </Typography>
             <Slider
-              value={fontSize}
+              value={titleFontSize}
               min={10}
               max={32}
               step={2}
-              onChange={handleFontSizeChange}
+              onChange={handleTitleFontSizeChange}
+              aria-labelledby="font-size-slider"
+            />
+          </div>
+
+          <div className={classes.slider}>
+            <Typography id="font-size-slider" gutterBottom>
+              Subtitle Font Size
+            </Typography>
+            <Slider
+              value={subTitleFontSize}
+              min={10}
+              max={32}
+              step={2}
+              onChange={handleSubtitleFontSizeChange}
               aria-labelledby="font-size-slider"
             />
           </div>
