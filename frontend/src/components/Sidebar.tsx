@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
@@ -17,6 +17,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
+import Texts from "./Texts";
 
 const drawerWidth = 220;
 
@@ -93,6 +94,8 @@ export default function Sidebar() {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [slideIndex, setSlideIndex] = useState<number | null>(null);
+  const [title, setTitle] = useState("");
+  const [subtitle, setSubtitle] = useState("");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -100,6 +103,16 @@ export default function Sidebar() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setTitle(event.target.value);
+  };
+
+  const handleSubtitleChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSubtitle(event.target.value);
   };
 
   // added to open / close the corresponding 'slide' for the icon
@@ -194,9 +207,12 @@ export default function Sidebar() {
             </Typography>
           )}
           {slideIndex === 1 && (
-            <Typography paragraph>
-              This is the slide for the icon #{slideIndex + 1}
-            </Typography>
+            <Texts
+            title={title}
+            subtitle={subtitle}
+            onTitleChange={handleTitleChange}
+            onSubtitleChange={handleSubtitleChange}
+          />
           )}
           {slideIndex === 2 && (
             <Typography paragraph>
