@@ -111,9 +111,7 @@ export default function Sidebar() {
     setTitle(event.target.value);
   };
 
-  const handleSubtitleChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleSubtitleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setSubtitle(event.target.value);
   };
 
