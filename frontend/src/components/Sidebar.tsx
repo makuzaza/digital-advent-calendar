@@ -19,6 +19,7 @@ import ListItemText from "@mui/material/ListItemText";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
 import SidebarSounds from "./SidebarSounds/SidebarSounds";
+import ArticleIcon from '@mui/icons-material/Article';
 import Texts from "./Texts";
 
 const drawerWidth = 220;
@@ -182,7 +183,7 @@ export default function Sidebar() {
                   >
                     {index === 0 && <HourglassEmptyIcon />}
                     {/* change the icon here */}
-                    {index === 1 && <HourglassEmptyIcon />}
+                    {index === 1 && <ArticleIcon />}
                     {index === 2 && <HourglassEmptyIcon />}
                     {index === 3 && <AudiotrackIcon />}
                   </ListItemIcon>

@@ -19,7 +19,7 @@ interface CustomComponentProps {
   }
   
   // fonts
-  const fontOptions = ['Arial', 'Helvetica', 'Times New Roman', 'Courier New', 'Verdana'];
+  const fontOptions = ['Arial', 'Helvetica', 'Times New Roman', 'Courier New', 'Verdana', 'Roboto', 'Montserrat', 'Lato', 'Open Sans', 'Oswald'];
   // font size options
   const fontSizeOptions = [10, 12, 14, 16, 18, 20, 24, 28, 32, 48, 54];
   
