@@ -107,11 +107,15 @@ export default function Sidebar() {
     setOpen(false);
   };
 
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleTitleChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setTitle(event.target.value);
   };
 
-  const handleSubtitleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleSubtitleChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setSubtitle(event.target.value);
   };
 
@@ -196,7 +200,6 @@ export default function Sidebar() {
       {slideIndex !== null && (
         <Box
           component="main"
-          mt={8}
           p={1}
           sx={{ width: 250, height: 760, bgcolor: "#534342", color: "#fff" }}
         >
@@ -208,18 +211,18 @@ export default function Sidebar() {
           )}
           {slideIndex === 1 && (
             <Texts
-            title={title}
-            subtitle={subtitle}
-            onTitleChange={handleTitleChange}
-            onSubtitleChange={handleSubtitleChange}
-          />
+              title={title}
+              subtitle={subtitle}
+              onTitleChange={handleTitleChange}
+              onSubtitleChange={handleSubtitleChange}
+            />
           )}
           {slideIndex === 2 && (
             <Typography paragraph>
               This is the slide for the icon #{slideIndex + 1}
             </Typography>
           )}
-            {slideIndex === 3 && <SidebarSounds />}
+          {slideIndex === 3 && <SidebarSounds />}
         </Box>
       )}
     </Box>
