@@ -35,8 +35,8 @@ const windows = [
 ];
 
 type Props = {
-  title : string;
-  subtitle : string;
+  title: string;
+  subtitle: string;
   setTitle: (title: string) => void;
   setSubtitle: (subtitle: string) => void;
   titleFont: string;
@@ -47,22 +47,27 @@ type Props = {
   setSubTitleFontSize: (subTitleFontSize: number) => void;
   subtitleFont: string;
   subTitleFontSize: number;
+  setOpenModal: (openModal: boolean) => void;
+  setDay: (day: number) => void;
+  windows: number[];
 };
 
 
-const Preview: React.FC<Props> = ({ title, subtitle, setTitle, setSubtitle, titleFont, titleFontSize, subtitleFont, subTitleFontSize }) => {
+const Preview: React.FC<Props> = ({ title, subtitle, setTitle, setSubtitle, titleFont, titleFontSize, subtitleFont, subTitleFontSize,  setOpenModal,
+  setDay,
+  windows }) => {
   
   const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
-  }
+  };
 
   const onSubtitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSubtitle(event.target.value);
-  }
+  };
 
   return (
     <div className="preview">
-    <div className="title">
+     <div className="title">
           <Typography onChange={onTitleChange} variant="h4" component="h2" style={{ fontFamily: titleFont, fontSize: titleFontSize }}>
             {title}
           </Typography>
@@ -72,7 +77,12 @@ const Preview: React.FC<Props> = ({ title, subtitle, setTitle, setSubtitle, titl
       </div>
       <div className="windows">
         {windows.map((window) => (
-          <Window key={window} day={window} />
+          <Window
+            key={window}
+            day={window}
+            setOpenModal={setOpenModal}
+            setDay={setDay}
+          />
         ))}
       </div>
     </div>
