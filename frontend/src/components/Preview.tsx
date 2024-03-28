@@ -3,9 +3,6 @@ import "./Preview.css";
 
 // components
 import React, { useState } from 'react';
-import FormControl from '@mui/material/FormControl';
-import Input from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
 import Window from "./Window/Window";
 import { Typography } from "@mui/material";
 
