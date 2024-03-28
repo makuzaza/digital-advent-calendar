@@ -21,7 +21,6 @@ import AudiotrackIcon from "@mui/icons-material/Audiotrack";
 import SidebarSounds from "./SidebarSounds/SidebarSounds";
 import RttIcon from '@mui/icons-material/Rtt';
 import Texts from "./Texts";
-import { set } from "firebase/database";
 
 const drawerWidth = 220;
 
@@ -99,9 +98,17 @@ type Props = {
   subtitle : string;
   setTitle: (title: string) => void;
   setSubtitle: (subtitle: string) => void;
+  titleFont: string;
+  titleFontSize: number;
+  setTitleFont: (titleFont: string) => void;
+  setSubtitleFont: (subtitleFont: string) => void;
+  setTitleFontSize: (titleFontSize: number) => void;
+  setSubTitleFontSize: (subTitleFontSize: number) => void;
+  subtitleFont: string;
+  subTitleFontSize: number;
 };
 
-const Sidebar: React.FC<Props>  = ( { title, subtitle, setTitle, setSubtitle } ) => {
+const Sidebar: React.FC<Props>  = ( { title, subtitle, setTitle, setSubtitle, titleFont, titleFontSize, subtitleFont, subTitleFontSize, setTitleFont, setSubtitleFont, setTitleFontSize, setSubTitleFontSize } ) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [slideIndex, setSlideIndex] = useState<number | null>(null);
@@ -222,6 +229,14 @@ const Sidebar: React.FC<Props>  = ( { title, subtitle, setTitle, setSubtitle } )
               subtitle={subtitle}
               setTitle={setTitle}
               setSubtitle={setSubtitle}
+              titleFont={titleFont}
+              titleFontSize={titleFontSize}
+              subtitleFont={subtitleFont}
+              subTitleFontSize={subTitleFontSize}
+              setTitleFont={setTitleFont}
+              setSubtitleFont={setSubtitleFont}
+              setTitleFontSize={setTitleFontSize}
+              setSubTitleFontSize={setSubTitleFontSize}
               onTitleChange={handleTitleChange}
               onSubtitleChange={handleSubtitleChange}
             />
