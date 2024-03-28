@@ -1,7 +1,17 @@
 .panel .preview {
-  margin: 15px;
-  background-color: lightgrey;
-  padding: 15px;
-  width: 100%;
+  margin: 20px;
   border-radius: 2px;
+  padding: 50px;
+  width: 100%;
+  background-color: lightgrey;
+}
+
+.preview .container {
+  margin: 0 auto;
+  width: 90%;
+}
+
+.preview .windows {
+  display: flex;
+  flex-wrap: wrap;
 }
