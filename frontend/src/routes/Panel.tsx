@@ -26,12 +26,39 @@ const Panel: React.FC = () => {
   ]);
   return (
     <div className="panel">
-      <Sidebar title={title} subtitle={subtitle} setTitle={setTitle} setSubtitle={setSubtitle} titleFont={titleFont} titleFontSize={titleFontSize} subtitleFont={subtitleFont} subTitleFontSize={subTitleFontSize} setTitleFont={setTitleFont} setSubtitleFont={setSubtitleFont} setTitleFontSize={setTitleFontSize} setSubTitleFontSize={setSubTitleFontSize}/>
-      <Preview title={title} subtitle={subtitle} setTitle={setTitle} setSubtitle={setSubtitle} titleFont={titleFont} titleFontSize={titleFontSize} subtitleFont={subtitleFont} subTitleFontSize={subTitleFontSize} setTitleFont={setTitleFont} setSubtitleFont={setSubtitleFont} setTitleFontSize={setTitleFontSize} setSubTitleFontSize={setSubTitleFontSize}   setOpenModal={setOpenModal}
-        setDay={setDay}
-        windows={windows}   />
-
-{openModal && (
+      
+      <Sidebar 
+      title={title} 
+      subtitle={subtitle} 
+      setTitle={setTitle} 
+      setSubtitle={setSubtitle} 
+      titleFont={titleFont} 
+      titleFontSize={titleFontSize} 
+      subtitleFont={subtitleFont} 
+      subTitleFontSize={subTitleFontSize} 
+      setTitleFont={setTitleFont} 
+      setSubtitleFont={setSubtitleFont} 
+      setTitleFontSize={setTitleFontSize} 
+      setSubTitleFontSize={setSubTitleFontSize}/>
+      
+      <Preview 
+      title={title} 
+      subtitle={subtitle} 
+      setTitle={setTitle} 
+      setSubtitle={setSubtitle} 
+      titleFont={titleFont} 
+      titleFontSize={titleFontSize} 
+      subtitleFont={subtitleFont} 
+      subTitleFontSize={subTitleFontSize} 
+      setTitleFont={setTitleFont} 
+      setSubtitleFont={setSubtitleFont} 
+      setTitleFontSize={setTitleFontSize} 
+      setSubTitleFontSize={setSubTitleFontSize}   
+      setOpenModal={setOpenModal}
+      setDay={setDay}
+      windows={windows}   />
+      
+      {openModal && (
         <Modal
           day={day}
           openModal={openModal}

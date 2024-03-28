@@ -53,9 +53,7 @@ type Props = {
 };
 
 
-const Preview: React.FC<Props> = ({ title, subtitle, setTitle, setSubtitle, titleFont, titleFontSize, subtitleFont, subTitleFontSize,  setOpenModal,
-  setDay,
-  windows }) => {
+const Preview: React.FC<Props> = ({ title, subtitle, setTitle, setSubtitle, titleFont, titleFontSize, subtitleFont, subTitleFontSize,  setOpenModal, setDay, windows }) => {
   
   const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
