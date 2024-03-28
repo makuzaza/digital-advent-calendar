@@ -4,13 +4,15 @@ import "./Window.css";
 import AddIcon from "@mui/icons-material/Add";
 
 type Props = {
-  day: string;
+  day: number;
+  setOpenModal: (openModal: boolean) => void;
+  setDay: (day: number) => void;
 };
 
-const Window: React.FC<Props> = ({ day }) => {
-  // this function will be called when user clicks on the windows add icon, will open up a modal
-  const handleClick = (day: string) => {
-    console.log(`Clicked on ${day} day`);
+const Window: React.FC<Props> = ({ day, setOpenModal, setDay }) => {
+  const handleClick = (day: number) => {
+    setOpenModal(true);
+    setDay(day);
   };
 
   return (
