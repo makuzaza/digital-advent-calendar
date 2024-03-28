@@ -12,14 +12,16 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 // Define interface for component props
 interface CustomComponentProps {
-    title: string;
-    subtitle: string;
+  title: string;
+  subtitle: string;
+  setTitle: (title: string) => void;
+  setSubtitle: (subtitle: string) => void;
     onTitleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onSubtitleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   }
   
   // fonts
-  const fontOptions = ['Arial', 'Helvetica', 'Times New Roman', 'Courier New', 'Verdana'];
+  const fontOptions = ['Arial', 'Times New Roman', 'Courier New', 'Verdana', 'Roboto', 'Lato','Montserrat',  'Open Sans', 'Oswald', 'Helvetica'];
   // font size options
   const fontSizeOptions = [10, 12, 14, 16, 18, 20, 24, 28, 32, 48, 54];
   
@@ -36,15 +38,23 @@ interface CustomComponentProps {
     },
   });
   
-  const CustomComponent: React.FC<CustomComponentProps> = ({ title, subtitle, onTitleChange, onSubtitleChange }) => {
+  export const CustomComponent: React.FC<CustomComponentProps> = ({ title, subtitle, setTitle, setSubtitle }) => {
     const classes = useStyles();
     // Initialize state for title font, subtitle font, and font size
     const [titleFont, setTitleFont] = useState<string>(fontOptions[0]);
     const [subtitleFont, setSubtitleFont] = useState<string>(fontOptions[0]);
     const [titleFontSize, setTitleFontSize] = useState<number>(fontSizeOptions[0]);
     const [subTitleFontSize, setSubTitleFontSize] = useState<number>(fontSizeOptions[0]);
-  
     // Event handler for title font change
+
+const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  setTitle(event.target.value);
+}
+
+const onSubtitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  setSubtitle(event.target.value);
+}
+
     const handleTitleFontChange = (event: SelectChangeEvent<string>) => {
         setTitleFont(event.target.value);
       };
@@ -71,7 +81,8 @@ interface CustomComponentProps {
           <Input
             value={title}
             onChange={onTitleChange}
-            style={{ backgroundColor: '#f5f5f5', borderRadius: '4px', fontFamily: titleFont, fontSize: titleFontSize }}
+            style={{ width: '200px', height: '50px',
+              backgroundColor: '#f5f5f5', borderRadius: '4px', fontFamily: titleFont, fontSize: titleFontSize }}
           />
         </FormControl>
         {/* Input field for subtitle with selected font and font size */}
@@ -80,7 +91,7 @@ interface CustomComponentProps {
           <Input
             value={subtitle}
             onChange={onSubtitleChange}
-            style={{ backgroundColor: '#f5f5f5', borderRadius: '4px', fontFamily: subtitleFont, fontSize: subTitleFontSize }}
+            style={{ width: '200px', height: '150px', backgroundColor: '#f5f5f5', borderRadius: '4px', fontFamily: subtitleFont, fontSize: subTitleFontSize }}
           />
         </FormControl>
           {/* Dropdown to select title font */}
@@ -125,7 +136,7 @@ interface CustomComponentProps {
             <Slider
               value={titleFontSize}
               min={10}
-              max={32}
+              max={54}
               step={2}
               onChange={handleTitleFontSizeChange}
               aria-labelledby="font-size-slider"
@@ -139,7 +150,7 @@ interface CustomComponentProps {
             <Slider
               value={subTitleFontSize}
               min={10}
-              max={32}
+              max={54}
               step={2}
               onChange={handleSubtitleFontSizeChange}
               aria-labelledby="font-size-slider"

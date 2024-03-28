@@ -19,7 +19,9 @@ import ListItemText from "@mui/material/ListItemText";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
 import SidebarSounds from "./SidebarSounds/SidebarSounds";
+import RttIcon from '@mui/icons-material/Rtt';
 import Texts from "./Texts";
+import { set } from "firebase/database";
 
 const drawerWidth = 220;
 
@@ -92,12 +94,17 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function Sidebar() {
+type Props = {
+  title : string;
+  subtitle : string;
+  setTitle: (title: string) => void;
+  setSubtitle: (subtitle: string) => void;
+};
+
+const Sidebar: React.FC<Props>  = ( { title, subtitle, setTitle, setSubtitle } ) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [slideIndex, setSlideIndex] = useState<number | null>(null);
-  const [title, setTitle] = useState("");
-  const [subtitle, setSubtitle] = useState("");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -186,7 +193,7 @@ export default function Sidebar() {
                   >
                     {index === 0 && <HourglassEmptyIcon />}
                     {/* change the icon here */}
-                    {index === 1 && <HourglassEmptyIcon />}
+                    {index === 1 && <RttIcon />}
                     {index === 2 && <HourglassEmptyIcon />}
                     {index === 3 && <AudiotrackIcon />}
                   </ListItemIcon>
@@ -213,6 +220,8 @@ export default function Sidebar() {
             <Texts
               title={title}
               subtitle={subtitle}
+              setTitle={setTitle}
+              setSubtitle={setSubtitle}
               onTitleChange={handleTitleChange}
               onSubtitleChange={handleSubtitleChange}
             />
@@ -228,3 +237,5 @@ export default function Sidebar() {
     </Box>
   );
 }
+
+export default Sidebar;
