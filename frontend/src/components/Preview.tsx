@@ -3,7 +3,13 @@ import "./Preview.css";
 
 // components
 import Window from "./Window/Window";
+import MusicPlayer from "./SidebarSounds/MusicPlayer";
+
 import { Typography } from "@mui/material";
+
+// sounds
+// this will come from the server later
+import selectedBgMusic from "../assets/music/xmas-music.mp3";
 
 type Props = {
   title: string;
@@ -46,6 +52,7 @@ const Preview: React.FC<Props> = ({
 
   return (
     <div className="preview">
+      {selectedBgMusic && <MusicPlayer audioSrc={selectedBgMusic} />}
       <div className="title">
         <Typography
           onChange={onTitleChange}

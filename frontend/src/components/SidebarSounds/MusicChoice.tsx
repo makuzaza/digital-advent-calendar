@@ -18,13 +18,13 @@ const MusicChoice: React.FC<Props> = ({ audioSrc, title, type }) => {
   // sound that user selected
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsSelected(e.target.value);
-    setMusicFile(audioSrc);
+    setMusicFile(audioSrc); // this need to be saved to the server
   };
 
   // this is just to see which one is selected, and what is the music file
   useEffect(() => {
     if (isSelected === null || musicFile === null) return;
-    console.log("selected: ", isSelected, "musicFile: ", musicFile);
+    console.log({ selected: isSelected, musicFile: musicFile });
   }, [isSelected, musicFile]);
 
   return (

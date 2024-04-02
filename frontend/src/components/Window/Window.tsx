@@ -3,6 +3,8 @@ import "./Window.css";
 // icons
 import AddIcon from "@mui/icons-material/Add";
 
+import selectedSoundEffect from "../../assets/sound-fx/xmas-fx.mp3";
+
 type Props = {
   day: number;
   setOpenModal: (openModal: boolean) => void;
@@ -11,6 +13,9 @@ type Props = {
 
 const Window: React.FC<Props> = ({ day, setOpenModal, setDay }) => {
   const handleClick = (day: number) => {
+    // if sound effect is chosen, play when opening the window
+    if (selectedSoundEffect) new Audio(selectedSoundEffect).play();
+
     setOpenModal(true);
     setDay(day);
   };
