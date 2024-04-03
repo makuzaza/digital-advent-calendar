@@ -26,5 +26,16 @@
   align-items: center;
   background-color: white;
   color: #666;
+}
+
+.window .icon-box:hover,
+.window .preview-icon:hover {
   cursor: pointer;
+  color: pink;
+}
+
+.window .preview-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }

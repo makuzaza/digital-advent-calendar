@@ -31,6 +31,7 @@ type Props = {
   subtitleColor: string;
   setTitleColor: (color: string) => void;
   setSubtitleColor: (color: string) => void;
+  setOpenPreviewModal: (openPreviewModal: boolean) => void;
 };
 
 const Preview: React.FC<Props> = ({
@@ -47,8 +48,9 @@ const Preview: React.FC<Props> = ({
   windows,
   titleColor,
   subtitleColor,
-  setTitleColor,
-  setSubtitleColor
+  /* setTitleColor,
+  setSubtitleColor, */
+  setOpenPreviewModal,
 }) => {
   const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -66,7 +68,11 @@ const Preview: React.FC<Props> = ({
           onChange={onTitleChange}
           variant="h4"
           component="h2"
-          style={{ fontFamily: titleFont, fontSize: titleFontSize, color: titleColor}}
+          style={{
+            fontFamily: titleFont,
+            fontSize: titleFontSize,
+            color: titleColor,
+          }}
         >
           {title}
         </Typography>
@@ -74,7 +80,11 @@ const Preview: React.FC<Props> = ({
           onChange={onSubtitleChange}
           variant="h4"
           component="h2"
-          style={{ fontFamily: subtitleFont, fontSize: subTitleFontSize, color: subtitleColor}}
+          style={{
+            fontFamily: subtitleFont,
+            fontSize: subTitleFontSize,
+            color: subtitleColor,
+          }}
         >
           {subtitle}
         </Typography>
@@ -86,6 +96,7 @@ const Preview: React.FC<Props> = ({
             day={window}
             setOpenModal={setOpenModal}
             setDay={setDay}
+            setOpenPreviewModal={setOpenPreviewModal}
           />
         ))}
       </div>
