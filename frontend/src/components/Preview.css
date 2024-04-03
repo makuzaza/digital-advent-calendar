@@ -5,6 +5,7 @@
   width: 100%;
   background-color: lightgrey;
   position: relative;
+  min-width: 500px;
 }
 
 .preview .container {
@@ -36,4 +37,13 @@
   position: absolute;
   top: 5px;
   right: 5px;
+}
+
+.preview .modal-create,
+.preview .modal-preview {
+  position: absolute;
+  top: 20px;
+  right: 0;
+  z-index: 1000;
+  width: 100%;
 }
