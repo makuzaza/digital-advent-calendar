@@ -1,3 +1,5 @@
+import { useState } from "react";
+import EmbedVideo from "../EmbedVideo/EmbedVideo";
 import "./Modal.css";
 
 import CloseIcon from "@mui/icons-material/Close";
@@ -17,6 +19,7 @@ const Modal: React.FC<Props> = ({
   setOpenModal,
   amountOfWindows,
 }) => {
+  const [videoURL, setVideoURL] = useState("");
   const handleClick = (direction: string) => {
     if (direction === "previous") {
       if (day === 1) {
@@ -29,6 +32,11 @@ const Modal: React.FC<Props> = ({
       }
       setDay(day + 1);
     }
+  };
+
+  // this function will save all the data of that day
+  const handleSave = (day: number) => {
+    console.log(`${day}. window's videoURL: ${videoURL}`);
   };
 
   return (
@@ -47,12 +55,21 @@ const Modal: React.FC<Props> = ({
           Next window
         </div>
       </div>
-      <h1>Modal for the {day} window</h1>
+      <h4>( Modal for the window {day} )</h4>
       {openModal && (
         <div className="close-modal" onClick={() => setOpenModal(false)}>
           <CloseIcon />
         </div>
       )}
+      <label className="video-input">
+        <h3>Add a video</h3>
+        <span className="span-text">Paste your URL here: </span>
+        <input type="text" onChange={(e) => setVideoURL(e.target.value)} />
+      </label>
+      <EmbedVideo videoURL={videoURL} />
+      <div className="save-btn">
+        <button onClick={() => handleSave(day)}>SAVE</button>
+      </div>
     </div>
   );
 };
