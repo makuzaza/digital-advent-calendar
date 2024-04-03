@@ -11,8 +11,8 @@ const CalendarEditor = () => {
       try {
         const response = await axios.get('https://api.unsplash.com/photos/random', {
           params: {
-            count: 8, // Fetch 8 random images
-            client_id: 'A9wMU_lZC4OW9kPTBjQOl6fncG6cTE13hDUtzDZ6xYE', // Replace with your Unsplash access key
+            count: 8, 
+            client_id: 'A9wMU_lZC4OW9kPTBjQOl6fncG6cTE13hDUtzDZ6xYE', 
           },
         });
         const imageUrls = response.data.map((photo: any) => photo.urls.small);
@@ -31,7 +31,6 @@ const CalendarEditor = () => {
 
   return (
     <div>
-      {/* Random images grid */}
       <Grid container spacing={1}>
         {randomImages.map((imageUrl, index) => (
           <Grid item key={index}>
@@ -39,15 +38,13 @@ const CalendarEditor = () => {
               src={imageUrl}
               alt={`Random Image ${index + 1}`}
               onClick={() => handleImageClick(imageUrl)}
-              style={{ width: '200px', height: '150px', objectFit: 'cover' }} // Set width, height, and object-fit
+              style={{ width: '200px', height: '150px', objectFit: 'cover' }} 
             />
           </Grid>
         ))}
       </Grid>
 
-      {/* Calendar preview with selected background */}
       <div style={{ backgroundImage: `url(${selectedBackground})`, backgroundSize: 'cover', height: '200px', width: '200px' }}>
-        {/* Calendar content goes here */}
       </div>
     </div>
   );
