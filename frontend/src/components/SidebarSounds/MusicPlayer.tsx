@@ -14,6 +14,7 @@ const MusicPlayer: React.FC<Props> = ({ audioSrc }) => {
 
   const togglePlay = () => {
     const audio = audioRef.current;
+    audio.loop = true; // Loop audio
     if (isPlaying) {
       audio.pause();
       audio.currentTime = 0; // Reset playback to the beginning
