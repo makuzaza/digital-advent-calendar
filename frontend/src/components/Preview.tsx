@@ -4,12 +4,15 @@ import "./Preview.css";
 // components
 import Window from "./Window/Window";
 import MusicPlayer from "./SidebarSounds/MusicPlayer";
+import Modal from "../components/Modal/Modal";
+import PreviewModal from "../components/PreviewModal/PreviewModal";
 
 import { Typography } from "@mui/material";
 
 // sounds
 // this will come from the server later
 import selectedBgMusic from "../assets/music/xmas-music.mp3";
+import { useState } from "react";
 
 type Props = {
   title: string;
@@ -24,14 +27,13 @@ type Props = {
   setSubTitleFontSize: (subTitleFontSize: number) => void;
   subtitleFont: string;
   subTitleFontSize: number;
-  setOpenModal: (openModal: boolean) => void;
   setDay: (day: number) => void;
   windows: number[];
   titleColor: string;
   subtitleColor: string;
   setTitleColor: (color: string) => void;
   setSubtitleColor: (color: string) => void;
-  setOpenPreviewModal: (openPreviewModal: boolean) => void;
+  day: number;
 };
 
 const Preview: React.FC<Props> = ({
@@ -43,15 +45,17 @@ const Preview: React.FC<Props> = ({
   titleFontSize,
   subtitleFont,
   subTitleFontSize,
-  setOpenModal,
   setDay,
+  day,
   windows,
   titleColor,
   subtitleColor,
   /* setTitleColor,
   setSubtitleColor, */
-  setOpenPreviewModal,
 }) => {
+  const [openPreviewModal, setOpenPreviewModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+
   const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
   };
@@ -100,6 +104,26 @@ const Preview: React.FC<Props> = ({
           />
         ))}
       </div>
+      {openModal && (
+        <div className="modal-create">
+          <Modal
+            day={day}
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+            setDay={setDay}
+            amountOfWindows={windows.length}
+          />
+        </div>
+      )}
+      {openPreviewModal && (
+        <div className="modal-preview">
+          <PreviewModal
+            day={day}
+            openPreviewModal={openPreviewModal}
+            setOpenPreviewModal={setOpenPreviewModal}
+          />
+        </div>
+      )}
     </div>
   );
 };
