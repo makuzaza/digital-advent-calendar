@@ -101,9 +101,21 @@ type Props = {
   subtitle : string;
   setTitle: (title: string) => void;
   setSubtitle: (subtitle: string) => void;
+  titleFont: string;
+  titleFontSize: number;
+  setTitleFont: (titleFont: string) => void;
+  setSubtitleFont: (subtitleFont: string) => void;
+  setTitleFontSize: (titleFontSize: number) => void;
+  setSubTitleFontSize: (subTitleFontSize: number) => void;
+  subtitleFont: string;
+  subTitleFontSize: number;
+  setTitleColor: (color: string) => void;
+  setSubtitleColor: (color: string) => void;
+  titleColor: string;
+  subtitleColor: string;
 };
 
-const Sidebar: React.FC<Props>  = ( { title, subtitle, setTitle, setSubtitle } ) => {
+const Sidebar: React.FC<Props>  = ( { title, subtitle, setTitle, setSubtitle, titleFont, titleFontSize, subtitleFont, subTitleFontSize, setTitleFont, setSubtitleFont, setTitleFontSize, setSubTitleFontSize, titleColor, subtitleColor, setTitleColor, setSubtitleColor } ) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [slideIndex, setSlideIndex] = useState<number | null>(null);
@@ -224,8 +236,20 @@ const Sidebar: React.FC<Props>  = ( { title, subtitle, setTitle, setSubtitle } )
               subtitle={subtitle}
               setTitle={setTitle}
               setSubtitle={setSubtitle}
+              titleFont={titleFont}
+              titleFontSize={titleFontSize}
+              subtitleFont={subtitleFont}
+              subTitleFontSize={subTitleFontSize}
+              setTitleFont={setTitleFont}
+              setSubtitleFont={setSubtitleFont}
+              setTitleFontSize={setTitleFontSize}
+              setSubTitleFontSize={setSubTitleFontSize}
               onTitleChange={handleTitleChange}
               onSubtitleChange={handleSubtitleChange}
+              titleColor={titleColor}
+              subtitleColor={subtitleColor}
+              setTitleColor={setTitleColor}
+              setSubtitleColor={setSubtitleColor}
             />
           )}
           {slideIndex === 2 && <UploadPicture />}

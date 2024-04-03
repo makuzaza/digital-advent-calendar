@@ -2,63 +2,67 @@
 import "./Preview.css";
 
 // components
-import React, { useState } from 'react';
-import FormControl from '@mui/material/FormControl';
-import Input from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
 import Window from "./Window/Window";
-import titleFont from "./Texts";
-import subtitleFont from "./Texts";
-import titleFontSize from "./Texts";
-import subTitleFontSize from "./Texts";
+import MusicPlayer from "./SidebarSounds/MusicPlayer";
+import Modal from "../components/Modal/Modal";
+import PreviewModal from "../components/PreviewModal/PreviewModal";
 
+import { Typography } from "@mui/material";
 
-
-// this array will be created based on the time user specifies
-const windows = [
-  "1.",
-  "2.",
-  "3.",
-  "4.",
-  "5.",
-  "6.",
-  "7.",
-  "8.",
-  "9.",
-  "10.",
-  "11.",
-  "12.",
-  "13.",
-  "14.",
-  "15.",
-  "16.",
-  "17.",
-  "18.",
-  "19.",
-  "20.",
-  "21.",
-  "22.",
-  "23.",
-  "24.",
-];
+// sounds
+// this will come from the server later
+import selectedBgMusic from "../assets/music/xmas-music.mp3";
+import { useState } from "react";
 
 type Props = {
-  title : string;
-  subtitle : string;
+  title: string;
+  subtitle: string;
   setTitle: (title: string) => void;
   setSubtitle: (subtitle: string) => void;
+  titleFont: string;
+  titleFontSize: number;
+  setTitleFont: (titleFont: string) => void;
+  setSubtitleFont: (subtitleFont: string) => void;
+  setTitleFontSize: (titleFontSize: number) => void;
+  setSubTitleFontSize: (subTitleFontSize: number) => void;
+  subtitleFont: string;
+  subTitleFontSize: number;
+  setDay: (day: number) => void;
+  windows: number[];
+  titleColor: string;
+  subtitleColor: string;
+  setTitleColor: (color: string) => void;
+  setSubtitleColor: (color: string) => void;
+  day: number;
 };
 
+const Preview: React.FC<Props> = ({
+  title,
+  subtitle,
+  setTitle,
+  setSubtitle,
+  titleFont,
+  titleFontSize,
+  subtitleFont,
+  subTitleFontSize,
+  setDay,
+  day,
+  windows,
+  titleColor,
+  subtitleColor,
+  /* setTitleColor,
+  setSubtitleColor, */
+}) => {
+  const [openPreviewModal, setOpenPreviewModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
-const Preview: React.FC<Props> = ({ title, subtitle, setTitle, setSubtitle, titleFont, titleFontSize }) => {
-  
   const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
-  }
+  };
 
   const onSubtitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSubtitle(event.target.value);
-  }
+  };
 
   return (
     <div className="preview">
@@ -84,12 +88,64 @@ const Preview: React.FC<Props> = ({ title, subtitle, setTitle, setSubtitle, titl
       <div>{title}</div>
       <div>{subtitle}</div>
    
+      {selectedBgMusic && <MusicPlayer audioSrc={selectedBgMusic} />}
+      <div className="title">
+        <Typography
+          onChange={onTitleChange}
+          variant="h4"
+          component="h2"
+          style={{
+            fontFamily: titleFont,
+            fontSize: titleFontSize,
+            color: titleColor,
+          }}
+        >
+          {title}
+        </Typography>
+        <Typography
+          onChange={onSubtitleChange}
+          variant="h4"
+          component="h2"
+          style={{
+            fontFamily: subtitleFont,
+            fontSize: subTitleFontSize,
+            color: subtitleColor,
+          }}
+        >
+          {subtitle}
+        </Typography>
       </div>
       <div className="windows">
         {windows.map((window) => (
-          <Window key={window} day={window} />
+          <Window
+            key={window}
+            day={window}
+            setOpenModal={setOpenModal}
+            setDay={setDay}
+            setOpenPreviewModal={setOpenPreviewModal}
+          />
         ))}
       </div>
+      {openModal && (
+        <div className="modal-create">
+          <Modal
+            day={day}
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+            setDay={setDay}
+            amountOfWindows={windows.length}
+          />
+        </div>
+      )}
+      {openPreviewModal && (
+        <div className="modal-preview">
+          <PreviewModal
+            day={day}
+            openPreviewModal={openPreviewModal}
+            setOpenPreviewModal={setOpenPreviewModal}
+          />
+        </div>
+      )}
     </div>
   );
 };

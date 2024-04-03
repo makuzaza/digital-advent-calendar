@@ -1,5 +1,15 @@
 .panel {
+  position: relative;
   display: flex;
   margin-top: 65px;
   min-height: 100vh;
+}
+
+.panel .preview {
+  margin: 20px;
+  border-radius: 2px;
+  padding: 50px;
+  width: 100%;
+  background-color: lightgrey;
+  text-align: center;
 }
