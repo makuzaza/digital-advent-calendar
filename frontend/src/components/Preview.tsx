@@ -78,7 +78,7 @@ const Preview: React.FC<Props> = ({ title, subtitle, setTitle, setSubtitle, titl
           <Input
               value={subtitle}
             onChange={onSubtitleChange}
-            style={{ width: '200px', height: '150px', backgroundColor: '#f5f5f5', borderRadius: '4px', fontFamily: subtitleFont, fontSize: subTitleFontSize }}
+            style={{ width: '200px', height: '150px', backgroundColor: '#f5f5f5', borderRadius: '4px', fontFamily: 'subtitleFont', fontSize: 'subTitleFontSize' }}
           />
         </FormControl>
       <div>{title}</div>
