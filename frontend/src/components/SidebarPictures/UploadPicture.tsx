@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import ExistingImageGallery from './ExistingImageGallery';
-import UploadIcon from "@mui/icons-material/Upload";
 
 interface UploadPictureProps {
   existingImages: string[];
@@ -16,7 +15,6 @@ const UploadPicture: React.FC<UploadPictureProps> = ({ existingImages }) => {
     }
   };
 
-  // Function to handle selection of existing background
   const handleBackgroundSelect = (backgroundUrl: string) => {
     setSelectedBackground(backgroundUrl);
   };
@@ -32,7 +30,6 @@ const UploadPicture: React.FC<UploadPictureProps> = ({ existingImages }) => {
         aria-labelledby="upload-label" 
       />
 
-      {/* List of existing backgrounds to choose from */}
       <div>
         <h3>Select backgrounds:</h3>
         <ExistingImageGallery 
@@ -41,7 +38,6 @@ const UploadPicture: React.FC<UploadPictureProps> = ({ existingImages }) => {
         />
       </div>
 
-      {/* Display selected background */}
       {selectedBackground && (
         <div style={{ marginTop: '20px' }}>
           <h3>Selected Background:</h3>
