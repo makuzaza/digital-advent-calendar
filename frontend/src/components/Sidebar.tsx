@@ -106,9 +106,13 @@ type Props = {
   setSubTitleFontSize: (subTitleFontSize: number) => void;
   subtitleFont: string;
   subTitleFontSize: number;
+  setTitleColor: (color: string) => void;
+  setSubtitleColor: (color: string) => void;
+  titleColor: string;
+  subtitleColor: string;
 };
 
-const Sidebar: React.FC<Props>  = ( { title, subtitle, setTitle, setSubtitle, titleFont, titleFontSize, subtitleFont, subTitleFontSize, setTitleFont, setSubtitleFont, setTitleFontSize, setSubTitleFontSize } ) => {
+const Sidebar: React.FC<Props>  = ( { title, subtitle, setTitle, setSubtitle, titleFont, titleFontSize, subtitleFont, subTitleFontSize, setTitleFont, setSubtitleFont, setTitleFontSize, setSubTitleFontSize, titleColor, subtitleColor, setTitleColor, setSubtitleColor } ) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [slideIndex, setSlideIndex] = useState<number | null>(null);
@@ -239,6 +243,10 @@ const Sidebar: React.FC<Props>  = ( { title, subtitle, setTitle, setSubtitle, ti
               setSubTitleFontSize={setSubTitleFontSize}
               onTitleChange={handleTitleChange}
               onSubtitleChange={handleSubtitleChange}
+              titleColor={titleColor}
+              subtitleColor={subtitleColor}
+              setTitleColor={setTitleColor}
+              setSubtitleColor={setSubtitleColor}
             />
           )}
           {slideIndex === 2 && (

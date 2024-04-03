@@ -24,6 +24,9 @@ const Panel: React.FC = () => {
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
     22, 23, 24,
   ]);
+  const [titleColor, setTitleColor] = useState("#000000");
+  const [subtitleColor, setSubtitleColor] = useState("#000000");
+
   return (
     <div className="panel">
       
@@ -39,7 +42,12 @@ const Panel: React.FC = () => {
       setTitleFont={setTitleFont} 
       setSubtitleFont={setSubtitleFont} 
       setTitleFontSize={setTitleFontSize} 
-      setSubTitleFontSize={setSubTitleFontSize}/>
+      setSubTitleFontSize={setSubTitleFontSize}
+      titleColor={titleColor}
+      subtitleColor={subtitleColor}
+      setTitleColor={setTitleColor}
+      setSubtitleColor={setSubtitleColor}
+      />
       
       <Preview 
       title={title} 
@@ -56,7 +64,12 @@ const Panel: React.FC = () => {
       setSubTitleFontSize={setSubTitleFontSize}   
       setOpenModal={setOpenModal}
       setDay={setDay}
-      windows={windows}   />
+      windows={windows}  
+      titleColor={titleColor}
+      subtitleColor={subtitleColor}
+      setTitleColor={setTitleColor}
+      setSubtitleColor={setSubtitleColor} 
+      />
       
       {openModal && (
         <Modal

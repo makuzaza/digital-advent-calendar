@@ -27,6 +27,10 @@ type Props = {
   setOpenModal: (openModal: boolean) => void;
   setDay: (day: number) => void;
   windows: number[];
+  titleColor: string;
+  subtitleColor: string;
+  setTitleColor: (color: string) => void;
+  setSubtitleColor: (color: string) => void;
 };
 
 const Preview: React.FC<Props> = ({
@@ -41,6 +45,10 @@ const Preview: React.FC<Props> = ({
   setOpenModal,
   setDay,
   windows,
+  titleColor,
+  subtitleColor,
+  setTitleColor,
+  setSubtitleColor
 }) => {
   const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -58,7 +66,7 @@ const Preview: React.FC<Props> = ({
           onChange={onTitleChange}
           variant="h4"
           component="h2"
-          style={{ fontFamily: titleFont, fontSize: titleFontSize }}
+          style={{ fontFamily: titleFont, fontSize: titleFontSize, color: titleColor}}
         >
           {title}
         </Typography>
@@ -66,7 +74,7 @@ const Preview: React.FC<Props> = ({
           onChange={onSubtitleChange}
           variant="h4"
           component="h2"
-          style={{ fontFamily: subtitleFont, fontSize: subTitleFontSize }}
+          style={{ fontFamily: subtitleFont, fontSize: subTitleFontSize, color: subtitleColor}}
         >
           {subtitle}
         </Typography>
