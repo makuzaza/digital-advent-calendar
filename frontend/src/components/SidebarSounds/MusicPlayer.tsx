@@ -1,11 +1,11 @@
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 
 // icons
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import StopCircleIcon from "@mui/icons-material/StopCircle";
 
 type Props = {
-  audioSrc: string;
+  audioSrc: string | undefined;
 };
 
 const MusicPlayer: React.FC<Props> = ({ audioSrc }) => {
@@ -13,6 +13,7 @@ const MusicPlayer: React.FC<Props> = ({ audioSrc }) => {
   const audioRef = useRef(new Audio(audioSrc));
 
   const togglePlay = () => {
+    if (!audioSrc) return;
     const audio = audioRef.current;
     audio.loop = true; // Loop audio
     if (isPlaying) {
