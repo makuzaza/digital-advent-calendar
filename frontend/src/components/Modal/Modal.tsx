@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import EmbedVideo from "../EmbedVideo/EmbedVideo";
 import "./Modal.css";
 
@@ -18,6 +18,11 @@ type ContentVisibility = {
   [key: string]: boolean;
 };
 
+interface WindowContent {
+  videoURL: string;
+  text: string;
+}
+
 const Modal: React.FC<Props> = ({
   day,
   setDay,
@@ -26,9 +31,16 @@ const Modal: React.FC<Props> = ({
   amountOfWindows,
 }) => {
   const [contentVisible, setContentVisible] = useState<ContentVisibility>({});
-  const [videoURL, setVideoURL] = useState("");
+  const [windowContent, setWindowContent] = useState<WindowContent[]>(Array(amountOfWindows).fill({ videoURL: "", text: "" }));
 
-  const [text, setText] = useState("");
+  useEffect(() => {
+    if (openModal) {
+      const savedContent = localStorage.getItem(`day_${day}_content`);
+      if (savedContent) {
+        setWindowContent(JSON.parse(savedContent));
+      }
+    }
+  }, [openModal, day]);
 
   const handleClick = (direction: string) => {
     if (direction === "previous") {
@@ -45,6 +57,7 @@ const Modal: React.FC<Props> = ({
   };
 
   const handleSave = () => {
+    localStorage.setItem(`day_${day}_content`, JSON.stringify(windowContent));
     console.log(`${day}. window's videoURL: ${videoURL}`);
     console.log(text);
     setOpenModal(false);
@@ -57,6 +70,8 @@ const Modal: React.FC<Props> = ({
       [contentID]: !prevState[contentID],
     }));
   };
+
+  const { videoURL, text } = windowContent[day - 1];
 
   return (
     <div className="modal">
@@ -83,7 +98,7 @@ const Modal: React.FC<Props> = ({
           label="Text"
           variant="outlined"
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={(e) => setWindowContent(windowContent.map((item, index) => index === day - 1 ? { ...item, text: e.target.value } : item))}
         />
       </div>
 
@@ -99,7 +114,7 @@ const Modal: React.FC<Props> = ({
         {contentVisible["video-input"] && (
           <>
             <span className="span-text">Paste your URL here: </span>
-            <input type="text" onChange={(e) => setVideoURL(e.target.value)} />
+            <input type="text" value={videoURL} onChange={(e) => setWindowContent(windowContent.map((item, index) => index === day - 1 ? { ...item, videoURL: e.target.value } : item))} />
             <EmbedVideo videoURL={videoURL} />
           </>
         )}
