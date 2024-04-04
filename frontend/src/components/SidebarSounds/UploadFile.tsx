@@ -7,7 +7,7 @@ const UploadFile: React.FC = () => {
     const file = e.target.files[0];
 
     console.log(file);
-    // upload file to server
+    // upload files to server
   };
 
   return (
