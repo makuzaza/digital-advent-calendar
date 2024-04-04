@@ -2,6 +2,9 @@ import { useState } from "react";
 import EmbedVideo from "../EmbedVideo/EmbedVideo";
 import "./Modal.css";
 
+import React, { useState } from "react";
+import { TextField, Button } from "@mui/material";
+
 import CloseIcon from "@mui/icons-material/Close";
 
 type Props = {
@@ -23,8 +26,13 @@ const Modal: React.FC<Props> = ({
   setOpenModal,
   amountOfWindows,
 }) => {
+
   const [contentVisible, setContentVisible] = useState<ContentVisibility>({});
   const [videoURL, setVideoURL] = useState("");
+
+  const [text, setText] = useState("");
+
+
   const handleClick = (direction: string) => {
     if (direction === "previous") {
       if (day === 1) {
@@ -39,9 +47,10 @@ const Modal: React.FC<Props> = ({
     }
   };
 
-  // this function will save all the data of that day
   const handleSave = (day: number) => {
     console.log(`${day}. window's videoURL: ${videoURL}`);
+    console.log(text);
+    setOpenModal(false);
   };
 
   // show / hide content
@@ -68,7 +77,22 @@ const Modal: React.FC<Props> = ({
           Next window
         </div>
       </div>
-      <h4>( Modal for the window {day} )</h4>
+      <h1>Modal for the {day} window</h1>
+      <div className="texts">
+      <TextField
+        id="outlined-basic"
+        multiline
+        rows={4}
+        label="Text"
+        variant="outlined"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
+      <Button variant="contained" color="primary"
+      onClick={handleSave}>
+        Save
+      </Button>
+      </div>
       {openModal && (
         <div className="close-modal" onClick={() => setOpenModal(false)}>
           <CloseIcon />

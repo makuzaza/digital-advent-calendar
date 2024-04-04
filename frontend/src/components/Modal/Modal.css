@@ -65,3 +65,10 @@
 .modal button:hover {
   opacity: 0.8;
 }
+
+.texts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
