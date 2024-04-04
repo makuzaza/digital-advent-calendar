@@ -14,6 +14,8 @@ const MusicPlayer: React.FC<Props> = ({ audioSrc }) => {
 
   useEffect(() => {
     if (audioSrc) {
+      audioRef.current.pause();
+      setIsPlaying(false);
       audioRef.current = new Audio(audioSrc);
     }
   }, [audioSrc]);
