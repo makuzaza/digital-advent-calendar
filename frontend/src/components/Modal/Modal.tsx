@@ -1,3 +1,5 @@
+import { useState } from "react";
+import EmbedVideo from "../EmbedVideo/EmbedVideo";
 import "./Modal.css";
 
 import CloseIcon from "@mui/icons-material/Close";
@@ -10,6 +12,10 @@ type Props = {
   amountOfWindows: number;
 };
 
+type ContentVisibility = {
+  [key: string]: boolean;
+};
+
 const Modal: React.FC<Props> = ({
   day,
   setDay,
@@ -17,6 +23,8 @@ const Modal: React.FC<Props> = ({
   setOpenModal,
   amountOfWindows,
 }) => {
+  const [contentVisible, setContentVisible] = useState<ContentVisibility>({});
+  const [videoURL, setVideoURL] = useState("");
   const handleClick = (direction: string) => {
     if (direction === "previous") {
       if (day === 1) {
@@ -29,6 +37,19 @@ const Modal: React.FC<Props> = ({
       }
       setDay(day + 1);
     }
+  };
+
+  // this function will save all the data of that day
+  const handleSave = (day: number) => {
+    console.log(`${day}. window's videoURL: ${videoURL}`);
+  };
+
+  // show / hide content
+  const toggleContent = (contentID: string) => {
+    setContentVisible((prevState) => ({
+      ...prevState,
+      [contentID]: !prevState[contentID],
+    }));
   };
 
   return (
@@ -47,12 +68,27 @@ const Modal: React.FC<Props> = ({
           Next window
         </div>
       </div>
-      <h1>Modal for the {day} window</h1>
+      <h4>( Modal for the window {day} )</h4>
       {openModal && (
         <div className="close-modal" onClick={() => setOpenModal(false)}>
           <CloseIcon />
         </div>
       )}
+      <label className="video-input">
+        <h3 onClick={() => toggleContent("video-input")}>
+          <button> Add a video</button>
+        </h3>
+        {contentVisible["video-input"] && (
+          <>
+            <span className="span-text">Paste your URL here: </span>
+            <input type="text" onChange={(e) => setVideoURL(e.target.value)} />
+            <EmbedVideo videoURL={videoURL} />
+          </>
+        )}
+      </label>
+      <div className="save-btn">
+        <button onClick={() => handleSave(day)}>SAVE</button>
+      </div>
     </div>
   );
 };
