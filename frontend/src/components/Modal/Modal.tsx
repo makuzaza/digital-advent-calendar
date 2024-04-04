@@ -1,3 +1,5 @@
+import { useState } from "react";
+import EmbedVideo from "../EmbedVideo/EmbedVideo";
 import "./Modal.css";
 
 import React, { useState } from "react";
@@ -13,6 +15,10 @@ type Props = {
   amountOfWindows: number;
 };
 
+type ContentVisibility = {
+  [key: string]: boolean;
+};
+
 const Modal: React.FC<Props> = ({
   day,
   setDay,
@@ -20,7 +26,12 @@ const Modal: React.FC<Props> = ({
   setOpenModal,
   amountOfWindows,
 }) => {
+
+  const [contentVisible, setContentVisible] = useState<ContentVisibility>({});
+  const [videoURL, setVideoURL] = useState("");
+
   const [text, setText] = useState("");
+
 
   const handleClick = (direction: string) => {
     if (direction === "previous") {
@@ -36,9 +47,18 @@ const Modal: React.FC<Props> = ({
     }
   };
 
-  const handleSave = () => {
+  const handleSave = (day: number) => {
+    console.log(`${day}. window's videoURL: ${videoURL}`);
     console.log(text);
     setOpenModal(false);
+  };
+
+  // show / hide content
+  const toggleContent = (contentID: string) => {
+    setContentVisible((prevState) => ({
+      ...prevState,
+      [contentID]: !prevState[contentID],
+    }));
   };
 
   return (
@@ -78,6 +98,21 @@ const Modal: React.FC<Props> = ({
           <CloseIcon />
         </div>
       )}
+      <label className="video-input">
+        <h3 onClick={() => toggleContent("video-input")}>
+          <button> Add a video</button>
+        </h3>
+        {contentVisible["video-input"] && (
+          <>
+            <span className="span-text">Paste your URL here: </span>
+            <input type="text" onChange={(e) => setVideoURL(e.target.value)} />
+            <EmbedVideo videoURL={videoURL} />
+          </>
+        )}
+      </label>
+      <div className="save-btn">
+        <button onClick={() => handleSave(day)}>SAVE</button>
+      </div>
     </div>
   );
 };
