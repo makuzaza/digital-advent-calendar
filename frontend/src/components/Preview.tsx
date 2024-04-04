@@ -9,9 +9,6 @@ import PreviewModal from "../components/PreviewModal/PreviewModal";
 
 import { Typography } from "@mui/material";
 
-// sounds
-// this will come from the server later
-import selectedBgMusic from "../assets/music/xmas-music.mp3";
 import { useState } from "react";
 
 type Props = {
@@ -34,6 +31,8 @@ type Props = {
   setTitleColor: (color: string) => void;
   setSubtitleColor: (color: string) => void;
   day: number;
+  musicFile: string;
+  musicFX: string;
 };
 
 const Preview: React.FC<Props> = ({
@@ -50,6 +49,8 @@ const Preview: React.FC<Props> = ({
   windows,
   titleColor,
   subtitleColor,
+  musicFile,
+  musicFX,
   /* setTitleColor,
   setSubtitleColor, */
 }) => {
@@ -66,8 +67,7 @@ const Preview: React.FC<Props> = ({
 
   return (
     <div className="preview">
-   
-      {selectedBgMusic && <MusicPlayer audioSrc={selectedBgMusic} />}
+      {musicFile && <MusicPlayer audioSrc={musicFile} />}
       <div className="title">
         <Typography
           onChange={onTitleChange}
@@ -102,6 +102,7 @@ const Preview: React.FC<Props> = ({
             setOpenModal={setOpenModal}
             setDay={setDay}
             setOpenPreviewModal={setOpenPreviewModal}
+            musicFX={musicFX}
           />
         ))}
       </div>

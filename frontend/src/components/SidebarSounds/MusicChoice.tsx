@@ -9,23 +9,48 @@ type Props = {
   audioSrc: string;
   title: string;
   type: string;
+  setMusicFile?: (file: string) => void;
+  musicFile?: string;
+  setMusicFX?: (musicFX: string) => void;
+  musicFX?: string;
 };
 
-const MusicChoice: React.FC<Props> = ({ audioSrc, title, type }) => {
+const MusicChoice: React.FC<Props> = ({
+  audioSrc,
+  title,
+  type,
+  musicFile,
+  setMusicFile,
+  setMusicFX,
+  musicFX,
+}) => {
   const [isSelected, setIsSelected] = useState<string | null>(null);
-  const [musicFile, setMusicFile] = useState<string | null>(null);
 
   // sound that user selected
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    type: string
+  ) => {
     setIsSelected(e.target.value);
-    setMusicFile(audioSrc); // this need to be saved to the server
+
+    if (type === "fx") {
+      if (!setMusicFX) return;
+      setMusicFX(audioSrc);
+    } else {
+      if (!setMusicFile) return;
+      setMusicFile(audioSrc);
+    }
   };
 
-  // this is just to see which one is selected, and what is the music file
+  // this is just to log to console which one is selected (name), and what is the music file path
   useEffect(() => {
-    if (isSelected === null || musicFile === null) return;
-    console.log({ selected: isSelected, musicFile: musicFile });
-  }, [isSelected, musicFile]);
+    if (isSelected === null || musicFile === null || musicFX === null) return;
+    console.log({
+      selected: isSelected,
+      musicFile: musicFile,
+      musicFX: musicFX,
+    });
+  }, [isSelected, musicFile, musicFX]);
 
   return (
     <div className="two-col">
@@ -40,7 +65,7 @@ const MusicChoice: React.FC<Props> = ({ audioSrc, title, type }) => {
             id={`${title} ${type}`}
             name="sound"
             value={`${title} ${type}`}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e, type)}
             style={{ display: "none" }} // hide the radio button and show icon instead
           />
         </div>
