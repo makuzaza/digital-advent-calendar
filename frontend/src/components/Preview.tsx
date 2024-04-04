@@ -66,27 +66,6 @@ const Preview: React.FC<Props> = ({
 
   return (
     <div className="preview">
-    /* <div>
-    <FormControl >
-          <InputLabel style={{ color: 'lightgrey' }}>Title</InputLabel>
-          <Input
-           value={title}
-            onChange={onTitleChange}
-            style={{ width: '200px', height: '50px',
-              backgroundColor: '#f5f5f5', borderRadius: '4px', fontFamily: titleFont, fontSize: titleFontSize }}
-          />
-        </FormControl> 
-        {/* Input field for subtitle with selected font and font size */}
-        <FormControl >
-          <InputLabel style={{ color: 'lightgrey' }}>Subtitle</InputLabel>
-          <Input
-              value={subtitle}
-            onChange={onSubtitleChange}
-            style={{ width: '200px', height: '150px', backgroundColor: '#f5f5f5', borderRadius: '4px', fontFamily: 'subtitleFont', fontSize: 'subTitleFontSize' }}
-          />
-        </FormControl>
-      <div>{title}</div>
-      <div>{subtitle}</div> */
    
       {selectedBgMusic && <MusicPlayer audioSrc={selectedBgMusic} />}
       <div className="title">

@@ -1,3 +1,4 @@
+import { Input } from "@material-ui/core";
 import "./Modal.css";
 
 import CloseIcon from "@mui/icons-material/Close";
@@ -48,6 +49,7 @@ const Modal: React.FC<Props> = ({
         </div>
       </div>
       <h1>Modal for the {day} window</h1>
+    
       {openModal && (
         <div className="close-modal" onClick={() => setOpenModal(false)}>
           <CloseIcon />
