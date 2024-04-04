@@ -5,14 +5,12 @@ import "./Window.css";
 import AddIcon from "@mui/icons-material/Add";
 import PreviewIcon from "@mui/icons-material/Preview";
 
-// sounds
-import selectedSoundEffect from "../../assets/sound-fx/xmas-fx.mp3";
-
 type Props = {
   day: number;
   setOpenModal: (openModal: boolean) => void;
   setDay: (day: number) => void;
   setOpenPreviewModal: (openPreviewModal: boolean) => void;
+  musicFX: string;
 };
 
 const Window: React.FC<Props> = ({
@@ -20,6 +18,7 @@ const Window: React.FC<Props> = ({
   setOpenModal,
   setDay,
   setOpenPreviewModal,
+  musicFX,
 }) => {
   const handleAddClick = (day: number) => {
     setOpenModal(true);
@@ -28,8 +27,8 @@ const Window: React.FC<Props> = ({
 
   const handlePreviewClick = (day: number) => {
     // if sound effect is chosen, play when opening the window
-    if (selectedSoundEffect) new Audio(selectedSoundEffect).play();
-
+    if (musicFX) new Audio(musicFX).play();
+    console.log(musicFX);
     setOpenPreviewModal(true);
     setDay(day);
   };
