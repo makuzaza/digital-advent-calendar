@@ -21,6 +21,9 @@ import AudiotrackIcon from "@mui/icons-material/Audiotrack";
 import SidebarSounds from "./SidebarSounds/SidebarSounds";
 import RttIcon from "@mui/icons-material/Rtt";
 import Texts from "./Texts";
+import { set } from "firebase/database";
+import ImageIcon from '@mui/icons-material/Image';
+import UploadPicture from "./SidebarPictures/UploadPicture";
 
 const drawerWidth = 220;
 
@@ -230,7 +233,7 @@ const Sidebar: React.FC<Props> = ({
                     {index === 0 && <HourglassEmptyIcon />}
                     {/* change the icon here */}
                     {index === 1 && <RttIcon />}
-                    {index === 2 && <HourglassEmptyIcon />}
+                    {index === 2 && < ImageIcon/>}
                     {index === 3 && <AudiotrackIcon />}
                   </ListItemIcon>
                   <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
@@ -274,11 +277,7 @@ const Sidebar: React.FC<Props> = ({
               setSubtitleColor={setSubtitleColor}
             />
           )}
-          {slideIndex === 2 && (
-            <Typography paragraph>
-              This is the slide for the icon #{slideIndex + 1}
-            </Typography>
-          )}
+          {slideIndex === 2 && <UploadPicture />}
           {slideIndex === 3 && (
             <SidebarSounds
               musicFile={musicFile}
