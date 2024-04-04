@@ -36,6 +36,8 @@ const Panel: React.FC = () => {
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
     22, 23, 24,
   ]);
+  const [musicFile, setMusicFile] = useState<string>("");
+  const [musicFX, setMusicFX] = useState<string>("");
   const [titleColor, setTitleColor] = useState("#000000");
   const [subtitleColor, setSubtitleColor] = useState("#000000");
 
@@ -58,6 +60,10 @@ const Panel: React.FC = () => {
         subtitleColor={subtitleColor}
         setTitleColor={setTitleColor}
         setSubtitleColor={setSubtitleColor}
+        musicFile={musicFile}
+        setMusicFile={setMusicFile}
+        setMusicFX={setMusicFX}
+        musicFX={musicFX}
       />
 
       <Preview
@@ -80,6 +86,8 @@ const Panel: React.FC = () => {
         setTitleColor={setTitleColor}
         setSubtitleColor={setSubtitleColor}
         day={day}
+        musicFile={musicFile}
+        musicFX={musicFX}
       />
     </div>
   );
