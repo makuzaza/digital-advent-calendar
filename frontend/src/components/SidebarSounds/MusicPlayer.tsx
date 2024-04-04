@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // icons
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
@@ -11,6 +11,12 @@ type Props = {
 const MusicPlayer: React.FC<Props> = ({ audioSrc }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(new Audio(audioSrc));
+
+  useEffect(() => {
+    if (audioSrc) {
+      audioRef.current = new Audio(audioSrc);
+    }
+  }, [audioSrc]);
 
   const togglePlay = () => {
     if (!audioSrc) return;
