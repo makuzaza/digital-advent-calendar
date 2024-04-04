@@ -44,7 +44,7 @@ const Modal: React.FC<Props> = ({
     }
   };
 
-  const handleSave = (day: number) => {
+  const handleSave = () => {
     console.log(`${day}. window's videoURL: ${videoURL}`);
     console.log(text);
     setOpenModal(false);
@@ -85,10 +85,8 @@ const Modal: React.FC<Props> = ({
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
-        <Button variant="contained" color="primary" onClick={handleSave}>
-          Save
-        </Button>
       </div>
+
       {openModal && (
         <div className="close-modal" onClick={() => setOpenModal(false)}>
           <CloseIcon />
@@ -106,9 +104,9 @@ const Modal: React.FC<Props> = ({
           </>
         )}
       </label>
-      <div className="save-btn">
-        <button onClick={() => handleSave(day)}>SAVE</button>
-      </div>
+      <Button variant="contained" color="primary" onClick={handleSave}>
+        Save
+      </Button>
     </div>
   );
 };
