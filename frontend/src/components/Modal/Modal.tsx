@@ -1,5 +1,7 @@
-import { Input } from "@material-ui/core";
 import "./Modal.css";
+
+import React, { useState } from "react";
+import { TextField, Button } from "@mui/material";
 
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -18,6 +20,8 @@ const Modal: React.FC<Props> = ({
   setOpenModal,
   amountOfWindows,
 }) => {
+  const [text, setText] = useState("");
+
   const handleClick = (direction: string) => {
     if (direction === "previous") {
       if (day === 1) {
@@ -30,6 +34,11 @@ const Modal: React.FC<Props> = ({
       }
       setDay(day + 1);
     }
+  };
+
+  const handleSave = () => {
+    console.log(text);
+    setOpenModal(false);
   };
 
   return (
@@ -49,7 +58,21 @@ const Modal: React.FC<Props> = ({
         </div>
       </div>
       <h1>Modal for the {day} window</h1>
-    
+      <div className="texts">
+      <TextField
+        id="outlined-basic"
+        multiline
+        rows={4}
+        label="Text"
+        variant="outlined"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
+      <Button variant="contained" color="primary"
+      onClick={handleSave}>
+        Save
+      </Button>
+      </div>
       {openModal && (
         <div className="close-modal" onClick={() => setOpenModal(false)}>
           <CloseIcon />
