@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './../index.css';
+import './date-and-order.css';
 
 interface Order {
   id: number;

@@ -1,0 +1,13 @@
+/* STYLE FOR DateAndOrder Feature */
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.btn {
+  padding: 3px 10px;
+  border: none;
+  border-radius: 40px;
+  background-color: #d985af;
+  color: #fff;
+  cursor: pointer;
+}
