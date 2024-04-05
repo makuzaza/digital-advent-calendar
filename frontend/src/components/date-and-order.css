@@ -1,0 +1,14 @@
+/* STYLE FOR DateAndOrder Feature */
+.date-and-order .buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.date-and-order .reset-btn,
+.date-and-order .apply-btn {
+  padding: 3px 10px;
+  border: none;
+  border-radius: 40px;
+  background-color: #d985af;
+  color: #fff;
+  cursor: pointer;
+}
