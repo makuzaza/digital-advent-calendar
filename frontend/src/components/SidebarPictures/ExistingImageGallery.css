@@ -1,8 +1,33 @@
 .calendarbg {
-    background-image: url('https://img.freepik.com/free-photo/space-background-realistic-starry-night-cosmos-shining-stars-milky-way-stardust-color-galaxy_1258-154643.jpg');
+    background-image: url(${selectedBackground});
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     height: 100%; 
     background-attachment: fixed;
   }
+
+  .dashboard-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; 
+  }
+  
+  .dashboard-images {
+    overflow-y: auto; 
+    flex: 1; 
+  }
+  
+  .dashboard-image {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+    cursor: pointer;
+  }
+  
+  .dashboard-background {
+    background-size: cover;
+    height: 200px;
+    width: 200px;
+  }
+  
