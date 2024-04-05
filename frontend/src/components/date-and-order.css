@@ -3,7 +3,8 @@
   display: flex;
   justify-content: space-between;
 }
-.btn {
+.buttons .reset-btn,
+.buttons .apply-btn {
   padding: 3px 10px;
   border: none;
   border-radius: 40px;

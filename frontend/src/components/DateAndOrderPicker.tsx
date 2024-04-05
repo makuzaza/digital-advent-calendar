@@ -88,10 +88,10 @@ const DateAndOrderPicker: React.FC<Props> = ({ orders }) => {
         )}
       </div>
       <div className="buttons">
-        <button className="btn" type="submit">
+        <button className="reset-btn" type="submit">
           Reset
         </button>
-        <button className="btn" type="submit">
+        <button className="apply-btn" type="submit">
           Apply
         </button>
       </div>
