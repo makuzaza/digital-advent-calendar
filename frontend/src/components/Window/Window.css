@@ -1,5 +1,5 @@
 .window {
-  background-color: rgb(233, 233, 233);
+  background-color: transparent;
   border: 1px solid white;
   border-radius: 2px;
   flex-grow: 1;
