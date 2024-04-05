@@ -1,10 +1,10 @@
 /* STYLE FOR DateAndOrder Feature */
-.buttons {
+.date-and-order .buttons {
   display: flex;
   justify-content: space-between;
 }
-.buttons .reset-btn,
-.buttons .apply-btn {
+.date-and-order .reset-btn,
+.date-and-order .apply-btn {
   padding: 3px 10px;
   border: none;
   border-radius: 40px;

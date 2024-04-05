@@ -30,7 +30,7 @@ const DateAndOrderPicker: React.FC<Props> = ({ orders }) => {
   };
 
   return (
-    <div>
+    <div className="date-and-order">
       <div>
         <label
           htmlFor="fromDatePicker"
