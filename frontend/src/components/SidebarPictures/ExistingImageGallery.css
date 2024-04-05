@@ -1,5 +1,5 @@
 .calendarbg {
-    background-image: url(${selectedBackground});
+    background-image: url('https://img.freepik.com/free-photo/space-background-realistic-starry-night-cosmos-shining-stars-milky-way-stardust-color-galaxy_1258-154643.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
