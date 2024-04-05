@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Grid from '@mui/material/Grid';
+import './ExistingImageGallery.css';
+
 
 const CalendarEditor = () => {
   const [randomImages, setRandomImages] = useState<string[]>([]);
@@ -27,10 +29,12 @@ const CalendarEditor = () => {
 
   const handleImageClick = (imageUrl: string) => {
     setSelectedBackground(imageUrl);
+    document.body.style.backgroundImage = `url(${imageUrl})`;
+    document.body.style.backgroundAttachment = 'scroll';
   };
 
   return (
-    <div>
+    <div className="calendarbg" style={{ backgroundImage: `url(${selectedBackground})`}}>
       <Grid container spacing={1}>
         {randomImages.map((imageUrl, index) => (
           <Grid item key={index}>
@@ -38,14 +42,11 @@ const CalendarEditor = () => {
               src={imageUrl}
               alt={`Random Image ${index + 1}`}
               onClick={() => handleImageClick(imageUrl)}
-              style={{ width: '200px', height: '150px', objectFit: 'cover' }} 
+              style={{ width: '200px', height: '150px', objectFit: 'cover', cursor: 'pointer' }} 
             />
           </Grid>
         ))}
       </Grid>
-
-      <div style={{ backgroundImage: `url(${selectedBackground})`, backgroundSize: 'cover', height: '200px', width: '200px' }}>
-      </div>
     </div>
   );
 };
