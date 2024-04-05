@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Grid from '@mui/material/Grid';
+import './ExistingImageGallery.css'; 
 
 const CalendarEditor = () => {
   const [randomImages, setRandomImages] = useState<string[]>([]);
@@ -22,30 +23,32 @@ const CalendarEditor = () => {
       }
     };
 
-    fetchRandomImages();
+     fetchRandomImages();
   }, []);
 
   const handleImageClick = (imageUrl: string) => {
     setSelectedBackground(imageUrl);
+    document.body.style.backgroundImage = `url(${imageUrl})`;
   };
 
   return (
-    <div>
-      <Grid container spacing={1}>
-        {randomImages.map((imageUrl, index) => (
-          <Grid item key={index}>
-            <img
-              src={imageUrl}
-              alt={`Random Image ${index + 1}`}
-              onClick={() => handleImageClick(imageUrl)}
-              style={{ width: '200px', height: '150px', objectFit: 'cover' }} 
-            />
-          </Grid>
-        ))}
-      </Grid>
-
-      <div style={{ backgroundImage: `url(${selectedBackground})`, backgroundSize: 'cover', height: '200px', width: '200px' }}>
+    <div className='dashboard-container'>
+      <div className='dashboard-images'>
+        <Grid container spacing={1}>
+          {randomImages.map((imageUrl, index) => (
+            <Grid item key={index}>
+              <img
+                src={imageUrl}
+                alt={`Random Image ${index + 1}`}
+                onClick={() => handleImageClick(imageUrl)}
+                className='dashboard-image'
+              />
+            </Grid>
+          ))}
+        </Grid>
       </div>
+
+      <div className='dashboard-background' style={{ backgroundImage: `url(${selectedBackground})` }}></div>
     </div>
   );
 };
