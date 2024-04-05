@@ -3,7 +3,7 @@
   margin: 0 auto;
   min-height: 60vh;
   background-color: white;
-  text-align: center;
+  text-align: left;
   border-radius: 5px;
   padding: 20px;
   position: relative;
@@ -37,3 +37,38 @@
   cursor: pointer;
   opacity: 0.7;
 }
+
+.modal .video-input input {
+  font-family: "Roboto", sans-serif;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.modal .video-input .span-text {
+  font-size: 14px;
+  color: #333;
+}
+
+.modal button {
+  margin-top: 10px;
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal button:hover {
+  opacity: 0.8;
+}
+
+.texts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+

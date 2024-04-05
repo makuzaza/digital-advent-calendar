@@ -1,26 +1,29 @@
-import React, { useState } from 'react';
-import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import { Typography } from '@mui/material';
-import MuiDrawer from '@mui/material/Drawer';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
-import AudiotrackIcon from '@mui/icons-material/Audiotrack';
-import SidebarSounds from './SidebarSounds/SidebarSounds';
-import RttIcon from '@mui/icons-material/Rtt';
-import Texts from './Texts';
+import React, { useState } from "react";
+import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import { Typography } from "@mui/material";
+import MuiDrawer from "@mui/material/Drawer";
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import List from "@mui/material/List";
+import CssBaseline from "@mui/material/CssBaseline";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
+import AudiotrackIcon from "@mui/icons-material/Audiotrack";
+import SidebarSounds from "./SidebarSounds/SidebarSounds";
+import RttIcon from "@mui/icons-material/Rtt";
+import Texts from "./Texts";
+import { set } from "firebase/database";
+import ImageIcon from '@mui/icons-material/Image';
+import UploadPicture from "./SidebarPictures/UploadPicture";
 import DateAndOrderPicker from './DateAndOrderPicker';
 
 const drawerWidth = 220;
@@ -111,6 +114,10 @@ type Props = {
   setSubtitleColor: (color: string) => void;
   titleColor: string;
   subtitleColor: string;
+  musicFile: string;
+  setMusicFile: (musicFile: string) => void;
+  setMusicFX: (musicFX: string) => void;
+  musicFX: string;
 };
 
 const Sidebar: React.FC<Props> = ({
@@ -130,6 +137,10 @@ const Sidebar: React.FC<Props> = ({
   subtitleColor,
   setTitleColor,
   setSubtitleColor,
+  setMusicFile,
+  musicFile,
+  setMusicFX,
+  musicFX
 }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -223,7 +234,7 @@ const Sidebar: React.FC<Props> = ({
                     {index === 0 && <HourglassEmptyIcon />}
                     {/* change the icon here */}
                     {index === 1 && <RttIcon />}
-                    {index === 2 && <HourglassEmptyIcon />}
+                    {index === 2 && < ImageIcon/>}
                     {index === 3 && <AudiotrackIcon />}
                   </ListItemIcon>
                   <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
@@ -265,12 +276,15 @@ const Sidebar: React.FC<Props> = ({
               setSubtitleColor={setSubtitleColor}
             />
           )}
-          {slideIndex === 2 && (
-            <Typography paragraph>
-              This is the slide for the icon #{slideIndex + 1}
-            </Typography>
+          {slideIndex === 2 && <UploadPicture />}
+          {slideIndex === 3 && (
+            <SidebarSounds
+              musicFile={musicFile}
+              setMusicFile={setMusicFile}
+              setMusicFX={setMusicFX}
+              musicFX={musicFX}
+            />
           )}
-          {slideIndex === 3 && <SidebarSounds />}
         </Box>
       )}
     </Box>
