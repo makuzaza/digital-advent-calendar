@@ -9,11 +9,13 @@
     display: flex;
     flex-direction: column;
     height: 100vh; 
+    
   }
   
   .dashboard-images {
     overflow-y: auto; 
     flex: 1; 
+    
   }
   
   .dashboard-image {
@@ -21,10 +23,12 @@
     height: 150px;
     object-fit: cover;
     cursor: pointer;
+    
   }
   
   .dashboard-background {
     background-size: cover;
     height: 200px;
     width: 200px;
+    
   }
