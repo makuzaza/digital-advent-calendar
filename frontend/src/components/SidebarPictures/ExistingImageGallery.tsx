@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Grid from '@mui/material/Grid';
 import './ExistingImageGallery.css'; 
+import { Repeat } from 'immutable';
+import { doc } from 'firebase/firestore';
 
 const CalendarEditor = () => {
   const [randomImages, setRandomImages] = useState<string[]>([]);
@@ -16,7 +18,7 @@ const CalendarEditor = () => {
             client_id: 'A9wMU_lZC4OW9kPTBjQOl6fncG6cTE13hDUtzDZ6xYE', 
           },
         });
-        const imageUrls = response.data.map((photo: any) => photo.urls.small);
+        const imageUrls = response.data.map((photo: any) => photo.urls.regular);
         setRandomImages(imageUrls);
       } catch (error) {
         console.error('Error fetching random images:', error);
@@ -28,7 +30,13 @@ const CalendarEditor = () => {
 
   const handleImageClick = (imageUrl: string) => {
     setSelectedBackground(imageUrl);
-    document.body.style.backgroundImage = `url(${imageUrl})`;
+    document.body.style.backgroundImage = `url(${imageUrl})`; 
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundPosition = 'center';
+    document.body.style.maxWidth = '100%';
+    document.body.style.height = '100%';
+
   };
 
   return (
@@ -48,7 +56,8 @@ const CalendarEditor = () => {
         </Grid>
       </div>
 
-      <div className='dashboard-background' style={{ backgroundImage: `url(${selectedBackground})` }}></div>
+      <div className='dashboard-background' style={{ backgroundImage: `url(${selectedBackground})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover'
+     }}></div>
     </div>
   );
 };
