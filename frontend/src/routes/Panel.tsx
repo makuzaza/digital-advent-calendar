@@ -42,7 +42,7 @@ const Panel: React.FC = () => {
   const [subtitleColor, setSubtitleColor] = useState("#000000");
 
   return (
-    <div className="panel">
+    <div className="panel"> 
       <Sidebar
         title={title}
         subtitle={subtitle}
