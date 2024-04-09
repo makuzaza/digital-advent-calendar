@@ -1,9 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Crafty+Girls&display=swap');
+
 .calendar {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
 }
 
 .calendar .parts {
@@ -14,7 +15,30 @@
   width: 90%;
 }
 
-body {
+.font {
+    font-family: "Crafty Girls", cursive;
+    font-size: 40px;
+    font-weight: 600;
+    font-style: normal;
+    align-items: center;
     text-align: center;
+}
+
+
+body {
     font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    /* overflow: hidden;  */
+    background-color: #1f244a;
+    color: white;
+    height: 100vh;
+}
+
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  
 }
