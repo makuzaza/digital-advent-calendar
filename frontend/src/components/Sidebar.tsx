@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import { Typography } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -21,7 +20,6 @@ import AudiotrackIcon from "@mui/icons-material/Audiotrack";
 import SidebarSounds from "./SidebarSounds/SidebarSounds";
 import RttIcon from "@mui/icons-material/Rtt";
 import Texts from "./Texts";
-import { set } from "firebase/database";
 import ImageIcon from '@mui/icons-material/Image';
 import UploadPicture from "./SidebarPictures/UploadPicture";
 import DateAndOrderPicker from './DateAndOrderPicker';
@@ -140,7 +138,7 @@ const Sidebar: React.FC<Props> = ({
   setMusicFile,
   musicFile,
   setMusicFX,
-  musicFX
+  musicFX,
 }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -276,7 +274,7 @@ const Sidebar: React.FC<Props> = ({
               setSubtitleColor={setSubtitleColor}
             />
           )}
-          {slideIndex === 2 && <UploadPicture />}
+          {slideIndex === 2 && <UploadPicture/>}
           {slideIndex === 3 && (
             <SidebarSounds
               musicFile={musicFile}

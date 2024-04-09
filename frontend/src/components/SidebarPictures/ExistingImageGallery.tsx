@@ -13,7 +13,7 @@ const CalendarEditor = () => {
       try {
         const response = await axios.get('https://api.unsplash.com/photos/random', {
           params: {
-            count: 8, 
+            count: 12, 
             client_id: 'A9wMU_lZC4OW9kPTBjQOl6fncG6cTE13hDUtzDZ6xYE', 
           },
         });
