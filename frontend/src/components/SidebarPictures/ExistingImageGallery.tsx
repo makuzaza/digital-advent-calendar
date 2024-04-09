@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Grid from '@mui/material/Grid';
 import './ExistingImageGallery.css'; 
-import { doc } from 'firebase/firestore';
 
 const CalendarEditor = () => {
   const [randomImages, setRandomImages] = useState<string[]>([]);
