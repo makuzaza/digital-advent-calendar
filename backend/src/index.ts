@@ -1,7 +1,12 @@
 import express from "express";
 import cors from "cors";
+import { config } from "dotenv";
+
+import firebase from "../db/firebaseAdmin";
 
 const app = express();
+
+config();
 
 app.use(cors());
 app.use(express.json());
@@ -31,3 +36,6 @@ const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+// connect to firebase
+firebase();
