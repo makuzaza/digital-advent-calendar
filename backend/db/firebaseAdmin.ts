@@ -14,11 +14,14 @@ admin.initializeApp({
 function firebase() {
   const db = admin.database();
 
-  console.log(admin);
-  console.log(db);
+  // console.log(admin);
+  // console.log(db);
   console.log("Connected to Firebase");
 
   return db;
 }
 
 export default firebase;
+
+export const auth = admin.auth();
+export const firestore = admin.firestore();
