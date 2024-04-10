@@ -1,9 +1,7 @@
-import { useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-
-// layouts
-import RootLayout from "./layouts/RootLayout";
+import { ParallaxProvider } from "react-scroll-parallax";
+import { BannerTop } from "./components/LandingPage/BannerTop";
 
 // routes
 import Home from "./routes/Home";
@@ -14,22 +12,14 @@ import Register from "./routes/Register";
 import Panel from "./routes/Panel";
 import Favourites from "./routes/Favourites";
 import Root from "./routes/Root";
+import Footer from "./components/LandingPage/Footer";
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#3f51b5",
-    },
-    secondary: {
-      main: "#f50057",
-    },
-  },
-});
+
 
 function App() {
 
   return (
-    <ThemeProvider theme={theme}>
+    <div>
       <Router>
         <Routes>
           <Route path="/" element={<Root />}>
@@ -42,8 +32,15 @@ function App() {
             <Route path="/panel" element={<Panel />} />
           </Route>
         </Routes>
+        <ParallaxProvider>
+      <BannerTop />
+      <div className="center full">
+        <h1 className="headline gray"></h1>
+      </div>
+    </ParallaxProvider>
+      <Footer/>
       </Router>
-    </ThemeProvider>
+    </div>
   );
 }
 
