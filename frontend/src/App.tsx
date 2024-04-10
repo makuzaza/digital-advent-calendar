@@ -1,7 +1,6 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { ParallaxProvider } from "react-scroll-parallax";
 import { BannerTop } from "./components/LandingPage/banner/BannerTop";
-
 // routes
 import Home from "./routes/Home";
 import NotFound from "./routes/NotFound";
