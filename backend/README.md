@@ -8,7 +8,7 @@ server:
 
 ## Endpoints
 
-### Firestore
+### FIRESTORE (calendars json)
 
 - GET all calendars:
 
@@ -30,14 +30,64 @@ server:
 
 `/caas/calendars/:uid`
 
-### Auth
+### STORAGE (image/sound files)
 
-- Create a user
+#### ALL
+
+- GET list of all files (returns a namelist)
+
+`/storage/files/`
+
+#### IMAGES
+
+- GET image by name
+
+`/storage/images/:imageName`
+
+- GET all images
+
+`/storage/images/`
+
+- POST (add) image
+
+`/storage/images/`
+
+#### SOUNDS - MUSIC
+
+- GET music by name
+
+`/storage/sounds/music/:musicName`
+
+- GET all music
+
+`/storage/sounds/music`
+
+- POST (add) music
+
+`/storage/sounds/music`
+
+#### SOUNDS - SOUND-FX
+
+- GET soundFx by name
+
+`/storage/sounds/soundfx/:soundFxName`
+
+- GET all soundFx
+
+`/storage/sounds/soundfx`
+
+- POST (add) soundFx
+
+`/storage/sounds/soundfx`
+
+### AUTH
+
+- POST (create a user)
   - email
   - password
 
 `/auth/signup`
 
-- Get user data
+- GET user data
 
 `/auth/users/:uid`

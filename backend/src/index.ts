@@ -2,8 +2,9 @@ import express from "express";
 import cors from "cors";
 import { config } from "dotenv";
 
-import { authRouter } from "../routes/auth";
-import { caasRouter } from "../routes/caas";
+import { Router as authRouter } from "../routes/auth";
+import { Router as caasRouter } from "../routes/caas";
+import { Router as storageRouter } from "../routes/storage";
 
 import firebase from "../db/firebaseAdmin";
 
@@ -19,11 +20,12 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use("/auth", authRouter);
 app.use("/caas", caasRouter);
+app.use("/storage", storageRouter);
 
 // Home route
 app.get("/", (req, res) => {
   res.send(
-    "Welcome to YODA Calendars™️ API 🌟 Your Online Digital Advent Calendars!"
+    "Welcome to YODA Calendars™️ API 🌟 Your Own Digital Advent Calendars!"
   );
 });
 

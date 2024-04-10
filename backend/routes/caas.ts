@@ -1,7 +1,7 @@
 import express from "express";
 import { firestore } from "../db/firebaseAdmin";
 
-export const caasRouter = express.Router();
+export const Router = express.Router();
 
 interface Calendar {
   id: string;
@@ -10,7 +10,7 @@ interface Calendar {
 }
 
 // get all calendars
-caasRouter.get("/calendars", async (req, res) => {
+Router.get("/calendars", async (req, res) => {
   try {
     const snapshot = await firestore.collection("calendars").get();
     const calendars: Calendar[] = [];
@@ -31,7 +31,7 @@ caasRouter.get("/calendars", async (req, res) => {
 });
 
 // get a calendar
-caasRouter.get("/calendars/:id", async (req, res) => {
+Router.get("/calendars/:id", async (req, res) => {
   const id = req.params.id;
   try {
     const doc = await firestore.collection("calendars").doc(id).get();
@@ -53,7 +53,7 @@ caasRouter.get("/calendars/:id", async (req, res) => {
 });
 
 // add a new calendar
-caasRouter.post("/calendars", async (req, res) => {
+Router.post("/calendars", async (req, res) => {
   const calendar: Calendar = req.body;
   try {
     const docRef = await firestore.collection("calendars").add(calendar);
@@ -67,7 +67,7 @@ caasRouter.post("/calendars", async (req, res) => {
 });
 
 // update a calendar
-caasRouter.put("/calendars/:id", async (req, res) => {
+Router.put("/calendars/:id", async (req, res) => {
   const id = req.params.id;
   const updatedCalendar: Calendar = req.body;
   try {
@@ -83,7 +83,7 @@ caasRouter.put("/calendars/:id", async (req, res) => {
 });
 
 // delete a calendar
-caasRouter.delete("/calendars/:id", async (req, res) => {
+Router.delete("/calendars/:id", async (req, res) => {
   const id = req.params.id;
   try {
     await firestore.collection("calendars").doc(id).delete();
