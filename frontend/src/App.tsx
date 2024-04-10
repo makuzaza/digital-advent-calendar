@@ -1,7 +1,6 @@
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { ParallaxProvider } from "react-scroll-parallax";
-import { BannerTop } from "./components/LandingPage/BannerTop";
+import { BannerTop } from "./components/LandingPage/banner/BannerTop";
 
 // routes
 import Home from "./routes/Home";
@@ -12,7 +11,7 @@ import Register from "./routes/Register";
 import Panel from "./routes/Panel";
 import Favourites from "./routes/Favourites";
 import Root from "./routes/Root";
-import Footer from "./components/LandingPage/Footer";
+import Footer from "./components/LandingPage/Footer/Footer";
 
 
 
