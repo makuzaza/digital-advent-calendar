@@ -3,7 +3,7 @@ import cors from "cors";
 import { config } from "dotenv";
 
 import { Router as authRouter } from "../routes/auth";
-import { Router as caasRouter } from "../routes/caas";
+import { Router as firestoreRouter } from "../routes/firestore";
 import { Router as storageRouter } from "../routes/storage";
 
 import firebase from "../db/firebaseAdmin";
@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use("/auth", authRouter);
-app.use("/caas", caasRouter);
+app.use("/firestore", firestoreRouter);
 app.use("/storage", storageRouter);
 
 // Home route
@@ -30,9 +30,10 @@ app.get("/", (req, res) => {
 });
 
 const PORT = process.env.PORT || 8000;
+const HOST = process.env.HOST || "localhost";
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on http://${HOST}:${PORT}`);
 });
 
 // connect to Firebase
