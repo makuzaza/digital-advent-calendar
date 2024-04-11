@@ -1,5 +1,6 @@
 import express from "express";
 import { firestore } from "../db/firebaseAdmin";
+import { verifyToken } from "../middleware/verifyToken";
 
 export const Router = express.Router();
 
@@ -53,8 +54,9 @@ Router.get("/calendars/:id", async (req, res) => {
 });
 
 // add a new calendar
-Router.post("/calendars", async (req, res) => {
-  const calendar: Calendar = req.body;
+Router.post("/calendars", verifyToken, async (req, res) => {
+  const calendar: Calendar = req.body.data;
+
   try {
     const docRef = await firestore.collection("calendars").add(calendar);
     res

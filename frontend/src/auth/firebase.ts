@@ -1,6 +1,5 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import axios from "axios";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_KEY,
@@ -16,34 +15,22 @@ initializeApp(firebaseConfig);
 
 const auth = getAuth();
 
+// Log in with email and password and return the token
 const loginWithEmailAndPassword = async (email: string, password: string) => {
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      // Access user token
-      user.getIdToken().then(function (token) {
-        // Send token to backend
-        sendTokenToBackend(token);
-      });
-    })
-    .catch((error) => {
-      console.error(error.message, error.code);
-    });
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredential.user;
+    const tokenId = await user.getIdToken();
+    return tokenId; // Return the token
+  } catch (error) {
+    console.error((error as Error).message);
+    return ""; // Return an empty string if there's an error
+  }
 };
-
-function sendTokenToBackend(token: string) {
-  // Make an HTTP request to your backend using Axios
-  axios
-    .post("https://localhost:8000/authenticate", { token: token })
-    .then((response) => {
-      // Handle successful response from backend if needed
-      console.log(response);
-    })
-    .catch((error) => {
-      console.error("Error sending token to backend:", error);
-    });
-}
 
 const logout = () => auth.signOut();
 
