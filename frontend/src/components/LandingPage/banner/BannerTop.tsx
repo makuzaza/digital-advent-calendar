@@ -2,6 +2,7 @@ import { ParallaxBanner } from "react-scroll-parallax";
 import { BannerLayer } from "react-scroll-parallax/dist/components/ParallaxBanner/types";
 import "./BannerTop.css"
 
+
 export const BannerTop = () => {
   const background: BannerLayer = {
     image:
