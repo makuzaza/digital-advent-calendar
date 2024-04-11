@@ -12,16 +12,13 @@ import Favourites from "./routes/Favourites";
 import Root from "./routes/Root";
 import Footer from "./components/LandingPage/Footer/Footer";
 
-
-
 function App() {
-
   return (
     <div>
       <Router>
         <Routes>
           <Route path="/" element={<Root />}>
-            <Route index element={<Home />} />
+            <Route path="/home" element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="*" element={<NotFound />} />
@@ -29,14 +26,15 @@ function App() {
             <Route path="/favourites" element={<Favourites />} />
             <Route path="/panel" element={<Panel />} />
           </Route>
+          
         </Routes>
         <ParallaxProvider>
-      <BannerTop />
-      <div className="center full">
-        <h1 className="headline gray"></h1>
-      </div>
-    </ParallaxProvider>
-      <Footer/>
+          <BannerTop />
+          <div className="center full">
+            <h1 className="headline gray"></h1>
+          </div>
+        </ParallaxProvider>
+        <Footer />
       </Router>
     </div>
   );

@@ -4,6 +4,7 @@ import "./Home.css";
 import Login from "./Login";
 import { Link } from "react-router-dom";
 import wreath from "../assets/wreath.png";
+import Footer from "../components/LandingPage/Footer/Footer";
 
 const Home: React.FC = () => {
   return (
