@@ -5,10 +5,11 @@ import Login from "./Login";
 import { Link } from "react-router-dom";
 import wreath from "../assets/wreath.png";
 import "../index.css";
+import { Input } from "@mui/material";
 
 const Home: React.FC = () => {
   return (
-    <div className="home">
+    <div className="home main">
       <div className="font">Create Your Own Advent Calendar</div>
       <div className="calendar">
         <div className="parts"><img src={wreath} alt="calendar" style={{width: "80%"}}/>
