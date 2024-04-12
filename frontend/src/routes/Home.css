@@ -30,7 +30,7 @@ body {
     margin: 0;
     padding: 0;
     /* overflow: hidden;  */
-    background-color: #1f244a;
+    background-color: #3f51b5;
     color: white;
     height: 100vh;
 }
@@ -40,5 +40,6 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-  
+    background-color: #3f51b5;
+
 }
