@@ -16,7 +16,7 @@ const Home: React.FC = () => {
         </div>
         <div className="parts"><Login/></div>
       </div>
-      <div><Link to="/panel"><Button variant="contained" color="primary" style={{marginTop: "10px"}}>Create new</Button></Link></div>
+      <div><Link to="/panel"><Button variant="contained" color="primary" style={{ marginBottom: "30px" }}>Create new</Button></Link></div>
     
     </div>
     
