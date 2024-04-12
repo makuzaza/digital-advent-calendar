@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { BannerLayer } from "react-scroll-parallax/dist/components/ParallaxBanner/types";
 import "./BannerTop.css"
 
+
 export const BannerTop = () => {
 
   const location = useLocation();

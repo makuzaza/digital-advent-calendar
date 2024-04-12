@@ -23,7 +23,16 @@ const CalendarEditor = () => {
       }
     };
 
-     fetchRandomImages();
+    fetchRandomImages();
+
+    return () => {
+      document.body.style.backgroundImage = '';
+      document.body.style.backgroundRepeat = '';
+      document.body.style.backgroundSize = '';
+      document.body.style.backgroundPosition = '';
+      document.body.style.maxWidth = '';
+      document.body.style.height = '';
+    };
   }, []);
 
   const handleImageClick = (imageUrl: string) => {
@@ -34,7 +43,6 @@ const CalendarEditor = () => {
     document.body.style.backgroundPosition = 'center';
     document.body.style.maxWidth = '100%';
     document.body.style.height = '100%';
-
   };
 
   return (
@@ -54,8 +62,7 @@ const CalendarEditor = () => {
         </Grid>
       </div>
 
-      <div className='dashboard-background' style={{ backgroundImage: `url(${selectedBackground})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover'
-     }}></div>
+      <div className='dashboard-background' style={{ backgroundImage: `url(${selectedBackground})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}></div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-/* body {
+body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -138,4 +138,4 @@
 .snowflake:nth-of-type(11) {
   left:65%;
   animation-delay:2.5s
-} */
+}
