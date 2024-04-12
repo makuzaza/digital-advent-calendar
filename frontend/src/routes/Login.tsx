@@ -2,7 +2,7 @@ import { Button, Input } from "@mui/material";
 
 const Login: React.FC = () => {
   return (
-    <div className="home" style={{ margin: "10px" }}>
+    <div className="home" style={{ margin: "10px", height: '80vh' }}>
       <h1>Start with Login</h1>
       <p>Please enter your credentials to login:</p>
       <div >

@@ -1,8 +1,16 @@
 import { ParallaxBanner } from "react-scroll-parallax";
+import { useLocation } from "react-router-dom";
 import { BannerLayer } from "react-scroll-parallax/dist/components/ParallaxBanner/types";
 import "./BannerTop.css"
 
 export const BannerTop = () => {
+
+  const location = useLocation();
+
+  if (location.pathname !== "/") {
+    return null; 
+  }
+
   const background: BannerLayer = {
     image:
       "https://s3-us-west-2.amazonaws.com/s.cdpn.io/105988/banner-background.jpg",

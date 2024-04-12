@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import "./Footer.css";
 import PrivacyModal from "./PrivacyModal"; 
 import GitHubIcon from "@mui/icons-material/GitHub";
@@ -7,6 +8,13 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import { Typography } from "@mui/material";
 
 const Footer: React.FC = () => {
+
+    const location = useLocation();
+
+    if (location.pathname === "/panel") {
+      return null;
+    }
+
     return (
         <footer className="footer">
             <div className="footer-container">

@@ -32,11 +32,10 @@ function App() {
         </Routes>
         <ParallaxProvider>
       <BannerTop />
-      <div className="center full">
+      <div className="center full" >
         <h1 className="headline gray"></h1>
       </div>
     </ParallaxProvider>
-      <Footer/>
       </Router>
     </div>
   );

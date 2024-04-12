@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Register: React.FC = () => {
   return (
-    <div className="home">
+    <div className="home" style={{ margin: "10px", height: '80vh' }} >
      <h1>Register</h1>
       <p>Please enter your credentials to register:</p>
       <div>

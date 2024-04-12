@@ -274,7 +274,7 @@ const Sidebar: React.FC<Props> = ({
               setSubtitleColor={setSubtitleColor}
             />
           )}
-          {slideIndex === 2 && <UploadPicture/>}
+          {slideIndex === 2 && <UploadPicture />}
           {slideIndex === 3 && (
             <SidebarSounds
               musicFile={musicFile}
