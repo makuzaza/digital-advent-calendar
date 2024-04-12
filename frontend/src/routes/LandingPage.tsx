@@ -11,6 +11,7 @@ function LandingPage() {
             <h1 className="headline gray"></h1>
           </div>
         </ParallaxProvider>
+        <Footer></Footer>
     </div>
   )
 }
