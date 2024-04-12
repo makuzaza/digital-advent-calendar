@@ -1,4 +1,5 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+
 // routes
 import Home from "./routes/Home";
 import NotFound from "./routes/NotFound";
@@ -9,11 +10,15 @@ import Panel from "./routes/Panel";
 import Favourites from "./routes/Favourites";
 import Root from "./routes/Root";
 import LandingPage from "./routes/LandingPage";
+import Test from "./routes/Test";
+
+// redux
+import { store } from "./store/store";
+import { Provider } from "react-redux";
 
 function App() {
-  
   return (
-    <div>
+    <Provider store={store}>
       <Router>
         <Routes>
           <Route path="" element={<Root />}>
@@ -25,13 +30,11 @@ function App() {
             <Route path="error" element={<ErrorPage />} />
             <Route path="/favourites" element={<Favourites />} />
             <Route path="/panel" element={<Panel />} />
-            
+            <Route path="/test" element={<Test />} />
           </Route>
-          
         </Routes>
-        
       </Router>
-    </div>
+    </Provider>
   );
 }
 

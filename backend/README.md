@@ -1,93 +1,62 @@
-# Backend
+# SERVER (firebase DB)
 
 ```shell
-server:
+Server:
 
-`localhost:8000`
+localhost:8000
 ```
 
 ## Endpoints
 
-### FIRESTORE (calendars json)
+### FIRESTORE (json)
 
-- GET all calendars:
+#### CALENDARS
 
-`/caas/calendars`
+- GET all calendars: `/firestore/calendars`
 
-- GET calendar by id:
+- GET calendar by id: `/firestore/calendars/:uid`
 
-`/caas/calendars/:uid`
+- POST (add) calendar: `/firestore/calendars`
 
-- POST (add) calendar
+- PUT (update) calendar: `/firestore/calendars/:uid`
 
-`/caas/calendars`
-
-- PUT (update) calendar
-
-`/caas/calendars/:uid`
-
-- DELETE calendar
-
-`/caas/calendars/:uid`
+- DELETE calendar: `/firestore/calendars/:uid`
 
 ### STORAGE (image/sound files)
 
 #### ALL
 
-- GET list of all files (returns a namelist)
-
-`/storage/files/`
+- GET list of all files (returns a namelist): `/storage/files/`
 
 #### IMAGES
 
-- GET image by name
+- GET image by name: `/storage/images/:imageName`
 
-`/storage/images/:imageName`
+- POST (add) image: `/storage/images/`
 
-- GET all images
-
-`/storage/images/`
-
-- POST (add) image
-
-`/storage/images/`
+- DELETE: `/storage/images/:imageName`
 
 #### SOUNDS - MUSIC
 
-- GET music by name
+- GET music by name: `/storage/sounds/music/:musicName`
 
-`/storage/sounds/music/:musicName`
+- POST (add) music: `/storage/sounds/music`
 
-- GET all music
-
-`/storage/sounds/music`
-
-- POST (add) music
-
-`/storage/sounds/music`
+- DELETE: `/storage/sounds/music/:musicName`
 
 #### SOUNDS - SOUND-FX
 
-- GET soundFx by name
+- GET soundFx by name: `/storage/sounds/soundfx/:soundFxName`
 
-`/storage/sounds/soundfx/:soundFxName`
+- POST (add) soundFx: `/storage/sounds/soundfx`
 
-- GET all soundFx
-
-`/storage/sounds/soundfx`
-
-- POST (add) soundFx
-
-`/storage/sounds/soundfx`
+- DELETE: `/storage/sounds/soundfx/:soundFxName`
 
 ### AUTH
 
-- POST (create a user)
+- POST (create a user): `/auth/signup`
+
   - email
   - password
 
-`/auth/signup`
-
-- GET user data
-
-`/auth/users/:uid`
+- GET user data: `/auth/users/:uid`

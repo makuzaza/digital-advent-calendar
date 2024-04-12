@@ -1,7 +1,7 @@
 import express from "express";
 import multer from "multer";
-
 import { bucket } from "../db/firebaseAdmin";
+import { verifyToken } from "../middleware/verifyToken";
 
 export const Router = express.Router();
 
@@ -10,7 +10,7 @@ const upload = multer({ dest: "uploads/" }); // Define multer storage destinatio
 // ALL FILES
 
 // Endpoint to get list of all the files in storage
-Router.get("/files", async (req, res) => {
+Router.get("/files", verifyToken, async (req, res) => {
   try {
     // Access all files in the bucket
     const [files] = await bucket.getFiles();
