@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBS_dSNCUkmjVHf2XlWOiyjSVjJDHRrh9U",
+  apiKey: import.meta.env.VITE_FIREBASE_KEY,
   authDomain: "digital-calendar-team1.firebaseapp.com",
   projectId: "digital-calendar-team1",
   storageBucket: "digital-calendar-team1.appspot.com",
