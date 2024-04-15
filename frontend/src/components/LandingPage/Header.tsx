@@ -1,6 +1,7 @@
 import { AppBar, Toolbar, Button } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 import styles from "./headerStyles.module.css";
+import Logout from "./Logout";
 
 const Header = () => {
   const location = useLocation();
@@ -10,7 +11,7 @@ const Header = () => {
   }
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: '#10617a' }}>
+    <AppBar position="static" sx={{ backgroundColor: "#10617a" }}>
       <Toolbar>
         <div className={styles.grow}>
           <Link to="/" className={styles.navLink}>
@@ -29,7 +30,7 @@ const Header = () => {
             <Button color="inherit">Register</Button>
           </Link>
         </div>
-        <Button color="inherit">Logout</Button>
+        <Logout />
       </Toolbar>
     </AppBar>
   );
