@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 
 // firebase
 import { loginWithEmailAndPassword } from "../auth/firebase";
 import { signOut } from "firebase/auth";
 import { auth } from "../auth/firebase";
-import { onAuthStateChanged } from "firebase/auth";
 
 // redux
 import { useAppDispatch, useAppSelector } from "../hooks/useAppDispatch";
@@ -15,7 +14,6 @@ import { setToken } from "../store/tokenSlice";
 import { saveJson } from "../helpers/saveJson";
 
 const Test: React.FC = () => {
-  const [userSignedIn, setUserSignedIn] = useState(false);
   const dispatch = useAppDispatch();
 
   // get state from redux store
@@ -36,13 +34,8 @@ const Test: React.FC = () => {
   };
 
   useEffect(() => {
-    // Listen for changes in authentication state
-    const unsubscribe = onAuthStateChanged(auth, (user) =>
-      user ? setUserSignedIn(true) : setUserSignedIn(false)
-    );
-
-    return () => unsubscribe();
-  }, []);
+    console.log(token);
+  }, [token]);
 
   const handleGetData = (endpoint: string) => {
     // Make an HTTP request to your backend using Axios
@@ -66,9 +59,7 @@ const Test: React.FC = () => {
       <button onClick={() => handleLogin("test@test.com", "test1234")}>
         Log in
       </button>
-      <button onClick={() => handleGetData("/firestore/calendars")}>
-        GET DATA
-      </button>
+      <button onClick={() => handleGetData("/storage/files")}>GET DATA</button>
       <button
         onClick={() =>
           saveJson("/firestore/calendars", { name: "new record!!!" }, token)
@@ -77,7 +68,6 @@ const Test: React.FC = () => {
         UPLOAD JSON object
       </button>
       <button onClick={handleLogout}>Log out</button>
-      {userSignedIn ? <p>User is signed in!</p> : <p>User is signed out!</p>}
     </div>
   );
 };
