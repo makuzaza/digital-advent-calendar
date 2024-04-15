@@ -6,6 +6,7 @@ import Window from "./Window/Window";
 import MusicPlayer from "./SidebarSounds/MusicPlayer";
 import Modal from "../components/Modal/Modal";
 import PreviewModal from "../components/PreviewModal/PreviewModal";
+import CalendarEditor from "./SidebarPictures/ExistingImageGallery";
 
 import { Typography } from "@mui/material";
 
@@ -33,6 +34,7 @@ type Props = {
   day: number;
   musicFile: string;
   musicFX: string;
+  // setBackGround: (imageUrl: string | null) => void;
 };
 
 const Preview: React.FC<Props> = ({
@@ -53,9 +55,11 @@ const Preview: React.FC<Props> = ({
   musicFX,
   /* setTitleColor,
   setSubtitleColor, */
+  // setBackground,
 }) => {
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [selectedBackground, setSelectedBackground] = useState<string | null>(null);
 
   const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -67,6 +71,7 @@ const Preview: React.FC<Props> = ({
 
   return (
     <div className="preview">
+      {/* <CalendarEditor setBackground={setBackground} /> */}
       {musicFile && <MusicPlayer audioSrc={musicFile} />}
       <div className="title">
         <Typography
