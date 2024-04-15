@@ -1,27 +1,25 @@
 import { Button, Input } from "@mui/material";
-import { auth, loginWithEmailAndPassword } from "../auth/firebase";
+import { loginWithEmailAndPassword } from "../auth/firebase";
 import { setToken } from "../store/tokenSlice";
 import { useAppDispatch } from "../hooks/useAppDispatch";
-import { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, loading] = useAuthState(auth);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (loading) return;
-    if (user) navigate("/favourites");
-  }, [user, loading, navigate]);
-
   const handleLogin = async () => {
-    const newToken = await loginWithEmailAndPassword(email, password);
-    dispatch(setToken(newToken));
+    try {
+      const newToken = await loginWithEmailAndPassword(email, password);
+      dispatch(setToken(newToken));
+      navigate("/favourites");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
