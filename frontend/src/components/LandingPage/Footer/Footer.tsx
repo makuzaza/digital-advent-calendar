@@ -5,8 +5,15 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import { Typography } from "@mui/material";
+import { useLocation } from "react-router-dom";
 
 const Footer: React.FC = () => {
+    const location = useLocation();
+
+    if (location.pathname === "/panel") {
+      return null;
+    }
+
     return (
         <footer className="footer">
             <div className="footer-container">
