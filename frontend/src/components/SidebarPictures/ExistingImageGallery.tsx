@@ -3,9 +3,12 @@ import axios from 'axios';
 import Grid from '@mui/material/Grid';
 import './ExistingImageGallery.css'; 
 
-const CalendarEditor = () => {
+interface CalendarEditorProps {
+  selectedBackground: string | null;
+}
+
+const CalendarEditor: React.FC<CalendarEditorProps> = ({ selectedBackground }) => {
   const [randomImages, setRandomImages] = useState<string[]>([]);
-  const [selectedBackground, setSelectedBackground] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchRandomImages = async () => {
@@ -26,17 +29,11 @@ const CalendarEditor = () => {
     fetchRandomImages();
 
     return () => {
-      document.body.style.backgroundImage = '';
-      document.body.style.backgroundRepeat = '';
-      document.body.style.backgroundSize = '';
-      document.body.style.backgroundPosition = '';
-      document.body.style.maxWidth = '';
-      document.body.style.height = '';
+      // Cleanup function if needed
     };
   }, []);
 
   const handleImageClick = (imageUrl: string) => {
-    setSelectedBackground(imageUrl);
     document.body.style.backgroundImage = `url(${imageUrl})`; 
     document.body.style.backgroundRepeat = 'no-repeat';
     document.body.style.backgroundSize = 'cover';
