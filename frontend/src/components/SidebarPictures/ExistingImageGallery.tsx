@@ -29,14 +29,14 @@ const CalendarEditor = () => {
 
     fetchRandomImages();
 
-    // return () => {
-    //   document.body.style.backgroundImage = '';
-    //   document.body.style.backgroundRepeat = '';
-    //   document.body.style.backgroundSize = '';
-    //   document.body.style.backgroundPosition = '';
-    //   document.body.style.maxWidth = '';
-    //   document.body.style.height = '';
-    // };
+    return () => {
+      document.body.style.backgroundImage = '';
+      document.body.style.backgroundRepeat = '';
+      document.body.style.backgroundSize = '';
+      document.body.style.backgroundPosition = '';
+      document.body.style.maxWidth = '';
+      document.body.style.height = '';
+    };
   }, []);
 
   const handleImageClick = (imageUrl: string) => {
