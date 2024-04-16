@@ -29,7 +29,6 @@ const CalendarEditor: React.FC<CalendarEditorProps> = ({ selectedBackground }) =
     fetchRandomImages();
 
     return () => {
-      // Cleanup function if needed
     };
   }, []);
 
