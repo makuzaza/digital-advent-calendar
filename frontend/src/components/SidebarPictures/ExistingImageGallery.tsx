@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Grid from '@mui/material/Grid';
-import './ExistingImageGallery.css'; 
+import './ExistingImageGallery.css';
+
+// type Props = {
+//   setBackground: (imageUrl: string | null) => void;
+// };
 
 const CalendarEditor = () => {
   const [randomImages, setRandomImages] = useState<string[]>([]);
@@ -43,6 +47,7 @@ const CalendarEditor = () => {
     document.body.style.backgroundPosition = 'center';
     document.body.style.maxWidth = '100%';
     document.body.style.height = '100%';
+    // setBackground(imageUrl);
   };
 
   return (
