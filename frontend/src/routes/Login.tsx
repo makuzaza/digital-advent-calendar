@@ -1,6 +1,7 @@
 import { Button, Input } from "@mui/material";
 import { loginWithEmailAndPassword } from "../auth/firebase";
 import { setToken } from "../store/tokenSlice";
+import { setUid } from "../store/uidSlice";
 import { useAppDispatch } from "../hooks/useAppDispatch";
 import { useState } from "react";
 import { useNavigate } from "react-router";
@@ -14,8 +15,9 @@ const Login: React.FC = () => {
 
   const handleLogin = async () => {
     try {
-      const newToken = await loginWithEmailAndPassword(email, password);
-      dispatch(setToken(newToken));
+      const newUser = await loginWithEmailAndPassword(email, password);
+      dispatch(setToken(newUser.tokenId));
+      dispatch(setUid(newUser.uid));
       navigate("/favourites");
     } catch (error) {
       console.error(error);

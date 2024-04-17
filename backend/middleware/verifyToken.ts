@@ -7,6 +7,7 @@ export function verifyToken(req: Request, res: Response, next: NextFunction) {
     req.body.token || req.query.token || req.headers["x-access-token"];
 
   if (!token) {
+    console.log("Token is required, and it was not provided.");
     return res
       .status(403)
       .json({ success: false, message: "Token is required" });
