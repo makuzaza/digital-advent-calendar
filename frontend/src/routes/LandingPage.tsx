@@ -4,6 +4,7 @@ import Login from './Login'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../auth/firebase';
 import { useEffect } from 'react';
+import Favourite from './Favourite';
 
 function LandingPage() {
 
@@ -21,9 +22,10 @@ function LandingPage() {
       <ParallaxProvider>
           <BannerTop /> 
           {!user && <Login />}
-          <div className="center full">
+          {/* <div className="center full">
             <h1 className="headline gray"></h1>
-          </div> 
+          </div>  */}
+        {user && <Favourite />}
         </ParallaxProvider>
     </div>
   )
