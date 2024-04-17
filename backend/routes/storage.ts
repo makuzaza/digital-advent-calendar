@@ -124,29 +124,34 @@ Router.get("/sounds/music/:musicName", async (req, res) => {
 });
 
 // Endpoint to upload music
-Router.post("/sounds/music", upload.single("music"), async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).send("No file uploaded");
+Router.post(
+  "/sounds/music",
+  verifyToken,
+  upload.single("music"),
+  async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).send("No file uploaded");
+      }
+
+      // Get file path
+      const filePath = req.file.path;
+
+      // Access UID data
+      const uid = req.body.uid;
+
+      // Upload file to Firebase Storage
+      await bucket.upload(filePath, {
+        destination: `sounds/music/${uid}/${req.file.originalname}`, // Define destination path in Firebase Storage
+      });
+
+      return res.status(200).send("File uploaded successfully");
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      res.status(500).send("Internal Server Error");
     }
-
-    // Get file path
-    const filePath = req.file.path;
-
-    // Access UID data
-    const uid = req.body.uid;
-
-    // Upload file to Firebase Storage
-    await bucket.upload(filePath, {
-      destination: `sounds/music/${uid}/${req.file.originalname}`, // Define destination path in Firebase Storage
-    });
-
-    return res.status(200).send("File uploaded successfully");
-  } catch (error) {
-    console.error("Error uploading file:", error);
-    res.status(500).send("Internal Server Error");
   }
-});
+);
 
 // Endpoint to delete music
 Router.delete("/sounds/music/:musicName", async (req, res) => {
@@ -197,29 +202,34 @@ Router.get("/sounds/soundFx/:soundFxName", async (req, res) => {
 });
 
 // Endpoint to upload sound effect
-Router.post("/sounds/soundFx", upload.single("soundFx"), async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).send("No file uploaded");
+Router.post(
+  "/sounds/soundFx",
+  verifyToken,
+  upload.single("soundFx"),
+  async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).send("No file uploaded");
+      }
+
+      // Get file path
+      const filePath = req.file.path;
+
+      // Access UID data
+      const uid = req.body.uid;
+
+      // Upload file to Firebase Storage
+      await bucket.upload(filePath, {
+        destination: `sounds/soundFx/${uid}/${req.file.originalname}`, // Define destination path in Firebase Storage
+      });
+
+      return res.status(200).send("File uploaded successfully");
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      res.status(500).send("Internal Server Error");
     }
-
-    // Get file path
-    const filePath = req.file.path;
-
-    // Access UID data
-    const uid = req.body.uid;
-
-    // Upload file to Firebase Storage
-    await bucket.upload(filePath, {
-      destination: `sounds/soundFx/${uid}/${req.file.originalname}`, // Define destination path in Firebase Storage
-    });
-
-    return res.status(200).send("File uploaded successfully");
-  } catch (error) {
-    console.error("Error uploading file:", error);
-    res.status(500).send("Internal Server Error");
   }
-});
+);
 
 // Endpoint to delete sound effect
 Router.delete("/sounds/soundFx/:soundFxName", async (req, res) => {
