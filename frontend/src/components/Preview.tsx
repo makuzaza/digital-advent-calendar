@@ -70,7 +70,8 @@ const Preview: React.FC<Props> = ({
   };
 
   return (
-    <div className="preview">
+    <div id="preview-container" >
+      <div className="preview">
       {/* <CalendarEditor setBackground={setBackground} /> */}
       {musicFile && <MusicPlayer audioSrc={musicFile} />}
       <div className="title">
@@ -131,6 +132,7 @@ const Preview: React.FC<Props> = ({
           />
         </div>
       )}
+    </div>
     </div>
   );
 };

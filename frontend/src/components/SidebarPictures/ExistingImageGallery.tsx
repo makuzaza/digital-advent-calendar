@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 import './ExistingImageGallery.css';
 
 // type Props = {
-//   setBackground: (imageUrl: string | null) => void;
+//   selectedBackground: string | null;
 // };
 
 const CalendarEditor = () => {
@@ -28,27 +28,25 @@ const CalendarEditor = () => {
     };
 
     fetchRandomImages();
-
-    return () => {
-      document.body.style.backgroundImage = '';
-      document.body.style.backgroundRepeat = '';
-      document.body.style.backgroundSize = '';
-      document.body.style.backgroundPosition = '';
-      document.body.style.maxWidth = '';
-      document.body.style.height = '';
-    };
   }, []);
 
   const handleImageClick = (imageUrl: string) => {
     setSelectedBackground(imageUrl);
-    document.body.style.backgroundImage = `url(${imageUrl})`; 
-    document.body.style.backgroundRepeat = 'no-repeat';
-    document.body.style.backgroundSize = 'cover';
-    document.body.style.backgroundPosition = 'center';
-    document.body.style.maxWidth = '100%';
-    document.body.style.height = '100%';
-    // setBackground(imageUrl);
   };
+
+  useEffect(() => {
+    const container = document.getElementById('preview-container');
+    if (container) {
+      if (selectedBackground) {
+        container.style.backgroundImage = `url(${selectedBackground})`;
+        container.style.backgroundRepeat = 'no-repeat';
+        container.style.backgroundSize = 'cover';
+        container.style.backgroundPosition = 'center';
+        container.style.maxWidth = '100%';
+        container.style.height = '100%';
+      } 
+  }
+  }, [selectedBackground]);
 
   return (
     <div className='dashboard-container'>
@@ -67,7 +65,7 @@ const CalendarEditor = () => {
         </Grid>
       </div>
 
-      <div className='dashboard-background' style={{ backgroundImage: `url(${selectedBackground})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}></div>
+      {/* <div className='dashboard-background' style={{ backgroundImage: `url(${selectedBackground})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}></div> */}
     </div>
   );
 };
