@@ -1,0 +1,13 @@
+.button-container {
+    position: absolute;
+    top:    15px; 
+    right: 20px; 
+  }
+  .custom-button {
+    background-color: #10617a; 
+    color: white; 
+  }
+  
+  .custom-button:hover {
+    background-color: rgb(47, 161, 179);
+  }

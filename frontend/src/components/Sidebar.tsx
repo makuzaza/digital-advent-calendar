@@ -23,6 +23,9 @@ import Texts from "./Texts";
 import ImageIcon from '@mui/icons-material/Image';
 import UploadPicture from "./SidebarPictures/UploadPicture";
 import DateAndOrderPicker from './DateAndOrderPicker';
+import { Button } from "@mui/material";
+import "./SideBar.css"
+import { Link } from "react-router-dom";
 
 const drawerWidth = 220;
 
@@ -179,7 +182,7 @@ const Sidebar: React.FC<Props> = ({
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar sx={{ bgcolor: '#d985af' }}>
+        <Toolbar sx={{ bgcolor: '#10617a' }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -190,9 +193,15 @@ const Sidebar: React.FC<Props> = ({
               ...(open && { display: 'none' }),
             }}
           >
+            
             <MenuIcon />
           </IconButton>
-        </Toolbar>
+          <div className="button-container">
+          <Link to="/" className="home-link">
+  <Button variant="contained" className="custom-button" >Home</Button>
+  </Link>
+</div>     </Toolbar>
+        
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
@@ -205,7 +214,7 @@ const Sidebar: React.FC<Props> = ({
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List sx={{ bgcolor: '#968382', height: 760, color: '#fff' }}>
+        <List sx={{ bgcolor: 'gray', height: 760, color: '#fff' }}>
           {['Time and Order', 'Text', 'Upload Image', 'Sounds'].map(
             (text, index) => (
               <ListItem
