@@ -133,9 +133,12 @@ Router.post("/sounds/music", upload.single("music"), async (req, res) => {
     // Get file path
     const filePath = req.file.path;
 
+    // Access UID data
+    const uid = req.body.uid;
+
     // Upload file to Firebase Storage
     await bucket.upload(filePath, {
-      destination: "sounds/music/" + req.file.originalname, // Define destination path in Firebase Storage
+      destination: `sounds/music/${uid}/${req.file.originalname}`, // Define destination path in Firebase Storage
     });
 
     return res.status(200).send("File uploaded successfully");
@@ -203,9 +206,12 @@ Router.post("/sounds/soundFx", upload.single("soundFx"), async (req, res) => {
     // Get file path
     const filePath = req.file.path;
 
+    // Access UID data
+    const uid = req.body.uid;
+
     // Upload file to Firebase Storage
     await bucket.upload(filePath, {
-      destination: "sounds/soundFx/" + req.file.originalname, // Define destination path in Firebase Storage
+      destination: `sounds/soundFx/${uid}/${req.file.originalname}`, // Define destination path in Firebase Storage
     });
 
     return res.status(200).send("File uploaded successfully");
