@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { logout } from "../../auth/firebase";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { setToken } from "../../store/tokenSlice";
+import { setUid } from "../../store/uidSlice";
 
 const Logout: React.FC = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const Logout: React.FC = () => {
     logout();
     navigate("/");
     dispatch(setToken(""));
+    dispatch(setUid(""));
   };
 
   return (
