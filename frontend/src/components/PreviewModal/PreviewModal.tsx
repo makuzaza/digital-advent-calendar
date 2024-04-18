@@ -13,7 +13,7 @@ const PreviewModal: React.FC<Props> = ({
 }) => {
   return (
     <div className="modal">
-      <h1>Preview modal for the window {day}</h1>
+      <h1>{day}</h1>
       {openPreviewModal && (
         <div className="close-modal" onClick={() => setOpenPreviewModal(false)}>
           <CloseIcon />

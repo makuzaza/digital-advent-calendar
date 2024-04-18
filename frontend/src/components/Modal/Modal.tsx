@@ -31,7 +31,9 @@ const Modal: React.FC<Props> = ({
   amountOfWindows,
 }) => {
   const [contentVisible, setContentVisible] = useState<ContentVisibility>({});
-  const [windowContent, setWindowContent] = useState<WindowContent[]>(Array(amountOfWindows).fill({ videoURL: "", text: "" }));
+  const [windowContent, setWindowContent] = useState<WindowContent[]>(
+    Array(amountOfWindows).fill({ videoURL: "", text: "" })
+  );
 
   useEffect(() => {
     if (openModal) {
@@ -89,7 +91,7 @@ const Modal: React.FC<Props> = ({
           Next window
         </div>
       </div>
-      <h1>Modal for the {day} window</h1>
+      <h1>{day}</h1>
       <div className="texts">
         <TextField
           id="outlined-basic"
@@ -98,7 +100,13 @@ const Modal: React.FC<Props> = ({
           label="Text"
           variant="outlined"
           value={text}
-          onChange={(e) => setWindowContent(windowContent.map((item, index) => index === day - 1 ? { ...item, text: e.target.value } : item))}
+          onChange={(e) =>
+            setWindowContent(
+              windowContent.map((item, index) =>
+                index === day - 1 ? { ...item, text: e.target.value } : item
+              )
+            )
+          }
         />
       </div>
 
@@ -114,7 +122,19 @@ const Modal: React.FC<Props> = ({
         {contentVisible["video-input"] && (
           <>
             <span className="span-text">Paste your URL here: </span>
-            <input type="text" value={videoURL} onChange={(e) => setWindowContent(windowContent.map((item, index) => index === day - 1 ? { ...item, videoURL: e.target.value } : item))} />
+            <input
+              type="text"
+              value={videoURL}
+              onChange={(e) =>
+                setWindowContent(
+                  windowContent.map((item, index) =>
+                    index === day - 1
+                      ? { ...item, videoURL: e.target.value }
+                      : item
+                  )
+                )
+              }
+            />
             <EmbedVideo videoURL={videoURL} />
           </>
         )}

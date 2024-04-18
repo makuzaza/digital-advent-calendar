@@ -29,7 +29,7 @@ type Props = {
   subtitleFont: string;
   subTitleFontSize: number;
   setDay: (day: number) => void;
-  windows: number[];
+  windows: string[];
   titleColor: string;
   subtitleColor: string;
   setTitleColor: (color: string) => void;
@@ -41,6 +41,7 @@ type Props = {
 };
 
 interface Json {
+  windows: string[];
   text: {
     title: string;
     titleFont: string;
@@ -92,6 +93,7 @@ const Preview: React.FC<Props> = ({
 
   const saveCalendar = async () => {
     const json: Json = {
+      windows: windows,
       text: {
         title: title,
         titleFont: titleFont,
@@ -155,7 +157,8 @@ const Preview: React.FC<Props> = ({
           {windows.map((window) => (
             <Window
               key={window}
-              day={window}
+              date={window}
+              day={windows.indexOf(window) + 1}
               setOpenModal={setOpenModal}
               setDay={setDay}
               setOpenPreviewModal={setOpenPreviewModal}

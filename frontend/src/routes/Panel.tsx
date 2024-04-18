@@ -32,9 +32,31 @@ const Panel: React.FC = () => {
     fontSizeOptions[0]
   );
   const [day, setDay] = useState(1);
-  const [windows /* , setWindows */] = useState([
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
-    22, 23, 24,
+  const [windows, setWindows] = useState([
+    "2024-12-01",
+    "2024-12-02",
+    "2024-12-03",
+    "2024-12-04",
+    "2024-12-05",
+    "2024-12-06",
+    "2024-12-07",
+    "2024-12-08",
+    "2024-12-09",
+    "2024-12-10",
+    "2024-12-11",
+    "2024-12-12",
+    "2024-12-13",
+    "2024-12-14",
+    "2024-12-15",
+    "2024-12-16",
+    "2024-12-17",
+    "2024-12-18",
+    "2024-12-19",
+    "2024-12-20",
+    "2024-12-21",
+    "2024-12-22",
+    "2024-12-23",
+    "2024-12-24",
   ]);
   const [musicFile, setMusicFile] = useState<string>("");
   const [musicFX, setMusicFX] = useState<string>("");
@@ -42,7 +64,7 @@ const Panel: React.FC = () => {
   const [subtitleColor, setSubtitleColor] = useState("#000000");
 
   return (
-    <div className="panel"> 
+    <div className="panel">
       <Sidebar
         title={title}
         subtitle={subtitle}
@@ -64,6 +86,8 @@ const Panel: React.FC = () => {
         setMusicFile={setMusicFile}
         setMusicFX={setMusicFX}
         musicFX={musicFX}
+        setWindows={setWindows}
+        windows={windows}
       />
 
       <Preview
