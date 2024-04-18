@@ -26,21 +26,21 @@ const SidebarSounds: React.FC<Props> = ({
         <MusicChoice
           musicFile={musicFile}
           setMusicFile={setMusicFile}
-          audioSrc={"/music/xmas-music.mp3"}
+          audioSrc={"xmas-music.mp3"}
           title={"Christmas"}
           type={"music"}
         />
         <MusicChoice
           musicFile={musicFile}
           setMusicFile={setMusicFile}
-          audioSrc={"/music/horror-music.mp3"}
+          audioSrc={"horror-music.mp3"}
           title={"Horror"}
           type={"music"}
         />
         <MusicChoice
           musicFile={musicFile}
           setMusicFile={setMusicFile}
-          audioSrc={"/music/fantasy-music.mp3"}
+          audioSrc={"fantasy-music.mp3"}
           title={"Fantasy"}
           type={"music"}
         />
@@ -51,21 +51,21 @@ const SidebarSounds: React.FC<Props> = ({
         <MusicChoice
           musicFX={musicFX}
           setMusicFX={setMusicFX}
-          audioSrc={"/sound-fx/xmas-fx.mp3"}
+          audioSrc={"xmas-fx.mp3"}
           title={"Christmas"}
           type={"fx"}
         />
         <MusicChoice
           musicFX={musicFX}
           setMusicFX={setMusicFX}
-          audioSrc={"/sound-fx/horror-fx.mp3"}
+          audioSrc={"horror-fx.mp3"}
           title={"Horror"}
           type={"fx"}
         />
         <MusicChoice
           musicFX={musicFX}
           setMusicFX={setMusicFX}
-          audioSrc={"/sound-fx/fantasy-fx.mp3"}
+          audioSrc={"fantasy-fx.mp3"}
           title={"Fantasy"}
           type={"fx"}
         />

@@ -69,7 +69,7 @@ const MusicChoice: React.FC<Props> = ({
             style={{ display: "none" }} // hide the radio button and show icon instead
           />
         </div>
-        <MusicPlayer audioSrc={audioSrc} />
+        <MusicPlayer audioSrc={audioSrc} type={type} />
       </div>
     </div>
   );

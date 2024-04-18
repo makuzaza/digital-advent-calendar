@@ -110,9 +110,20 @@ Router.delete("/images/:imageName", async (req, res) => {
 Router.get("/sounds/music/:musicName", async (req, res) => {
   try {
     const musicName = req.params.musicName;
+    const uid = req.query.uid as string;
+
+    let musicPath = "sounds/music";
 
     // Specify the full path to the sound within the 'sounds' folder
-    const musicPath = "sounds/music/" + musicName;
+    if (
+      musicName === "fantasy-music.mp3" ||
+      musicName === "horror-music.mp3" ||
+      musicName === "xmas-music.mp3"
+    ) {
+      musicPath += `/default/${musicName}`;
+    } else {
+      musicPath += `/${uid}/${musicName}`;
+    }
 
     // Access file from the bucket
     const file = bucket.file(musicPath);
@@ -188,9 +199,20 @@ Router.delete("/sounds/music/:musicName", async (req, res) => {
 Router.get("/sounds/soundFx/:soundFxName", async (req, res) => {
   try {
     const soundFxName = req.params.soundFxName;
+    const uid = req.query.uid as string;
+
+    let soundFxPath = "sounds/soundFx";
 
     // Specify the full path to the sound within the 'sounds' folder
-    const soundFxPath = "sounds/soundFx/" + soundFxName;
+    if (
+      soundFxName === "fantasy-fx.mp3" ||
+      soundFxName === "horror-fx.mp3" ||
+      soundFxName === "xmas-fx.mp3"
+    ) {
+      soundFxPath += `/default/${soundFxName}`;
+    } else {
+      soundFxPath += `/${uid}/${soundFxName}`;
+    }
 
     // Access file from the bucket
     const file = bucket.file(soundFxPath);
