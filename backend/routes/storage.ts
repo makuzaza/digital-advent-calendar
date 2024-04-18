@@ -54,26 +54,34 @@ Router.get("/images/:imageName", async (req, res) => {
 });
 
 // Endpoint to upload image
-Router.post("/images", upload.single("image"), async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).send("No file uploaded");
+Router.post(
+  "/images",
+  verifyToken,
+  upload.single("image"),
+  async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).send("No file uploaded");
+      }
+
+      // Get file path
+      const filePath = req.file.path;
+
+      // Access UID data
+      const uid = req.body.uid;
+
+      // Upload file to Firebase Storage
+      await bucket.upload(filePath, {
+        destination: `images/${uid}/${req.file.originalname}`, // Define destination path in Firebase Storage
+      });
+
+      return res.status(200).send("File uploaded successfully");
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      res.status(500).send("Internal Server Error");
     }
-
-    // Get file path
-    const filePath = req.file.path;
-
-    // Upload file to Firebase Storage
-    await bucket.upload(filePath, {
-      destination: "images/" + req.file.originalname, // Define destination path in Firebase Storage
-    });
-
-    return res.status(200).send("File uploaded successfully");
-  } catch (error) {
-    console.error("Error uploading file:", error);
-    res.status(500).send("Internal Server Error");
   }
-});
+);
 
 // Endpoint to delete image
 Router.delete("/images/:imageName", async (req, res) => {
