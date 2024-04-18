@@ -45,7 +45,11 @@ const SidebarSounds: React.FC<Props> = ({
           type={"music"}
         />
       </div>
-      <UploadFile soundType="music" />
+      <UploadFile
+        soundType="music"
+        setMusicFile={setMusicFile}
+        setMusicFX={setMusicFX}
+      />
       <h2>Sound Effects</h2>
       <div className="music-choices">
         <MusicChoice
@@ -70,7 +74,11 @@ const SidebarSounds: React.FC<Props> = ({
           type={"fx"}
         />
       </div>
-      <UploadFile soundType="soundFx" />
+      <UploadFile
+        soundType="soundFx"
+        setMusicFX={setMusicFX}
+        setMusicFile={setMusicFile}
+      />
     </div>
   );
 };

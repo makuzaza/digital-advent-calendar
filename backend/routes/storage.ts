@@ -164,7 +164,10 @@ Router.post(
         destination: `sounds/music/${uid}/${req.file.originalname}`, // Define destination path in Firebase Storage
       });
 
-      return res.status(200).send("File uploaded successfully");
+      return res.status(200).send({
+        musicName: req.file.originalname,
+        message: "File uploaded successfully",
+      });
     } catch (error) {
       console.error("Error uploading file:", error);
       res.status(500).send("Internal Server Error");
@@ -253,7 +256,10 @@ Router.post(
         destination: `sounds/soundFx/${uid}/${req.file.originalname}`, // Define destination path in Firebase Storage
       });
 
-      return res.status(200).send("File uploaded successfully");
+      return res.status(200).send({
+        soundFxName: req.file.originalname,
+        message: "File uploaded successfully",
+      });
     } catch (error) {
       console.error("Error uploading file:", error);
       res.status(500).send("Internal Server Error");
