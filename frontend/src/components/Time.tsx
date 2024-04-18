@@ -38,7 +38,7 @@ const Time: React.FC<Props> = ({ setWindows, windows }) => {
       return dateArray;
     }
     const dates = getDatesArray(fromDate, toDate);
-    console.log(dates);
+    // console.log(dates);
     setWindows(dates);
   }, [fromDate, toDate, setWindows]);
 
