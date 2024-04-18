@@ -134,7 +134,22 @@ const Preview: React.FC<Props> = ({
     <div id="preview-container">
       <div className="preview">
         {/* <CalendarEditor setBackground={setBackground} /> */}
-        {musicFile && <MusicPlayer audioSrc={musicFile} type={"music"} />}
+        <div className="preview-music">
+          {musicFile && (
+            <>
+              <p className="preview-sound-btn">Music: </p>
+              <MusicPlayer audioSrc={musicFile} type={"music"} />
+            </>
+          )}
+        </div>
+        <div className="preview-soundfx">
+          {musicFX && (
+            <>
+              <p className="preview-sound-btn">FX: </p>
+              <MusicPlayer audioSrc={musicFX} type={"soundFx"} />
+            </>
+          )}
+        </div>
         <div className="title">
           <Typography
             onChange={onTitleChange}
