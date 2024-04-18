@@ -57,11 +57,32 @@ Router.get("/calendars/:id", async (req, res) => {
 Router.post("/calendars", verifyToken, async (req, res) => {
   const calendar: Calendar = req.body.data;
 
+  // Access UID data
+  const uid = req.body.uid;
+
+  // Create a reference to the 'calendars' collection
+  const calendarsCollectionRef = firestore.collection("all calendars");
+
+  // Create a reference to the 'uid' folder inside 'calendars'
+  const userCalendarFolderRef = calendarsCollectionRef.doc(uid);
+
+  // Check if the 'uid' folder exists
+  const folderSnapshot = await userCalendarFolderRef.get();
+
+  if (!folderSnapshot.exists) {
+    // If 'uid' folder doesn't exist, create it
+    await userCalendarFolderRef.set({});
+  }
+
   try {
-    const docRef = await firestore.collection("calendars").add(calendar);
-    res
-      .status(201)
-      .json({ message: "Calendar added successfully", id: docRef.id });
+    const docRef = await userCalendarFolderRef
+      .collection("user calendars")
+      .add(calendar);
+
+    res.status(201).json({
+      message: "Calendar added successfully",
+      calendarId: docRef.id,
+    });
   } catch (error) {
     console.error("Error creating calendar:", error.message);
     res.status(500).json({ error: "Internal server error" });

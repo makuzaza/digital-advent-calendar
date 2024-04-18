@@ -40,6 +40,7 @@ const Login: React.FC = () => {
             padding: "5px",
           }}
           placeholder="Your Email"
+          type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -51,6 +52,7 @@ const Login: React.FC = () => {
             padding: "5px",
           }}
           placeholder="Password"
+          type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
@@ -63,8 +65,6 @@ const Login: React.FC = () => {
       >
         Login
       </Button>
-      <p>email: test@test.com</p>
-      <p>password: test1234</p>
     </div>
   );
 };
