@@ -9,6 +9,7 @@ import Logout from "../components/LandingPage/Logout";
 
 const Test: React.FC = () => {
   const token = useAppSelector((state) => state.token.token);
+  const uid = useAppSelector((state) => state.uid.uid);
 
   const handleGetData = (endpoint: string) => {
     // Make an HTTP request to your backend using Axios
@@ -27,10 +28,29 @@ const Test: React.FC = () => {
       });
   };
 
+  const getCalendar = () => {
+    const calendarId = "P8jprEf4R23OJSQXmjrN";
+
+    axios
+      .get(`http://localhost:8000/firestore/calendars/${calendarId}`, {
+        params: {
+          // token: token,
+          uid: uid,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error sending token to backend:", error);
+      });
+  };
+
   return (
     <div>
       <Login />
       <button onClick={() => handleGetData("/storage/files")}>GET DATA</button>
+      <button onClick={getCalendar}>GET CALENDAR</button>
       <Logout />
     </div>
   );

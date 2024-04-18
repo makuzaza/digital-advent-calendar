@@ -2,11 +2,12 @@
 import "./Window.css";
 
 // icons
-import AddIcon from "@mui/icons-material/Add";
+// import AddIcon from "@mui/icons-material/Add";
 import PreviewIcon from "@mui/icons-material/Preview";
 
 type Props = {
   day: number;
+  date: string;
   setOpenModal: (openModal: boolean) => void;
   setDay: (day: number) => void;
   setOpenPreviewModal: (openPreviewModal: boolean) => void;
@@ -14,6 +15,7 @@ type Props = {
 };
 
 const Window: React.FC<Props> = ({
+  date,
   day,
   setOpenModal,
   setDay,
@@ -33,11 +35,34 @@ const Window: React.FC<Props> = ({
     setDay(day);
   };
 
+  function formatDate(inputDate: string) {
+    const date = new Date(inputDate);
+    const monthNames = [
+      "Jan.",
+      "Feb.",
+      "Mar.",
+      "Apr.",
+      "May",
+      "June",
+      "July",
+      "Aug.",
+      "Sep.",
+      "Oct.",
+      "Nov.",
+      "Dec.",
+    ];
+    const month = monthNames[date.getMonth()];
+    const day = date.getDate();
+
+    return `${month} ${day}`;
+  }
+
   return (
     <div className="window">
       <div className="day">{day}</div>
       <div className="icon-box" onClick={() => handleAddClick(day)}>
-        <AddIcon fontSize="large" />
+        {/* <AddIcon fontSize="large" /> */}
+        <div>{formatDate(date)}</div>
       </div>
       <div className="preview-icon" onClick={() => handlePreviewClick(day)}>
         <PreviewIcon />

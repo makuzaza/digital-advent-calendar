@@ -20,40 +20,40 @@ import AudiotrackIcon from "@mui/icons-material/Audiotrack";
 import SidebarSounds from "./SidebarSounds/SidebarSounds";
 import RttIcon from "@mui/icons-material/Rtt";
 import Texts from "./Texts";
-import ImageIcon from '@mui/icons-material/Image';
+import ImageIcon from "@mui/icons-material/Image";
 import UploadPicture from "./SidebarPictures/UploadPicture";
-import DateAndOrderPicker from './DateAndOrderPicker';
 import { Button } from "@mui/material";
-import "./SideBar.css"
+import "./SideBar.css";
 import { Link } from "react-router-dom";
+import Time from "./Time";
 
 const drawerWidth = 220;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
-  transition: theme.transitions.create('width', {
+  transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
   }),
-  overflowX: 'hidden',
+  overflowX: "hidden",
 });
 
 const closedMixin = (theme: Theme): CSSObject => ({
-  transition: theme.transitions.create('width', {
+  transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  overflowX: 'hidden',
+  overflowX: "hidden",
   width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up('sm')]: {
+  [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
 });
 
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
+const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-end",
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
@@ -64,17 +64,17 @@ interface AppBarProps extends MuiAppBarProps {
 }
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
+  shouldForwardProp: (prop) => prop !== "open",
 })<AppBarProps>(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
+  transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
@@ -82,19 +82,19 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== 'open',
+  shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
   width: drawerWidth,
   flexShrink: 0,
-  whiteSpace: 'nowrap',
-  boxSizing: 'border-box',
+  whiteSpace: "nowrap",
+  boxSizing: "border-box",
   ...(open && {
     ...openedMixin(theme),
-    '& .MuiDrawer-paper': openedMixin(theme),
+    "& .MuiDrawer-paper": openedMixin(theme),
   }),
   ...(!open && {
     ...closedMixin(theme),
-    '& .MuiDrawer-paper': closedMixin(theme),
+    "& .MuiDrawer-paper": closedMixin(theme),
   }),
 }));
 
@@ -119,6 +119,8 @@ type Props = {
   setMusicFile: (musicFile: string) => void;
   setMusicFX: (musicFX: string) => void;
   musicFX: string;
+  setWindows: (windows: string[]) => void;
+  windows: string[];
 };
 
 const Sidebar: React.FC<Props> = ({
@@ -142,6 +144,8 @@ const Sidebar: React.FC<Props> = ({
   musicFile,
   setMusicFX,
   musicFX,
+  setWindows,
+  windows,
 }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -179,10 +183,10 @@ const Sidebar: React.FC<Props> = ({
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar sx={{ bgcolor: '#10617a' }}>
+        <Toolbar sx={{ bgcolor: "#10617a" }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -190,23 +194,24 @@ const Sidebar: React.FC<Props> = ({
             edge="start"
             sx={{
               marginRight: 5,
-              ...(open && { display: 'none' }),
+              ...(open && { display: "none" }),
             }}
           >
-            
             <MenuIcon />
           </IconButton>
           <div className="button-container">
-          <Link to="/" className="home-link">
-  <Button variant="contained" className="custom-button" >Home</Button>
-  </Link>
-</div>     </Toolbar>
-        
+            <Link to="/" className="home-link">
+              <Button variant="contained" className="custom-button">
+                Home
+              </Button>
+            </Link>
+          </div>{" "}
+        </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? (
+            {theme.direction === "rtl" ? (
               <ChevronRightIcon />
             ) : (
               <ChevronLeftIcon />
@@ -214,52 +219,50 @@ const Sidebar: React.FC<Props> = ({
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List sx={{ bgcolor: 'gray', height: 760, color: '#fff' }}>
-          {['Time and Order', 'Text', 'Upload Image', 'Sounds'].map(
-            (text, index) => (
-              <ListItem
-                onClick={() => toggleSlideOpen(index)}
-                key={text}
-                disablePadding
-                sx={{ display: 'block' }}
+        <List sx={{ bgcolor: "gray", height: 760, color: "#fff" }}>
+          {["Time", "Text", "Image", "Sound"].map((text, index) => (
+            <ListItem
+              onClick={() => toggleSlideOpen(index)}
+              key={text}
+              disablePadding
+              sx={{ display: "block" }}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
               >
-                <ListItemButton
+                <ListItemIcon
                   sx={{
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 2.5,
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                    color: "#fff",
                   }}
                 >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : 'auto',
-                      justifyContent: 'center',
-                      color: '#fff',
-                    }}
-                  >
-                    {index === 0 && <HourglassEmptyIcon />}
-                    {/* change the icon here */}
-                    {index === 1 && <RttIcon />}
-                    {index === 2 && < ImageIcon/>}
-                    {index === 3 && <AudiotrackIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-                </ListItemButton>
-              </ListItem>
-            )
-          )}
+                  {index === 0 && <HourglassEmptyIcon />}
+                  {/* change the icon here */}
+                  {index === 1 && <RttIcon />}
+                  {index === 2 && <ImageIcon />}
+                  {index === 3 && <AudiotrackIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
+          ))}
         </List>
       </Drawer>
       {slideIndex !== null && (
         <Box
           component="main"
           p={1}
-          sx={{ width: 250, height: 760, bgcolor: '#534342', color: '#fff' }}
+          sx={{ width: 250, height: 760, bgcolor: "#534342", color: "#fff" }}
         >
           {slideIndex === 0 && (
             /* This is the place for the first icons component etc...*/
-            <DateAndOrderPicker orders={[]} />
+            <Time setWindows={setWindows} windows={windows} />
           )}
           {slideIndex === 1 && (
             <Texts
@@ -283,7 +286,7 @@ const Sidebar: React.FC<Props> = ({
               setSubtitleColor={setSubtitleColor}
             />
           )}
-          {slideIndex === 2 && <UploadPicture/>}
+          {slideIndex === 2 && <UploadPicture />}
           {slideIndex === 3 && (
             <SidebarSounds
               musicFile={musicFile}

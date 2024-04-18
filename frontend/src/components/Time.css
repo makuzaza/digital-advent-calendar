@@ -1,0 +1,10 @@
+.time input {
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.time .buttons {
+  margin-top: 10px;
+}
