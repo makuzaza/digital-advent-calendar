@@ -187,7 +187,8 @@ const Preview: React.FC<Props> = ({
           </div>
         )}
       </div>
-      <Button onClick={saveCalendar}>SAVE CALENDAR</Button>
+      <div><Button variant="contained" color="primary"
+      onClick={saveCalendar}>SAVE CALENDAR</Button></div>
     </div>
   );
 };

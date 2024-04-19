@@ -32,6 +32,7 @@ const CalendarEditor = () => {
 
   const handleImageClick = (imageUrl: string) => {
     setSelectedBackground(imageUrl);
+    console.log('Selected background:', imageUrl);
   };
 
   useEffect(() => {

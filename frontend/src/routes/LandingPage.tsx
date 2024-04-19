@@ -19,7 +19,7 @@ function LandingPage() {
     <div>
       <ParallaxProvider>
         <BannerTop />
-        {!user && <Login />}
+        <div style={{ marginBottom: '300px'}}>{!user && <Login />}</div>
         {/* <div className="center full">
             <h1 className="headline gray"></h1>
           </div>  */}
