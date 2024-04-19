@@ -275,7 +275,7 @@ const Sidebar: React.FC<Props> = ({
         <Box
           component="main"
           p={1}
-          sx={{ width: 250, height: 760, bgcolor: "#534342", color: "#fff" }}
+          sx={{ width: 250, minHeight: 760, bgcolor: "#575757", color: "#fff" }}
         >
           {slideIndex === 0 && (
             /* This is the place for the first icons component etc...*/
