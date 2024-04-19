@@ -6,9 +6,15 @@ import { useAppSelector } from "../../hooks/useAppDispatch";
 
 type Props = {
   soundType: string;
+  setMusicFX: (file: string) => void;
+  setMusicFile: (musicFile: string) => void;
 };
 
-const UploadFile: React.FC<Props> = ({ soundType }) => {
+const UploadFile: React.FC<Props> = ({
+  soundType,
+  setMusicFX,
+  setMusicFile,
+}) => {
   const uid = useAppSelector((state) => state.uid.uid);
   const token = useAppSelector((state) => state.token.token);
 
@@ -31,6 +37,11 @@ const UploadFile: React.FC<Props> = ({ soundType }) => {
       })
       .then((response) => {
         console.log(`${soundType}:`, response.data);
+        if (soundType === "music") {
+          setMusicFile(response.data.musicName);
+        } else {
+          setMusicFX(response.data.soundFxName);
+        }
       })
       .catch(() => {
         console.log(

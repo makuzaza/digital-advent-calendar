@@ -39,7 +39,7 @@ const Test: React.FC = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
+        console.log(response);
       })
       .catch((error) => {
         console.error("Error sending token to backend:", error);
