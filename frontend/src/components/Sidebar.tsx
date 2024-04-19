@@ -121,6 +121,8 @@ type Props = {
   musicFX: string;
   setWindows: (windows: string[]) => void;
   windows: string[];
+  setSelectedBackground: (background: string) => void;
+  selectedBackground: string;
 };
 
 const Sidebar: React.FC<Props> = ({
@@ -146,6 +148,8 @@ const Sidebar: React.FC<Props> = ({
   musicFX,
   setWindows,
   windows,
+  setSelectedBackground,
+  selectedBackground,
 }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -200,17 +204,26 @@ const Sidebar: React.FC<Props> = ({
             <MenuIcon />
           </IconButton>
           <div className="button-container">
-
-  <Link to="/preview">
-    <Button className="preview-button" variant="contained" style={{ backgroundColor: '#15728e', color: 'white',  }}>Preview</Button>
-  </Link>
-  <Link to="/">
-    <Button className="home-button" variant="contained" style={{ backgroundColor: '#15728e', color: 'white' }}>Home</Button>
-  </Link>
-</div>
-     
-</Toolbar>
-
+            <Link to="/preview">
+              <Button
+                className="preview-button"
+                variant="contained"
+                style={{ backgroundColor: "#15728e", color: "white" }}
+              >
+                Preview
+              </Button>
+            </Link>
+            <Link to="/">
+              <Button
+                className="home-button"
+                variant="contained"
+                style={{ backgroundColor: "#15728e", color: "white" }}
+              >
+                Home
+              </Button>
+            </Link>
+          </div>
+        </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
@@ -262,7 +275,7 @@ const Sidebar: React.FC<Props> = ({
         <Box
           component="main"
           p={1}
-          sx={{ width: 250, height: 760, bgcolor: "#534342", color: "#fff" }}
+          sx={{ width: 250, minHeight: 760, bgcolor: "#575757", color: "#fff" }}
         >
           {slideIndex === 0 && (
             /* This is the place for the first icons component etc...*/
@@ -290,7 +303,12 @@ const Sidebar: React.FC<Props> = ({
               setSubtitleColor={setSubtitleColor}
             />
           )}
-          {slideIndex === 2 && <UploadPicture />}
+          {slideIndex === 2 && (
+            <UploadPicture
+              setSelectedBackground={setSelectedBackground}
+              selectedBackground={selectedBackground}
+            />
+          )}
           {slideIndex === 3 && (
             <SidebarSounds
               musicFile={musicFile}

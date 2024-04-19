@@ -62,6 +62,7 @@ const Panel: React.FC = () => {
   const [musicFX, setMusicFX] = useState<string>("");
   const [titleColor, setTitleColor] = useState("#000000");
   const [subtitleColor, setSubtitleColor] = useState("#000000");
+  const [selectedBackground, setSelectedBackground] = useState<string>("");
 
   return (
     <div className="panel">
@@ -88,6 +89,8 @@ const Panel: React.FC = () => {
         musicFX={musicFX}
         setWindows={setWindows}
         windows={windows}
+        setSelectedBackground={setSelectedBackground}
+        selectedBackground={selectedBackground}
       />
 
       <Preview
@@ -112,6 +115,7 @@ const Panel: React.FC = () => {
         day={day}
         musicFile={musicFile}
         musicFX={musicFX}
+        selectedBackground={selectedBackground}
       />
     </div>
   );
