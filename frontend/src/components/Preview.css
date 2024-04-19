@@ -1,3 +1,7 @@
+#preview-container {
+  margin: 0 auto;
+}
+
 .panel .preview {
   margin: 20px;
   border-radius: 2px;
@@ -8,8 +12,22 @@
   min-width: 500px;
 }
 
-.preview .container {
-  margin: 0 auto;
+.preview .preview-music {
+  position: absolute;
+  top: -10px;
+  right: 40px;
+  line-height: 1rem;
+}
+
+.preview .preview-soundfx {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  line-height: 1rem;
+}
+
+.preview .preview-sound-btn {
+  margin-right: 50px;
 }
 
 .preview .windows {

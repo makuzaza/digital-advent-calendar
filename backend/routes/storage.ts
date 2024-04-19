@@ -54,26 +54,34 @@ Router.get("/images/:imageName", async (req, res) => {
 });
 
 // Endpoint to upload image
-Router.post("/images", upload.single("image"), async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).send("No file uploaded");
+Router.post(
+  "/images",
+  verifyToken,
+  upload.single("image"),
+  async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).send("No file uploaded");
+      }
+
+      // Get file path
+      const filePath = req.file.path;
+
+      // Access UID data
+      const uid = req.body.uid;
+
+      // Upload file to Firebase Storage
+      await bucket.upload(filePath, {
+        destination: `images/${uid}/${req.file.originalname}`, // Define destination path in Firebase Storage
+      });
+
+      return res.status(200).send("File uploaded successfully");
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      res.status(500).send("Internal Server Error");
     }
-
-    // Get file path
-    const filePath = req.file.path;
-
-    // Upload file to Firebase Storage
-    await bucket.upload(filePath, {
-      destination: "images/" + req.file.originalname, // Define destination path in Firebase Storage
-    });
-
-    return res.status(200).send("File uploaded successfully");
-  } catch (error) {
-    console.error("Error uploading file:", error);
-    res.status(500).send("Internal Server Error");
   }
-});
+);
 
 // Endpoint to delete image
 Router.delete("/images/:imageName", async (req, res) => {
@@ -102,9 +110,20 @@ Router.delete("/images/:imageName", async (req, res) => {
 Router.get("/sounds/music/:musicName", async (req, res) => {
   try {
     const musicName = req.params.musicName;
+    const uid = req.query.uid as string;
+
+    let musicPath = "sounds/music";
 
     // Specify the full path to the sound within the 'sounds' folder
-    const musicPath = "sounds/music/" + musicName;
+    if (
+      musicName === "fantasy-music.mp3" ||
+      musicName === "horror-music.mp3" ||
+      musicName === "xmas-music.mp3"
+    ) {
+      musicPath += `/default/${musicName}`;
+    } else {
+      musicPath += `/${uid}/${musicName}`;
+    }
 
     // Access file from the bucket
     const file = bucket.file(musicPath);
@@ -145,7 +164,10 @@ Router.post(
         destination: `sounds/music/${uid}/${req.file.originalname}`, // Define destination path in Firebase Storage
       });
 
-      return res.status(200).send("File uploaded successfully");
+      return res.status(200).send({
+        musicName: req.file.originalname,
+        message: "File uploaded successfully",
+      });
     } catch (error) {
       console.error("Error uploading file:", error);
       res.status(500).send("Internal Server Error");
@@ -180,9 +202,20 @@ Router.delete("/sounds/music/:musicName", async (req, res) => {
 Router.get("/sounds/soundFx/:soundFxName", async (req, res) => {
   try {
     const soundFxName = req.params.soundFxName;
+    const uid = req.query.uid as string;
+
+    let soundFxPath = "sounds/soundFx";
 
     // Specify the full path to the sound within the 'sounds' folder
-    const soundFxPath = "sounds/soundFx/" + soundFxName;
+    if (
+      soundFxName === "fantasy-fx.mp3" ||
+      soundFxName === "horror-fx.mp3" ||
+      soundFxName === "xmas-fx.mp3"
+    ) {
+      soundFxPath += `/default/${soundFxName}`;
+    } else {
+      soundFxPath += `/${uid}/${soundFxName}`;
+    }
 
     // Access file from the bucket
     const file = bucket.file(soundFxPath);
@@ -223,7 +256,10 @@ Router.post(
         destination: `sounds/soundFx/${uid}/${req.file.originalname}`, // Define destination path in Firebase Storage
       });
 
-      return res.status(200).send("File uploaded successfully");
+      return res.status(200).send({
+        soundFxName: req.file.originalname,
+        message: "File uploaded successfully",
+      });
     } catch (error) {
       console.error("Error uploading file:", error);
       res.status(500).send("Internal Server Error");

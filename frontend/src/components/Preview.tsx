@@ -1,3 +1,6 @@
+import { useState } from "react";
+import axios from "axios";
+
 // styles
 import "./Preview.css";
 
@@ -6,14 +9,11 @@ import Window from "./Window/Window";
 import MusicPlayer from "./SidebarSounds/MusicPlayer";
 import Modal from "../components/Modal/Modal";
 import PreviewModal from "../components/PreviewModal/PreviewModal";
-import CalendarEditor from "./SidebarPictures/ExistingImageGallery";
+// import CalendarEditor from "./SidebarPictures/ExistingImageGallery";
 
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 
-import { useState } from "react";
-
-
-
+import { useAppSelector } from "../hooks/useAppDispatch";
 
 type Props = {
   title: string;
@@ -29,7 +29,7 @@ type Props = {
   subtitleFont: string;
   subTitleFontSize: number;
   setDay: (day: number) => void;
-  windows: number[];
+  windows: string[];
   titleColor: string;
   subtitleColor: string;
   setTitleColor: (color: string) => void;
@@ -39,6 +39,25 @@ type Props = {
   musicFX: string;
   // setBackGround: (imageUrl: string | null) => void;
 };
+
+interface Json {
+  windows: string[];
+  text: {
+    title: string;
+    titleFont: string;
+    titleFontSize: number;
+    titleColor: string;
+    subtitle: string;
+    subtitleFont: string;
+    subTitleFontSize: number;
+    subtitleColor: string;
+  };
+  sounds: {
+    musicName: string;
+    soundFxName: string;
+  };
+  // Add more properties as needed
+}
 
 const Preview: React.FC<Props> = ({
   title,
@@ -62,7 +81,11 @@ const Preview: React.FC<Props> = ({
 }) => {
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const [selectedBackground, setSelectedBackground] = useState<string | null>(null);
+  // const [selectedBackground, setSelectedBackground] = useState<string | null>(
+  //   null
+  // );
+  const token = useAppSelector((state) => state.token.token);
+  const uid = useAppSelector((state) => state.uid.uid);
 
   const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -72,70 +95,124 @@ const Preview: React.FC<Props> = ({
     setSubtitle(event.target.value);
   };
 
+  const saveCalendar = async () => {
+    const json: Json = {
+      windows: windows,
+      text: {
+        title: title,
+        titleFont: titleFont,
+        titleFontSize: titleFontSize,
+        titleColor: titleColor,
+        subtitle: subtitle,
+        subtitleFont: subtitleFont,
+        subTitleFontSize: subTitleFontSize,
+        subtitleColor: subtitleColor,
+      },
+      sounds: {
+        musicName: musicFile,
+        soundFxName: musicFX,
+      },
+      // Add more properties as needed...
+    };
+    console.log(json);
+
+    axios
+      .post(`http://localhost:8000/firestore/calendars`, {
+        token: token,
+        uid: uid,
+        data: json,
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error saving calendar:", error);
+      });
+  };
+
   return (
-    <div id="preview-container" >
+    <div id="preview-container">
       <div className="preview">
-      {/* <CalendarEditor setBackground={setBackground} /> */}
-      {musicFile && <MusicPlayer audioSrc={musicFile} />}
-      <div className="title">
-        <Typography
-          onChange={onTitleChange}
-          variant="h4"
-          component="h2"
-          style={{
-            fontFamily: titleFont,
-            fontSize: titleFontSize,
-            color: titleColor,
-          }}
-        >
-          {title}
-        </Typography>
-        <Typography
-          onChange={onSubtitleChange}
-          variant="h4"
-          component="h2"
-          style={{
-            fontFamily: subtitleFont,
-            fontSize: subTitleFontSize,
-            color: subtitleColor,
-          }}
-        >
-          {subtitle}
-        </Typography>
-      </div>
-      <div className="windows">
-        {windows.map((window) => (
-          <Window
-            key={window}
-            day={window}
-            setOpenModal={setOpenModal}
-            setDay={setDay}
-            setOpenPreviewModal={setOpenPreviewModal}
-            musicFX={musicFX}
-          />
-        ))}
-      </div>
-      {openModal && (
-        <div className="modal-create">
-          <Modal
-            day={day}
-            openModal={openModal}
-            setOpenModal={setOpenModal}
-            setDay={setDay}
-            amountOfWindows={windows.length}
-          />
+        {/* <CalendarEditor setBackground={setBackground} /> */}
+        <div className="preview-music">
+          {musicFile && (
+            <>
+              <p className="preview-sound-btn">Music: </p>
+              <MusicPlayer audioSrc={musicFile} type={"music"} />
+            </>
+          )}
         </div>
-      )}
-      {openPreviewModal && (
-        <div className="modal-preview">
-          <PreviewModal
-            day={day}
-            openPreviewModal={openPreviewModal}
-            setOpenPreviewModal={setOpenPreviewModal}
-          />
+        <div className="preview-soundfx">
+          {musicFX && (
+            <>
+              <p className="preview-sound-btn">FX: </p>
+              <MusicPlayer audioSrc={musicFX} type={"soundFx"} />
+            </>
+          )}
         </div>
-      )}
-    </div>
+        <div className="title">
+          <Typography
+            onChange={onTitleChange}
+            variant="h4"
+            component="h2"
+            style={{
+              fontFamily: titleFont,
+              fontSize: titleFontSize,
+              color: titleColor,
+            }}
+          >
+            {title}
+          </Typography>
+          <Typography
+            onChange={onSubtitleChange}
+            variant="h4"
+            component="h2"
+            style={{
+              fontFamily: subtitleFont,
+              fontSize: subTitleFontSize,
+              color: subtitleColor,
+            }}
+          >
+            {subtitle}
+          </Typography>
+        </div>
+        <div className="windows">
+          {windows.map((window) => (
+            <Window
+              key={window}
+              date={window}
+              day={windows.indexOf(window) + 1}
+              setOpenModal={setOpenModal}
+              setDay={setDay}
+              setOpenPreviewModal={setOpenPreviewModal}
+              musicFX={musicFX}
+            />
+          ))}
+        </div>
+        {openModal && (
+          <div className="modal-create">
+            <Modal
+              day={day}
+              openModal={openModal}
+              setOpenModal={setOpenModal}
+              setDay={setDay}
+              amountOfWindows={windows.length}
+            />
+          </div>
+        )}
+        {openPreviewModal && (
+          <div className="modal-preview">
+            <PreviewModal
+              day={day}
+              openPreviewModal={openPreviewModal}
+              setOpenPreviewModal={setOpenPreviewModal}
+            />
+          </div>
+        )}
+      </div>
+      <Button onClick={saveCalendar} variant="contained">
+        SAVE CALENDAR
+      </Button>
     </div>
   );
 };
