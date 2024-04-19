@@ -197,11 +197,17 @@ const Sidebar: React.FC<Props> = ({
             <MenuIcon />
           </IconButton>
           <div className="button-container">
-          <Link to="/" className="home-link">
-  <Button variant="contained" className="custom-button" >Home</Button>
+  <Link to="/preview">
+    <Button className="preview-button" variant="contained" style={{ backgroundColor: '#15728e', color: 'white',  }}>Preview</Button>
   </Link>
-</div>     </Toolbar>
-        
+  <Link to="/">
+    <Button className="home-button" variant="contained" style={{ backgroundColor: '#15728e', color: 'white' }}>Home</Button>
+  </Link>
+</div>
+
+  
+     
+</Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
