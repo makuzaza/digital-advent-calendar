@@ -11,6 +11,7 @@ import Favourites from "./routes/Favourites";
 import Root from "./routes/Root";
 import LandingPage from "./routes/LandingPage";
 import Test from "./routes/Test";
+import MainApp from "./components/Calendar/MainApp";
 
 // redux
 import { store } from "./store/store";
@@ -31,6 +32,7 @@ function App() {
             <Route path="/favourites" element={<Favourites />} />
             <Route path="/panel" element={<Panel />} />
             <Route path="/test" element={<Test />} />
+            <Route path="/preview" element={<MainApp />} />
           </Route>
         </Routes>
       </Router>
