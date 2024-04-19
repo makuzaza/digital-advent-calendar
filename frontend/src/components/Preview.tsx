@@ -52,6 +52,10 @@ interface Json {
     subTitleFontSize: number;
     subtitleColor: string;
   };
+  sounds: {
+    musicName: string;
+    soundFxName: string;
+  };
   // Add more properties as needed
 }
 
@@ -104,6 +108,10 @@ const Preview: React.FC<Props> = ({
         subTitleFontSize: subTitleFontSize,
         subtitleColor: subtitleColor,
       },
+      sounds: {
+        musicName: musicFile,
+        soundFxName: musicFX,
+      },
       // Add more properties as needed...
     };
     console.log(json);
@@ -126,7 +134,22 @@ const Preview: React.FC<Props> = ({
     <div id="preview-container">
       <div className="preview">
         {/* <CalendarEditor setBackground={setBackground} /> */}
-        {musicFile && <MusicPlayer audioSrc={musicFile} />}
+        <div className="preview-music">
+          {musicFile && (
+            <>
+              <p className="preview-sound-btn">Music: </p>
+              <MusicPlayer audioSrc={musicFile} type={"music"} />
+            </>
+          )}
+        </div>
+        <div className="preview-soundfx">
+          {musicFX && (
+            <>
+              <p className="preview-sound-btn">FX: </p>
+              <MusicPlayer audioSrc={musicFX} type={"soundFx"} />
+            </>
+          )}
+        </div>
         <div className="title">
           <Typography
             onChange={onTitleChange}
@@ -187,7 +210,9 @@ const Preview: React.FC<Props> = ({
           </div>
         )}
       </div>
-      <Button onClick={saveCalendar}>SAVE CALENDAR</Button>
+      <Button onClick={saveCalendar} variant="contained">
+        SAVE CALENDAR
+      </Button>
     </div>
   );
 };

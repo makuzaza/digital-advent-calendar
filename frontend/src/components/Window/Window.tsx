@@ -29,7 +29,7 @@ const Window: React.FC<Props> = ({
 
   const handlePreviewClick = (day: number) => {
     // if sound effect is chosen, play when opening the window
-    if (musicFX) new Audio(musicFX).play();
+    // if (musicFX) new Audio(musicFX).play();
     console.log(musicFX);
     setOpenPreviewModal(true);
     setDay(day);
