@@ -37,7 +37,7 @@ type Props = {
   day: number;
   musicFile: string;
   musicFX: string;
-  // setBackGround: (imageUrl: string | null) => void;
+  selectedBackground: string;
 };
 
 interface Json {
@@ -55,6 +55,9 @@ interface Json {
   sounds: {
     musicName: string;
     soundFxName: string;
+  };
+  image: {
+    imageUrl: string;
   };
   // Add more properties as needed
 }
@@ -75,15 +78,11 @@ const Preview: React.FC<Props> = ({
   subtitleColor,
   musicFile,
   musicFX,
-  /* setTitleColor,
-  setSubtitleColor, */
-  // setBackground,
+  selectedBackground,
 }) => {
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  // const [selectedBackground, setSelectedBackground] = useState<string | null>(
-  //   null
-  // );
+
   const token = useAppSelector((state) => state.token.token);
   const uid = useAppSelector((state) => state.uid.uid);
 
@@ -111,6 +110,9 @@ const Preview: React.FC<Props> = ({
       sounds: {
         musicName: musicFile,
         soundFxName: musicFX,
+      },
+      image: {
+        imageUrl: selectedBackground,
       },
       // Add more properties as needed...
     };

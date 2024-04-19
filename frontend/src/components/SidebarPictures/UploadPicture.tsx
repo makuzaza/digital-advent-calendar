@@ -1,19 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import ExistingImageGallery from "./ExistingImageGallery";
 import { useAppSelector } from "../../hooks/useAppDispatch";
 import axios from "axios";
 
 interface UploadPictureProps {
+  setSelectedBackground: (backgroundUrl: string) => void;
+  selectedBackground: string;
   existingImages: string[];
 }
 
-const UploadPicture: React.FC<UploadPictureProps> = ({ existingImages }) => {
+const UploadPicture: React.FC<UploadPictureProps> = ({
+  existingImages,
+  setSelectedBackground,
+  selectedBackground,
+}) => {
   const uid = useAppSelector((state) => state.uid.uid);
   const token = useAppSelector((state) => state.token.token);
-
-  const [selectedBackground, setSelectedBackground] = useState<string | null>(
-    null
-  );
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return;
@@ -64,6 +66,8 @@ const UploadPicture: React.FC<UploadPictureProps> = ({ existingImages }) => {
       <div>
         <h3>Select backgrounds:</h3>
         <ExistingImageGallery
+          setSelectedBackground={setSelectedBackground}
+          selectedBackground={selectedBackground}
           existingImages={existingImages}
           onImageSelect={handleBackgroundSelect}
         />
