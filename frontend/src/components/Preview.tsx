@@ -38,7 +38,13 @@ type Props = {
   musicFile: string;
   musicFX: string;
   selectedBackground: string;
+  uploadedImageName: string;
 };
+
+interface WindowContent {
+  text: string;
+  videoURL: string;
+}
 
 interface Json {
   windows: string[];
@@ -58,7 +64,9 @@ interface Json {
   };
   image: {
     imageUrl: string;
+    uploadedImageName: string;
   };
+  windowContent: WindowContent[];
   // Add more properties as needed
 }
 
@@ -79,9 +87,13 @@ const Preview: React.FC<Props> = ({
   musicFile,
   musicFX,
   selectedBackground,
+  uploadedImageName,
 }) => {
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [windowContent, setWindowContent] = useState<WindowContent[]>(
+    Array(windows.length).fill({ imageUrl: "", videoURL: "", text: "" })
+  );
 
   const token = useAppSelector((state) => state.token.token);
   const uid = useAppSelector((state) => state.uid.uid);
@@ -113,7 +125,9 @@ const Preview: React.FC<Props> = ({
       },
       image: {
         imageUrl: selectedBackground,
+        uploadedImageName: uploadedImageName,
       },
+      windowContent: windowContent,
       // Add more properties as needed...
     };
     console.log(json);
@@ -199,6 +213,8 @@ const Preview: React.FC<Props> = ({
               setOpenModal={setOpenModal}
               setDay={setDay}
               amountOfWindows={windows.length}
+              windowContent={windowContent}
+              setWindowContent={setWindowContent}
             />
           </div>
         )}
