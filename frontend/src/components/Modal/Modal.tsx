@@ -43,8 +43,17 @@ const Modal: React.FC<Props> = ({
       if (savedContent) {
         setWindowContent(JSON.parse(savedContent));
       }
+      else {
+        // Initialize content for each day if not present
+        const newWindowContent = Array.from({ length: amountOfWindows }, (_, index) => ({
+          videoURL: "",
+          text: "",
+          imageURL: "",
+        }));
+        setWindowContent(newWindowContent);
+      }
     }
-  }, [openModal, day, setWindowContent]);
+  }, [openModal, day, setWindowContent, amountOfWindows]);
 
   const handleClick = (direction: string) => {
     if (direction === "previous") {
@@ -86,7 +95,7 @@ const Modal: React.FC<Props> = ({
     reader.readAsDataURL(file);
   };
   
-  const { videoURL, text, imageURL } = windowContent[day - 1];
+  const { videoURL, text, imageURL } = windowContent[day - 1] || { videoURL: "", text: "", imageURL: "" };
 
   return (
     <div className="modal">
