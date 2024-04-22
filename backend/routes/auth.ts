@@ -30,7 +30,7 @@ Router.post("/signup", async (req, res) => {
         },
       });
     })
-    .catch((error) => {
+    .catch((error: Error) => {
       res
         .status(500)
         .json({ message: "Error creating new user", error: error });
@@ -58,7 +58,7 @@ Router.get("/users/:uid", async (req, res) => {
         },
       });
     })
-    .catch((error) => {
+    .catch((error: Error) => {
       console.log("Error fetching user data:", error);
     });
 });
