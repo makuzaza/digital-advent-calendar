@@ -7,12 +7,14 @@ interface UploadPictureProps {
   setSelectedBackground: (backgroundUrl: string) => void;
   selectedBackground: string;
   existingImages: string[];
+  setUploadedImageName: (name: string) => void;
 }
 
 const UploadPicture: React.FC<UploadPictureProps> = ({
   existingImages,
   setSelectedBackground,
   selectedBackground,
+  setUploadedImageName,
 }) => {
   const uid = useAppSelector((state) => state.uid.uid);
   const token = useAppSelector((state) => state.token.token);
@@ -23,6 +25,8 @@ const UploadPicture: React.FC<UploadPictureProps> = ({
     const file = event.target.files?.[0];
 
     setSelectedBackground(URL.createObjectURL(file));
+
+    setUploadedImageName(file.name);
 
     // upload image to database
     const formData = new FormData();

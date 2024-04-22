@@ -12,6 +12,8 @@ type Props = {
   setOpenModal: (openModal: boolean) => void;
   setDay: (day: number) => void;
   amountOfWindows: number;
+  windowContent: WindowContent[];
+  setWindowContent: (windowContent: WindowContent[]) => void;
 };
 
 type ContentVisibility = {
@@ -29,11 +31,10 @@ const Modal: React.FC<Props> = ({
   openModal,
   setOpenModal,
   amountOfWindows,
+  windowContent,
+  setWindowContent,
 }) => {
   const [contentVisible, setContentVisible] = useState<ContentVisibility>({});
-  const [windowContent, setWindowContent] = useState<WindowContent[]>(
-    Array(amountOfWindows).fill({ videoURL: "", text: "" })
-  );
 
   useEffect(() => {
     if (openModal) {
@@ -42,7 +43,7 @@ const Modal: React.FC<Props> = ({
         setWindowContent(JSON.parse(savedContent));
       }
     }
-  }, [openModal, day]);
+  }, [openModal, day, setWindowContent]);
 
   const handleClick = (direction: string) => {
     if (direction === "previous") {
@@ -60,8 +61,6 @@ const Modal: React.FC<Props> = ({
 
   const handleSave = () => {
     localStorage.setItem(`day_${day}_content`, JSON.stringify(windowContent));
-    console.log(`${day}. window's videoURL: ${videoURL}`);
-    console.log(text);
     setOpenModal(false);
   };
 

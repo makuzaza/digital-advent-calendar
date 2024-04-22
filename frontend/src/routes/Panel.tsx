@@ -63,6 +63,7 @@ const Panel: React.FC = () => {
   const [titleColor, setTitleColor] = useState("#000000");
   const [subtitleColor, setSubtitleColor] = useState("#000000");
   const [selectedBackground, setSelectedBackground] = useState<string>("");
+  const [uploadedImageName, setUploadedImageName] = useState("");
 
   return (
     <div className="panel">
@@ -91,6 +92,7 @@ const Panel: React.FC = () => {
         windows={windows}
         setSelectedBackground={setSelectedBackground}
         selectedBackground={selectedBackground}
+        setUploadedImageName={setUploadedImageName}
       />
 
       <Preview
@@ -116,6 +118,7 @@ const Panel: React.FC = () => {
         musicFile={musicFile}
         musicFX={musicFX}
         selectedBackground={selectedBackground}
+        uploadedImageName={uploadedImageName}
       />
     </div>
   );
