@@ -123,6 +123,7 @@ type Props = {
   windows: string[];
   setSelectedBackground: (background: string) => void;
   selectedBackground: string;
+  setUploadedImageName: (uploadedImageName: string) => void;
 };
 
 const Sidebar: React.FC<Props> = ({
@@ -150,6 +151,7 @@ const Sidebar: React.FC<Props> = ({
   windows,
   setSelectedBackground,
   selectedBackground,
+  setUploadedImageName,
 }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -307,6 +309,7 @@ const Sidebar: React.FC<Props> = ({
             <UploadPicture
               setSelectedBackground={setSelectedBackground}
               selectedBackground={selectedBackground}
+              setUploadedImageName={setUploadedImageName}
             />
           )}
           {slideIndex === 3 && (

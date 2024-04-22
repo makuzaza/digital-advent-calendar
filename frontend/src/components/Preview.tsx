@@ -38,6 +38,7 @@ type Props = {
   musicFile: string;
   musicFX: string;
   selectedBackground: string;
+  uploadedImageName: string;
 };
 
 interface Json {
@@ -58,6 +59,7 @@ interface Json {
   };
   image: {
     imageUrl: string;
+    uploadedImageName: string;
   };
   // Add more properties as needed
 }
@@ -79,6 +81,7 @@ const Preview: React.FC<Props> = ({
   musicFile,
   musicFX,
   selectedBackground,
+  uploadedImageName,
 }) => {
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
@@ -113,6 +116,7 @@ const Preview: React.FC<Props> = ({
       },
       image: {
         imageUrl: selectedBackground,
+        uploadedImageName: uploadedImageName,
       },
       // Add more properties as needed...
     };
