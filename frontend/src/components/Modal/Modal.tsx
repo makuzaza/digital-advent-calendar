@@ -115,7 +115,7 @@ const Modal: React.FC<Props> = ({
       </div>
       <h1>{day}</h1>
 
-      <div className="image-input">
+      <div className="image-input" style={{ margin: "20px"}}>
         <label htmlFor="image-upload">Upload Image:</label>
         <input
           id="image-upload"
@@ -123,8 +123,13 @@ const Modal: React.FC<Props> = ({
           accept="image/*"
           onChange={handleImageUpload}
         />
-        <div><p>Your saved image:</p>
-        {imageURL && <img src={imageURL} alt="Uploaded" style={{ maxWidth: "200px", margin: "20px" }} />}
+       <div>
+        {imageURL && (
+        <>
+        <p>Your saved image:</p>
+        <img src={imageURL} alt="Uploaded" style={{ maxWidth: "200px" }} />
+        </>
+        )}
         </div>
       </div>
 

@@ -6,6 +6,7 @@ import "./ExistingImageGallery.css";
 type Props = {
   setSelectedBackground: (backgroundUrl: string) => void;
   selectedBackground: string;
+  onImageSelect: (imageUrl: string) => void;
 };
 
 const CalendarEditor: React.FC<Props> = ({
