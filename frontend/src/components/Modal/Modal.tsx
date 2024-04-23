@@ -20,7 +20,7 @@ type ContentVisibility = {
   [key: string]: boolean;
 };
 
-interface WindowContent {
+export interface WindowContent {
   videoURL: string;
   text: string;
   imageURL: string;
