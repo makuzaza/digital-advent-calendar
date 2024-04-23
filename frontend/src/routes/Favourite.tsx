@@ -5,7 +5,7 @@ const Favourite: React.FC = () => {
       className="favourite"
       style={{ height: '70vh', background: "transparent", textAlign: "center"}}
     >
-      <h1>Here are your favourite calendars</h1>
+      <h1>Here are your saved calendars</h1>
      
     </div>
   );

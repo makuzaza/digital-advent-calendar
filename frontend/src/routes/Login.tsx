@@ -5,6 +5,7 @@ import { setUid } from "../store/uidSlice";
 import { useAppDispatch } from "../hooks/useAppDispatch";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -65,6 +66,12 @@ const Login: React.FC = () => {
       >
         Login
       </Button>
+      <div style={{ marginTop: "10px" }}>
+      Don't have an account?
+        <Link style={{ color: "white", margin: "10px" }} to="/register">
+          Register
+        </Link>
+        </div>
     </div>
   );
 };
