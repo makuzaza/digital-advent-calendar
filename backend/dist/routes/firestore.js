@@ -28,6 +28,15 @@ exports.Router.get("/calendars", async (req, res) => {
                     subTitleFontSize: calendarData.subTitleFontSize,
                     subtitleColor: calendarData.subtitleColor,
                 },
+                image: {
+                    imageUrl: calendarData.imageUrl,
+                    uploadedImageName: calendarData.uploadedImageName,
+                },
+                sounds: {
+                    musicName: calendarData.musicName,
+                    soundFxName: calendarData.soundFxName,
+                },
+                windowsContent: calendarData.windowsContent,
                 // Map other properties from the document as needed
             };
             calendars.push(calendar);
@@ -68,6 +77,15 @@ exports.Router.get("/calendars/:id", async (req, res) => {
                 subTitleFontSize: calendarData.text.subTitleFontSize,
                 subtitleColor: calendarData.text.subtitleColor,
             },
+            image: {
+                imageUrl: calendarData.image.imageUrl,
+                uploadedImageName: calendarData.image.uploadedImageName,
+            },
+            sounds: {
+                musicName: calendarData.sounds.musicName,
+                soundFxName: calendarData.sounds.soundFxName,
+            },
+            windowsContent: calendarData.windowsContent,
             // Map other properties from the document as needed
         };
         res.status(200).json(calendar);
