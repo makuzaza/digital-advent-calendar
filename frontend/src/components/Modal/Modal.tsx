@@ -23,7 +23,7 @@ type ContentVisibility = {
 interface WindowContent {
   videoURL: string;
   text: string;
-  imageURL?: string;
+  imageURL: string;
 }
 
 const Modal: React.FC<Props> = ({
@@ -43,15 +43,14 @@ const Modal: React.FC<Props> = ({
       if (savedContent) {
         setWindowContent(JSON.parse(savedContent));
       }
-      else {
-        // Initialize content for each day if not present
-        const newWindowContent = Array.from({ length: amountOfWindows }, (_, index) => ({
-          videoURL: "",
-          text: "",
-          imageURL: "",
-        }));
-        setWindowContent(newWindowContent);
-      }
+    } else {
+      // Initialize content for each day if not present
+      const newWindowContent = Array.from({ length: amountOfWindows }, () => ({
+        videoURL: "",
+        text: "",
+        imageURL: "",
+      }));
+      setWindowContent(newWindowContent);
     }
   }, [openModal, day, setWindowContent, amountOfWindows]);
 
@@ -81,21 +80,28 @@ const Modal: React.FC<Props> = ({
       [contentID]: !prevState[contentID],
     }));
   };
-  
+
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
-  
+
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.onloadend = () => {
       const newWindowContent = [...windowContent];
-      newWindowContent[day - 1] = { ...newWindowContent[day - 1], imageURL: reader.result as string };
+      newWindowContent[day - 1] = {
+        ...newWindowContent[day - 1],
+        imageURL: reader.result as string,
+      };
       setWindowContent(newWindowContent);
     };
     reader.readAsDataURL(file);
   };
-  
-  const { videoURL, text, imageURL } = windowContent[day - 1] || { videoURL: "", text: "", imageURL: "" };
+
+  const { videoURL, text, imageURL } = windowContent[day - 1] || {
+    videoURL: "",
+    text: "",
+    imageURL: "",
+  };
 
   return (
     <div className="modal">
@@ -115,7 +121,7 @@ const Modal: React.FC<Props> = ({
       </div>
       <h1>{day}</h1>
 
-      <div className="image-input" style={{ margin: "20px"}}>
+      <div className="image-input" style={{ margin: "20px" }}>
         <label htmlFor="image-upload">Upload Image:</label>
         <input
           id="image-upload"
@@ -123,16 +129,19 @@ const Modal: React.FC<Props> = ({
           accept="image/*"
           onChange={handleImageUpload}
         />
-       <div>
-        {imageURL && (
-        <>
-        <p>Your saved image:</p>
-        <img src={imageURL} alt="Uploaded" style={{ maxWidth: "200px" }} />
-        </>
-        )}
+        <div>
+          {imageURL && (
+            <>
+              <p>Your saved image:</p>
+              <img
+                src={imageURL}
+                alt="Uploaded"
+                style={{ maxWidth: "200px" }}
+              />
+            </>
+          )}
         </div>
       </div>
-
 
       <div className="texts">
         <TextField

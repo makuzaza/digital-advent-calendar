@@ -44,6 +44,7 @@ type Props = {
 interface WindowContent {
   text: string;
   videoURL: string;
+  imageURL: string;
 }
 
 interface Json {
@@ -228,8 +229,11 @@ const Preview: React.FC<Props> = ({
           </div>
         )}
       </div>
-      <div><Button variant="contained" color="primary"
-      onClick={saveCalendar}>SAVE CALENDAR</Button></div>
+      <div>
+        <Button variant="contained" color="primary" onClick={saveCalendar}>
+          SAVE CALENDAR
+        </Button>
+      </div>
     </div>
   );
 };
