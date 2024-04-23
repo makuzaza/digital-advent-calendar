@@ -1,5 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getFirestore } from 'firebase/firestore';
+
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_KEY,
@@ -33,5 +35,7 @@ const loginWithEmailAndPassword = async (email: string, password: string) => {
 };
 
 const logout = () => auth.signOut();
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-export { auth, loginWithEmailAndPassword, logout };
+export { auth, loginWithEmailAndPassword, logout, db };

@@ -3,13 +3,13 @@ import { StyledHatch } from "./HatchStyles";
 
 interface HatchProps {
   hatchData: {
-    id: number;
+    id: string;  
     nr: number;
     text: string;
     img: string;
     open: boolean;
   };
-  handleClick: (id: number) => void;
+  handleClick: (id: string) => void;  
 }
 
 const Hatch: React.FC<HatchProps> = ({ hatchData, handleClick }) => (

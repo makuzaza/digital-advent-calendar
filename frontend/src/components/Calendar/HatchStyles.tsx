@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import hatchBackdrop from "./img/hatch_backdrop.jpg";
 
 interface StyledHatchProps {
   background: string;
@@ -27,13 +26,14 @@ export const StyledHatch = styled.div<StyledHatchProps>`
       font-family: "open sans";
       color: #fff;
       padding: 20px;
-      width: 50%;
-      height: 100%;
+      width: 20%;
+      height: 20%;
       background: rgba(0, 0, 0, 0.7);
       font-weight: 700;
       font-size: 2rem;
       transform-origin: left center; 
       transition: transform 0.5s; 
+      border-radius: 50%;
     }
 
     &.open {
@@ -43,7 +43,7 @@ export const StyledHatch = styled.div<StyledHatchProps>`
 
   .back {
     position: absolute;
-    background: center / cover url(${hatchBackdrop});
+    background: center / cover;
     top: 0px;
     left: 0px;
     z-index: 1;
