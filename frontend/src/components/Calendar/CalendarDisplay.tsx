@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import db from './firebaseConfig';
 import { CalendarData } from './types';
-
 
 const CalendarDisplay = () => {
     const [calendarData, setCalendarData] = useState<CalendarData | null>(null);
@@ -31,8 +30,7 @@ const CalendarDisplay = () => {
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
     if (!calendarData) return <div>No Data Found</div>;
-   
-    
+
     return (
         <div>
             <h1 style={{
@@ -72,11 +70,7 @@ const CalendarDisplay = () => {
                 ))}
             </ul>
         </div>
-
     );
 };
 
 export default CalendarDisplay;
-
-
-

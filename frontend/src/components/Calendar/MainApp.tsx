@@ -3,7 +3,6 @@ import { createGlobalStyle } from 'styled-components';
 import db from './firebaseConfig';
 import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
 import Hatch from './Hatch';
-import DocumentFetcher from './DocumentFetcher';
 import CalendarDisplay from './CalendarDisplay';
 
 const GlobalStyle = createGlobalStyle`
@@ -68,8 +67,7 @@ function MainApp() {
       {hatches.map((hatch) => (
         <Hatch key={hatch.id} hatchData={hatch} handleClick={handleFlipHatch} />
       ))}
-      <DocumentFetcher documentId="487Kosq7vsRe6O8ptKoH
-" />
+
 <CalendarDisplay></CalendarDisplay>
       
     </>
