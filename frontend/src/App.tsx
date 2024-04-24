@@ -16,7 +16,6 @@ import MainApp from "./components/Calendar/MainApp";
 // redux
 import { store } from "./store/store";
 import { Provider } from "react-redux";
-import CalendarDisplay from "./components/Calendar/CalendarDisplay";
 
 function App() {
   return (
@@ -38,7 +37,6 @@ function App() {
           </Route>
          
         </Routes>
-        <CalendarDisplay />
       </Router>
     </Provider>
   );

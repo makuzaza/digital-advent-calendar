@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
-import { StyledApp } from './AppStyles';
-import Hatch from './Hatch';
 import db from './firebaseConfig';
 import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
+import Hatch from './Hatch';
 import DocumentFetcher from './DocumentFetcher';
+import CalendarDisplay from './CalendarDisplay';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -15,9 +15,18 @@ const GlobalStyle = createGlobalStyle`
 interface HatchData {
   id: string;
   nr: number;
-  text: string;
   img: string;
   open: boolean;
+  text: {
+    title: string;
+    titleFont: string;
+    titleFontSize: number;
+    titleColor: string;
+    subtitle: string;
+    subtitleFont: string;
+    subTitleFontSize: number;
+    subtitleColor: string;
+  };
 }
 
 function MainApp() {
@@ -25,20 +34,23 @@ function MainApp() {
 
   useEffect(() => {
     const fetchHatches = async () => {
-      const querySnapshot = await getDocs(collection(db, 'hatches'));
-      const fetchedHatches = querySnapshot.docs.map(doc => {
-        const { id, ...data } = doc.data() as HatchData & { id?: string };
-        return {
-          id: doc.id,
-          ...data
-        };
-      });
-      
-      setHatches(fetchedHatches);
+        const querySnapshot = await getDocs(collection(db, 'hatches'));
+        const fetchedHatches: HatchData[] = querySnapshot.docs.map(doc => {
+            const data = doc.data();
+            return {
+                id: doc.id,
+                nr: data.nr, 
+                text: data.text,
+                img: data.img,
+                open: data.open
+            };
+        });
+        setHatches(fetchedHatches);
     };
 
     fetchHatches();
-  }, []);
+}, []);
+
 
   const handleFlipHatch = async (id: string) => {
     const updatedHatches = hatches.map(hatch =>
@@ -53,29 +65,15 @@ function MainApp() {
   return (
     <>
       <GlobalStyle />
-      <StyledApp>
-        {hatches.map((hatch) => (
-          <Hatch
-            key={hatch.id}
-            hatchData={hatch}
-            handleClick={handleFlipHatch}
-          />
-        ))}
-      </StyledApp>
-      <div>
-            <DocumentFetcher documentId="gqrvB59W4yUVmiBGvDJS9mkUqK72" />
-        </div>
+      {hatches.map((hatch) => (
+        <Hatch key={hatch.id} hatchData={hatch} handleClick={handleFlipHatch} />
+      ))}
+      <DocumentFetcher documentId="487Kosq7vsRe6O8ptKoH
+" />
+<CalendarDisplay></CalendarDisplay>
+      
     </>
   );
 }
 
 export default MainApp;
-
-
-// const shuffle = (a: Array<any>) => {
-//   for (let i = a.length - 1; i > 0; i--) {
-//     const j = Math.floor(Math.random() * (i + 1));
-//     [a[i], a[j]] = [a[j], a[i]];
-//   }
-//   return a;
-// };
