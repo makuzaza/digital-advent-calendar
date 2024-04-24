@@ -31,7 +31,12 @@ interface Calendar {
   };
 }
 
-const Calendars = () => {
+type Props = {
+  search: string;
+  setSearch: (search: string) => void;
+};
+
+const Calendars: React.FC<Props> = ({ search, setSearch }) => {
   const [calendars, setCalendars] = useState<Calendar[]>([]);
 
   const getCalendars = async () => {
@@ -50,15 +55,24 @@ const Calendars = () => {
     <div>
       <h1>All the calendars ({calendars.length}) made with this app</h1>
       <div className="calendars">
-        {calendars.map((calendar) => (
-          <div key={calendar.calendarId} className="calendar-card">
-            <h2>{calendar.data.text.title}</h2>
-            <p>{calendar.calendarId}</p>
-            <p>Amount of windows: {calendar.data.windows.length}</p>
-            <Link to={`/calendars/${calendar.calendarId}`}>View</Link>
-            {/* <p>By: 'user name here'</p> */}
-          </div>
-        ))}
+        {calendars
+          .filter((elem) =>
+            elem.data.text.title.toLowerCase().startsWith(search.toLowerCase())
+          )
+          .map((calendar) => (
+            <div key={calendar.calendarId} className="calendar-card">
+              <h2>{calendar.data.text.title}</h2>
+              <p>{calendar.calendarId}</p>
+              <p>Amount of windows: {calendar.data.windows.length}</p>
+              <Link
+                to={`/calendars/${calendar.calendarId}`}
+                onClick={() => setSearch("")}
+              >
+                View
+              </Link>
+              {/* <p>By: 'user name here'</p> */}
+            </div>
+          ))}
       </div>
     </div>
   );

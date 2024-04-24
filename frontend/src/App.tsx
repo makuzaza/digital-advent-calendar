@@ -18,13 +18,22 @@ import CalendarSingle from "./routes/CalendarSingle";
 // redux
 import { store } from "./store/store";
 import { Provider } from "react-redux";
+import { useState } from "react";
 
 function App() {
+  const [search, setSearch] = useState("");
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setSearch(e.target.value);
+
   return (
     <Provider store={store}>
       <Router>
         <Routes>
-          <Route path="" element={<Root />}>
+          <Route
+            path=""
+            element={<Root handleSearch={handleSearch} search={search} />}
+          >
             <Route path="home" element={<Home />} />
             <Route index path="/" element={<LandingPage />} />
             <Route path="login" element={<Home />} />
@@ -35,7 +44,10 @@ function App() {
             <Route path="/panel" element={<Panel />} />
             <Route path="/test" element={<Test />} />
             <Route path="/preview" element={<MainApp />} />
-            <Route path="/calendars" element={<Calendars />} />
+            <Route
+              path="/calendars"
+              element={<Calendars search={search} setSearch={setSearch} />}
+            />
             <Route path="/calendars/:calendarId" element={<CalendarSingle />} />
           </Route>
         </Routes>
