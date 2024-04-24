@@ -12,6 +12,8 @@ import Root from "./routes/Root";
 import LandingPage from "./routes/LandingPage";
 import Test from "./routes/Test";
 import MainApp from "./components/Calendar/MainApp";
+import Calendars from "./routes/Calendars";
+import CalendarSingle from "./routes/CalendarSingle";
 
 // redux
 import { store } from "./store/store";
@@ -33,6 +35,8 @@ function App() {
             <Route path="/panel" element={<Panel />} />
             <Route path="/test" element={<Test />} />
             <Route path="/preview" element={<MainApp />} />
+            <Route path="/calendars" element={<Calendars />} />
+            <Route path="/calendars/:calendarId" element={<CalendarSingle />} />
           </Route>
         </Routes>
       </Router>
