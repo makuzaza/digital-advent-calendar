@@ -1,0 +1,16 @@
+.calendars {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+  gap: 30px;
+  margin: 30px;
+}
+
+.calendar-card {
+  height: 200px;
+  width: 200px;
+  border: 1px solid white;
+  background-color: #f5f5f5;
+  color: #333;
+}

@@ -26,6 +26,9 @@ const Header = () => {
           <Link to="/" className={styles.navLink}>
             <Button color="inherit">Home</Button>
           </Link>
+          <Link to="/calendars" className={styles.navLink}>
+            <Button color="inherit">Browse Calendars</Button>
+          </Link>
           <Link to="/panel" className={styles.navLink}>
             <Button color="inherit">Create Calendar</Button>
           </Link>
