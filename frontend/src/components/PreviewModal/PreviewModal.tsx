@@ -30,13 +30,14 @@ const PreviewModal: React.FC<Props> = ({
   };
 
   return (
-    <div className="modal">
-      <h1>{day}</h1>
+    <div className={`modal ${openPreviewModal ? "open" : ""}`}>
+      <div className="modal-backdrop" onClick={() => setOpenPreviewModal(false)}></div>
+      <div className="modal-content">
+      Window {day}
       <div>
         {imageURL && (
           <>
-            <p>Your saved image:</p>
-            <img src={imageURL} alt="Uploaded" style={{ maxWidth: "200px" }} />
+           <img src={imageURL} alt="Uploaded" style={{ width: "450px" }} />
           </>
         )}
       </div>
@@ -44,7 +45,7 @@ const PreviewModal: React.FC<Props> = ({
         <p>{text}</p>
       </div>
       {videoURL && (
-        <div>
+        <div style={{ width: "450"  }}>
           <EmbedVideo videoURL={videoURL} />
         </div>
       )}
@@ -54,6 +55,7 @@ const PreviewModal: React.FC<Props> = ({
           <CloseIcon />
         </div>
       )}
+    </div>
     </div>
   );
 };

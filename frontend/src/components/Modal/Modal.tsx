@@ -104,8 +104,12 @@ const Modal: React.FC<Props> = ({
   };
 
   return (
-    <div className="modal">
-      <div className="modal-navigation">
+ 
+    <div className={`modal ${openModal ? 'open' : ''}`}>
+    <div className="modal-backdrop" onClick={() => setOpenModal(false)}></div>
+    <div className="modal-content">
+      <div className="modal-navigation"> 
+        <div>Window: {day}</div>
         <div
           className="modal-navigation-item"
           onClick={() => handleClick("previous")}
@@ -119,8 +123,6 @@ const Modal: React.FC<Props> = ({
           Next window
         </div>
       </div>
-      <h1>{day}</h1>
-
       <div className="image-input" style={{ margin: "20px" }}>
         <label htmlFor="image-upload">Upload Image:</label>
         <input
@@ -136,7 +138,7 @@ const Modal: React.FC<Props> = ({
               <img
                 src={imageURL}
                 alt="Uploaded"
-                style={{ maxWidth: "200px" }}
+                style={{ maxHeight: "150px"}}
               />
             </>
           )}
@@ -194,7 +196,9 @@ const Modal: React.FC<Props> = ({
       <Button variant="contained" color="primary" onClick={handleSave}>
         Save
       </Button>
+      </div>
     </div>
+ 
   );
 };
 
