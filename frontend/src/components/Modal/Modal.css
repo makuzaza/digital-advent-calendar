@@ -1,12 +1,34 @@
 .modal {
-  width: 95%;
-  margin: 0 auto;
-  min-height: 60vh;
-  background-color: rgb(215, 225, 229);
-  text-align: left;
-  border-radius: 5px;
-  padding: 20px;
   position: relative;
+  top: 10%;
+  left: 30%;
+  margin: 0;
+  max-width: 600px;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.modal.open {
+  display: flex;
+  
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  width: 600px !important;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 100;
+  overflow-y: auto;
 }
 
 .modal .close-modal {
@@ -74,5 +96,12 @@
 
 .modal input {
   padding: 5px 10px;
+}
+
+@media screen and (max-width: 900px) {
+  .modal {
+    width: 90%;
+    left: 40%;
+  }
 }
 
