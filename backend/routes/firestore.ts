@@ -6,6 +6,7 @@ export const Router = express.Router();
 
 interface Calendar {
   calendarId: string;
+  calendarName: string;
   windows: string[];
   text: {
     title: string;
@@ -29,44 +30,38 @@ interface Calendar {
   // Add more properties as needed
 }
 
-// get all calendars
+// get all calendars in the database
 Router.get("/calendars", async (req, res) => {
-  try {
-    const snapshot = await firestore.collection("all calendars").get();
-    const calendars: Calendar[] = [];
-    snapshot.forEach((doc) => {
-      const calendarData = doc.data();
-      const calendar: Calendar = {
-        calendarId: doc.id,
-        windows: calendarData.windows,
-        text: {
-          title: calendarData.title,
-          titleFont: calendarData.titleFont,
-          titleFontSize: calendarData.titleFontSize,
-          titleColor: calendarData.titleColor,
-          subtitle: calendarData.subtitle,
-          subtitleFont: calendarData.subtitleFont,
-          subTitleFontSize: calendarData.subTitleFontSize,
-          subtitleColor: calendarData.subtitleColor,
-        },
-        image: {
-          imageUrl: calendarData.imageUrl,
-          uploadedImageName: calendarData.uploadedImageName,
-        },
-        sounds: {
-          musicName: calendarData.musicName,
-          soundFxName: calendarData.soundFxName,
-        },
-        windowsContent: calendarData.windowsContent,
+  async function getAllCalendarData() {
+    const allCalendarsRef = firestore.collection("all calendars");
+    const snapshot = await allCalendarsRef.get();
 
-        // Map other properties from the document as needed
-      };
-      calendars.push(calendar);
+    const calendarDataArray: any[] = [];
+    const promises: any[] = [];
+    snapshot.forEach((uidDoc) => {
+      const userCalendarsRef = uidDoc.ref.collection("user calendars");
+      const promise = userCalendarsRef.get().then((calendarSnapshot) => {
+        calendarSnapshot.forEach((calendarDoc) => {
+          const calendarId = calendarDoc.id;
+          const data = calendarDoc.data();
+          calendarDataArray.push({ calendarId, data });
+        });
+      });
+      promises.push(promise);
     });
-    res.status(200).json(calendars);
+
+    await Promise.all(promises); // Wait for all promises to resolve
+
+    return calendarDataArray;
+  }
+
+  try {
+    const data = await getAllCalendarData();
+    console.log(data);
+    res.status(200).json(data);
   } catch (error) {
-    console.error("Error fetching calendars:", error.message);
-    res.status(500).json({ error: "Internal server error" });
+    console.error("Error getting calendar data:", error);
+    res.status(500).send("Error getting calendar data");
   }
 });
 
@@ -89,6 +84,7 @@ Router.get("/calendars/:id", async (req, res) => {
     const calendarData = doc.data();
     const calendar: Calendar = {
       calendarId: doc.id,
+      calendarName: calendarData.title,
       windows: calendarData.windows,
       text: {
         title: calendarData.text.title,
