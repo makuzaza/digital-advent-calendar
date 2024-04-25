@@ -1,3 +1,4 @@
+import { Input } from "@mui/material";
 import "./Search.css";
 
 type SearchProps = {
@@ -8,11 +9,12 @@ type SearchProps = {
 const Search: React.FC<SearchProps> = ({ handleSearch, search }) => {
   return (
     <div className="search">
-      <input
+      <Input
         onChange={handleSearch}
         value={search}
         placeholder="Search a calendar..."
-      ></input>
+        style={{ width: '250px', borderRadius: "5px", padding: "5px", color: "white", backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+      ></Input>
     </div>
   );
 };
