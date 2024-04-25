@@ -12,29 +12,29 @@ localhost:8000
 
 #### CALENDARS
 
-- GET all calendars from the database: `/firestore/calendars` ✅
+- GET all calendars in database: `/firestore/calendars` ✅
 
-- GET all calendars for by UID: `/firestore/calendars/user` ✅
+- GET all calendars by uid: `/firestore/calendars/user` ✅
 
-- GET calendar by id: `/firestore/calendars/:calendarId`✅
+- GET calendar by id: `/firestore/calendars/:calendarId` ✅
 
 - POST (add) calendar: `/firestore/calendars` ✅
 
 This saves to: 'all calendars' / { uid } / 'user calendars' / { calendar id }
 
-- PUT (update) calendar: `/firestore/calendars/:calendarId`
+- DELETE calendar by id: `/firestore/calendars/:calendarId` ✅
 
-- DELETE calendar: `/firestore/calendars/:calendarId`
+- PUT (update) calendar: `/firestore/calendars/:calendarId` - extra feature
 
 ### STORAGE (image/sound files)
 
 #### ALL
 
-- GET list of all files (returns a namelist): `/storage/files/`
+- GET list of all files (returns a namelist): `/storage/files/` ✅
 
 #### IMAGES
 
-- GET image by name: `/storage/images/:imageName`
+- GET image by name: `/storage/images/:imageName` ✅
 
 - POST (add) image: `/storage/images/` ✅
 
@@ -42,7 +42,7 @@ This saves to: 'all calendars' / { uid } / 'user calendars' / { calendar id }
 
 #### SOUNDS - MUSIC
 
-- GET music by name: `/storage/sounds/music/:musicName`
+- GET music by name: `/storage/sounds/music/:musicName` ✅
 
 - POST (add) music: `/storage/sounds/music` ✅
 
@@ -50,7 +50,7 @@ This saves to: 'all calendars' / { uid } / 'user calendars' / { calendar id }
 
 #### SOUNDS - SOUND-FX
 
-- GET soundFx by name: `/storage/sounds/soundFx/:soundFxName`
+- GET soundFx by name: `/storage/sounds/soundFx/:soundFxName` ✅
 
 - POST (add) soundFx: `/storage/sounds/soundFx` ✅
 
@@ -64,4 +64,4 @@ This saves to: 'all calendars' / { uid } / 'user calendars' / { calendar id }
   - email
   - password
 
-- GET user data: `/auth/users/:uid`
+- GET user data: `/auth/users/:uid` ✅

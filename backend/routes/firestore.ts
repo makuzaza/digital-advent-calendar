@@ -182,26 +182,22 @@ Router.post("/calendars", verifyToken, async (req, res) => {
 });
 
 // update a calendar
-Router.put("/calendars/:id", async (req, res) => {
-  const id = req.params.id;
-  const updatedCalendar: Calendar = req.body;
-  try {
-    await firestore
-      .collection("calendars")
-      .doc(id)
-      .set(updatedCalendar, { merge: true });
-    res.status(200).json({ message: "Calendar updated successfully" });
-  } catch (error) {
-    console.error("Error updating calendar:", error.message);
-    res.status(500).json({ error: "Internal server error" });
-  }
+Router.put("/calendars/:id", verifyToken, async (req, res) => {
+  res.status(200).json({ error: "Server missing logic for this endpoint" });
 });
 
 // delete a calendar
-Router.delete("/calendars/:id", async (req, res) => {
+Router.delete("/calendars/:id", verifyToken, async (req, res) => {
   const id = req.params.id;
+  const uid = req.query.uid as string;
+
   try {
-    await firestore.collection("calendars").doc(id).delete();
+    await firestore
+      .collection("all calendars")
+      .doc(uid)
+      .collection("user calendars")
+      .doc(id)
+      .delete();
     res.status(200).json({ message: "Calendar deleted successfully" });
   } catch (error) {
     console.error("Error deleting calendar:", error.message);
