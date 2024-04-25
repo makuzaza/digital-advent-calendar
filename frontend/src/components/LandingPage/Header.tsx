@@ -5,14 +5,8 @@ import Logout from "./Logout";
 // import { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../auth/firebase";
-import Search from "../Search";
 
-type Props = {
-  handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  search: string;
-};
-
-const Header: React.FC<Props> = ({ handleSearch, search }) => {
+const Header: React.FC = () => {
   const { pathname } = useLocation();
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user] = useAuthState(auth);
@@ -41,11 +35,6 @@ const Header: React.FC<Props> = ({ handleSearch, search }) => {
           <Link to="/favourites" className={styles.navLink}>
             <Button color="inherit">Favourites</Button>
           </Link>
-          <div >
-            {pathname === "/calendars" && (
-              <Search onchange={handleSearch} search={search} />
-            )}
-          </div>
         </div>
         <div className={styles.rightAlign}>
           {user ? (

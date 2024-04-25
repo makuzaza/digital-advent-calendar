@@ -41,7 +41,10 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="*" element={<NotFound />} />
             <Route path="error" element={<ErrorPage />} />
-            <Route path="/favourites" element={<Favourites />} />
+            <Route
+              path="/favourites"
+              element={<Favourites search={search} setSearch={setSearch} />}
+            />
             <Route path="/panel" element={<Panel />} />
             <Route path="/test" element={<Test />} />
             <Route path="/preview" element={<MainApp />} />

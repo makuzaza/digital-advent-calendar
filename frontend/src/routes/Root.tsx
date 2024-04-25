@@ -1,6 +1,7 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Header from "../components/LandingPage/Header";
 import Footer from "../components/LandingPage/Footer/Footer";
+import Search from "../components/Search";
 
 type RootProps = {
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -8,9 +9,14 @@ type RootProps = {
 };
 
 const Root: React.FC<RootProps> = ({ handleSearch, search }) => {
+  const { pathname } = useLocation();
+
   return (
     <div>
-      <Header handleSearch={handleSearch} search={search} />
+      <Header />
+      {(pathname === "/calendars" || pathname === "/favourites") && (
+        <Search handleSearch={handleSearch} search={search} />
+      )}
       <Outlet />
       <Footer />
     </div>
