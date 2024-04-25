@@ -12,7 +12,7 @@ import Root from "./routes/Root";
 import LandingPage from "./routes/LandingPage";
 import Test from "./routes/Test";
 import MainApp from "./components/Calendar/MainApp";
-import Calendars from "./routes/Calendars";
+// import Calendars from "./routes/Calendars";
 import CalendarSingle from "./routes/CalendarSingle";
 import CalendarsPage from "./routes/CalendarsPage";
 
@@ -31,27 +31,28 @@ function App() {
     <Provider store={store}>
       <Router>
         <Routes>
-          <Route
-            path=""
-            element={<Root/>}
-          >
+          <Route path="" element={<Root />}>
             <Route path="home" element={<Home />} />
-            <Route index path="/" element={<LandingPage />} />
+            <Route
+              index
+              path="/"
+              element={
+                <LandingPage
+                  search={search}
+                  handleSearch={handleSearch}
+                  setSearch={setSearch}
+                />
+              }
+            />
             <Route path="login" element={<Home />} />
             <Route path="register" element={<Register />} />
             <Route path="*" element={<NotFound />} />
             <Route path="error" element={<ErrorPage />} />
-            <Route
-              path="/favourites"
-              element={<Favourites />}
-            />
+            <Route path="/favourites" element={<Favourites />} />
             <Route path="/panel" element={<Panel />} />
             <Route path="/test" element={<Test />} />
             <Route path="/preview" element={<MainApp />} />
-            <Route
-              path="/calendars"
-              element={<CalendarsPage />}
-            />
+            <Route path="/calendars" element={<CalendarsPage />} />
             <Route path="/calendars/:calendarId" element={<CalendarSingle />} />
           </Route>
         </Routes>

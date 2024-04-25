@@ -34,12 +34,12 @@ interface Calendar {
 }
 
 type Props = {
-  handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
+  handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
   setSearch: (search: string) => void;
 };
 
-const Favourite: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
+const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
   const [calendars, setCalendars] = useState<Calendar[]>([]);
   const { pathname } = useLocation();
 
@@ -47,6 +47,7 @@ const Favourite: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
   const uid = useAppSelector((state) => state.uid.uid);
 
   const getUserCalendars = useCallback(async () => {
+    if (!uid) return;
     console.log(`user: ${uid} calendars`);
     axios
       .get("http://localhost:8000/firestore/calendars/user", {
@@ -68,12 +69,12 @@ const Favourite: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
   useEffect(() => {
     console.log(calendars);
   }, [calendars]);
-  
+
   return (
     <div
-      style={{ height: '70vh', background: "transparent", textAlign: "center"}}
+      style={{ height: "70vh", background: "transparent", textAlign: "center" }}
     >
-        {(pathname === "/calendars" || pathname === "/favourites") && (
+      {(pathname === "/calendars" || pathname === "/favourites") && (
         <Search handleSearch={handleSearch} search={search} />
       )}
       <h1>Here are your saved calendars</h1>
