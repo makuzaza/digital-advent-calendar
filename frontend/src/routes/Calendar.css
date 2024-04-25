@@ -1,7 +1,41 @@
+.calendars {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
 .calendar-card {
-  height: 200px;
-  width: 200px;
-  border: 1px solid white;
   background-color: #f5f5f5;
+  border-radius: 4px;
+  border: 1px solid #0e627a;
+  background-color: #ffffff;
   color: #333;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.calendar-card h2 {
+  text-transform: capitalize;
+}
+
+.calendar-card p {
+  font-size: 18px;
+}
+.calendar-card span {
+  margin-bottom: 80px;
+}
+.calender-view {
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  background-color: #0e627a;
+  position: absolute;
+  bottom: 0;
+  padding: 10px 0;
+  color: #ffffff;
 }
