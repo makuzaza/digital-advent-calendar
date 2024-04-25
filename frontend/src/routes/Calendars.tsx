@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import "./Calendar.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import Search from "../components/Search";
 
 interface Calendar {
   calendarId: string;
@@ -32,12 +34,14 @@ interface Calendar {
 }
 
 type Props = {
+  handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
   search: string;
   setSearch: (search: string) => void;
 };
 
-const Calendars: React.FC<Props> = ({ search, setSearch }) => {
+const Calendars: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
   const [calendars, setCalendars] = useState<Calendar[]>([]);
+  const { pathname } = useLocation();
 
   const getCalendars = async () => {
     axios.get("http://localhost:8000/firestore/calendars").then((response) => {
@@ -53,6 +57,9 @@ const Calendars: React.FC<Props> = ({ search, setSearch }) => {
 
   return (
     <div style={{ height: '70vh', background: "transparent", textAlign: "center"}}>
+        {(pathname === "/calendars" || pathname === "/favourites") && (
+        <Search handleSearch={handleSearch} search={search} />
+      )}
       <h1>All the calendars ({calendars.length}) made with this app</h1>
       <div>
         {calendars

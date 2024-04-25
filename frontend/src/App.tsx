@@ -33,7 +33,7 @@ function App() {
         <Routes>
           <Route
             path=""
-            element={<Root handleSearch={handleSearch} search={search} />}
+            element={<Root/>}
           >
             <Route path="home" element={<Home />} />
             <Route index path="/" element={<LandingPage />} />
@@ -43,7 +43,7 @@ function App() {
             <Route path="error" element={<ErrorPage />} />
             <Route
               path="/favourites"
-              element={<Favourites search={search} setSearch={setSearch} />}
+              element={<Favourites />}
             />
             <Route path="/panel" element={<Panel />} />
             <Route path="/test" element={<Test />} />
