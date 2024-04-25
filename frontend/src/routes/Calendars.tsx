@@ -17,7 +17,7 @@ interface Calendar {
       titleColor: string;
       subtitle: string;
       subtitleFont: string;
-      subTitleFontSize: number;
+      subtitleFontSize: number;
       subtitleColor: string;
     };
     sounds: {
@@ -45,8 +45,6 @@ const Calendars: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
 
   const getCalendars = async () => {
     axios.get("http://localhost:8000/firestore/calendars").then((response) => {
-      console.log("firestore/calendars");
-      console.log(response.data);
       setCalendars(response.data);
     });
   };
@@ -56,7 +54,7 @@ const Calendars: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
   }, []);
 
   return (
-    <div style={{ height: "", background: "transparent", textAlign: "center" }}>
+    <div style={{ background: "transparent", textAlign: "center" }}>
       {(pathname === "/calendars" || pathname === "/favourites") && (
         <Search handleSearch={handleSearch} search={search} />
       )}
@@ -68,11 +66,12 @@ const Calendars: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
           )
           .map((calendar) => (
             <Calendar_Card
+              key={calendar.calendarId} // Added key prop
               title={calendar.data.text.title}
               calendarId={calendar.calendarId}
               windowsNumber={calendar.data.windows.length}
               link={calendar.calendarId}
-              onClick={setSearch("")}
+              onClick={() => setSearch("")} // Pass setSearch as a function
             />
           ))}
       </div>
