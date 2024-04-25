@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
 import "./Calendar.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Search from "../components/Search";
+import Calendar_Card from "../components/Calendar_Card";
 
 interface Calendar {
   calendarId: string;
@@ -67,19 +67,13 @@ const Calendars: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
             elem.data.text.title.toLowerCase().includes(search.toLowerCase())
           )
           .map((calendar) => (
-            <div key={calendar.calendarId} className="calendar-card">
-              <h2>{calendar.data.text.title}</h2>
-              <p>{calendar.calendarId}</p>
-              <span>Amount of windows: {calendar.data.windows.length}</span>
-              <Link
-                to={`/calendars/${calendar.calendarId}`}
-                onClick={() => setSearch("")}
-                className="calender-view "
-              >
-                View
-              </Link>
-              {/* <p>By: 'user name here'</p> */}
-            </div>
+            <Calendar_Card
+              title={calendar.data.text.title}
+              calendarId={calendar.calendarId}
+              windowsNumber={calendar.data.windows.length}
+              link={calendar.calendarId}
+              onClick={setSearch("")}
+            />
           ))}
       </div>
     </div>
