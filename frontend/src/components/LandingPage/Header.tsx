@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Button } from "@mui/material";
+import { AppBar, Toolbar, Button, Input } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 import styles from "./headerStyles.module.css";
 import Logout from "./Logout";
