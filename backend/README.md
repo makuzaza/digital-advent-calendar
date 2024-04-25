@@ -12,9 +12,11 @@ localhost:8000
 
 #### CALENDARS
 
-- GET all calendars: `/firestore/calendars`
+- GET all calendars from the database: `/firestore/calendars` ✅
 
-- GET calendar by id: `/firestore/calendars/:calendarId`
+- GET all calendars for by UID: `/firestore/calendars/user` ✅
+
+- GET calendar by id: `/firestore/calendars/:calendarId`✅
 
 - POST (add) calendar: `/firestore/calendars` ✅
 

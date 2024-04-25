@@ -65,6 +65,37 @@ Router.get("/calendars", async (req, res) => {
   }
 });
 
+// get all calendars for a specific user
+Router.get("/calendars/user", async (req, res) => {
+  const uid = req.query.uid as string;
+  console.log("uid:", uid);
+
+  async function getUserCalendarData() {
+    const userCalendarsRef = firestore
+      .collection("all calendars")
+      .doc(uid)
+      .collection("user calendars");
+    const snapshot = await userCalendarsRef.get();
+
+    const calendarDataArray: any[] = [];
+    snapshot.forEach((doc) => {
+      const calendarId = doc.id;
+      const data = doc.data();
+      calendarDataArray.push({ calendarId, data });
+    });
+
+    return calendarDataArray;
+  }
+
+  try {
+    const data = await getUserCalendarData();
+    res.status(200).json(data);
+  } catch (error) {
+    console.error("Error getting user calendar data:", error);
+    res.status(500).send("Error getting user calendar data");
+  }
+});
+
 // get a calendar
 Router.get("/calendars/:id", async (req, res) => {
   const calendarId = req.params.id;
