@@ -14,6 +14,7 @@ import Test from "./routes/Test";
 import MainApp from "./components/Calendar/MainApp";
 import Calendars from "./routes/Calendars";
 import CalendarSingle from "./routes/CalendarSingle";
+import CalendarsPage from "./routes/CalendarsPage";
 
 // redux
 import { store } from "./store/store";
@@ -46,7 +47,7 @@ function App() {
             <Route path="/preview" element={<MainApp />} />
             <Route
               path="/calendars"
-              element={<Calendars search={search} setSearch={setSearch} />}
+              element={<CalendarsPage />}
             />
             <Route path="/calendars/:calendarId" element={<CalendarSingle />} />
           </Route>

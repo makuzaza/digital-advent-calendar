@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Button } from "@mui/material";
+import { AppBar, Toolbar, Button, Input } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 import styles from "./headerStyles.module.css";
 import Logout from "./Logout";
@@ -41,7 +41,7 @@ const Header: React.FC<Props> = ({ handleSearch, search }) => {
           <Link to="/favourites" className={styles.navLink}>
             <Button color="inherit">Favourites</Button>
           </Link>
-          <div>
+          <div >
             {pathname === "/calendars" && (
               <Search onchange={handleSearch} search={search} />
             )}

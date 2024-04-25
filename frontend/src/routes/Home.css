@@ -43,6 +43,6 @@ body {
     background-position: center;
 }
 
-.favourites, .main, .register {
+.favourites, .main, .register, .calendars{
     min-height: 83vh;
 }

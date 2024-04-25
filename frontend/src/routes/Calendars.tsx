@@ -52,9 +52,9 @@ const Calendars: React.FC<Props> = ({ search, setSearch }) => {
   }, []);
 
   return (
-    <div>
+    <div style={{ height: '70vh', background: "transparent", textAlign: "center"}}>
       <h1>All the calendars ({calendars.length}) made with this app</h1>
-      <div className="calendars">
+      <div>
         {calendars
           .filter((elem) =>
             elem.data.text.title.toLowerCase().startsWith(search.toLowerCase())
