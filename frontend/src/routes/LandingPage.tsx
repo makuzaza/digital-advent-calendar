@@ -12,7 +12,7 @@ type Props = {
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-function LandingPage( { search, setSearch, handleSearch }: Props) {
+const LandingPage: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
   const [user] = useAuthState(auth);
 
   // useEffect(() => {
@@ -25,14 +25,20 @@ function LandingPage( { search, setSearch, handleSearch }: Props) {
     <div>
       <ParallaxProvider>
         <BannerTop />
-        <div style={{ marginBottom: '300px'}}>{!user && <Login />}</div>
+        <div style={{ marginBottom: "300px" }}>{!user && <Login />}</div>
         {/* <div className="center full">
             <h1 className="headline gray"></h1>
           </div>  */}
-        {user && <Favourite search={search} setSearch={setSearch} handleSearch={handleSearch} />}
+        {user && (
+          <Favourite
+            search={search}
+            handleSearch={handleSearch}
+            setSearch={setSearch}
+          />
+        )}
       </ParallaxProvider>
     </div>
   );
-}
+};
 
 export default LandingPage;
