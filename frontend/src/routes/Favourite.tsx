@@ -81,7 +81,7 @@ const Favourite: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
       <div>
         {calendars
           .filter((elem) =>
-            elem.data.text.title.toLowerCase().startsWith(search.toLowerCase())
+            elem.data.text.title.toLowerCase().includes(search.toLowerCase())
           )
           .map((calendar) => (
             <div key={calendar.calendarId} className="calendar-card">

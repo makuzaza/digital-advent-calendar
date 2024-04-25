@@ -6,7 +6,13 @@ import { auth } from "../auth/firebase";
 // import { useEffect } from 'react';
 import Favourite from "./Favourite";
 
-function LandingPage() {
+type Props = {
+  search: string;
+  setSearch: (search: string) => void;
+  handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+function LandingPage( { search, setSearch, handleSearch }: Props) {
   const [user] = useAuthState(auth);
 
   // useEffect(() => {
@@ -23,7 +29,7 @@ function LandingPage() {
         {/* <div className="center full">
             <h1 className="headline gray"></h1>
           </div>  */}
-        {user && <Favourite />}
+        {user && <Favourite search={search} setSearch={setSearch} handleSearch={handleSearch} />}
       </ParallaxProvider>
     </div>
   );
