@@ -52,9 +52,12 @@ function App() {
             <Route path="/panel" element={<Panel />} />
             <Route path="/test" element={<Test />} />
             <Route path="/preview" element={<MainApp />} />
+
             <Route path="/calendars" element={<CalendarsPage />} />
             <Route path="/calendars/:calendarId" element={<CalendarSingle />} />
+
           </Route>
+         
         </Routes>
       </Router>
     </Provider>

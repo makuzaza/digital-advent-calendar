@@ -1,58 +1,75 @@
-import { useState, useEffect } from "react";
-import { createGlobalStyle } from "styled-components";
-import { StyledApp } from "./AppStyles";
-import { createCalendar } from "./helpers";
-import Hatch from "./Hatch";
+import { useEffect, useState } from 'react';
+import { createGlobalStyle } from 'styled-components';
+import db from './firebaseConfig';
+import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
+import Hatch from './Hatch';
+import CalendarDisplay from './CalendarDisplay';
 
 const GlobalStyle = createGlobalStyle`
   body {
     background: center / cover url("./img/calendar_backdrop.jpg");
     margin: 0;
-  }
-`;
+  }`;
 
 interface HatchData {
-  id: number;
+  id: string;
   nr: number;
-  text: string;
   img: string;
   open: boolean;
+  text: {
+    title: string;
+    titleFont: string;
+    titleFontSize: number;
+    titleColor: string;
+    subtitle: string;
+    subtitleFont: string;
+    subTitleFontSize: number;
+    subtitleColor: string;
+  };
 }
 
 function MainApp() {
   const [hatches, setHatches] = useState<HatchData[]>([]);
 
   useEffect(() => {
-    const calendar = localStorage.calendar
-      ? JSON.parse(localStorage.calendar)
-      : createCalendar();
+    const fetchHatches = async () => {
+        const querySnapshot = await getDocs(collection(db, 'hatches'));
+        const fetchedHatches: HatchData[] = querySnapshot.docs.map(doc => {
+            const data = doc.data();
+            return {
+                id: doc.id,
+                nr: data.nr, 
+                text: data.text,
+                img: data.img,
+                open: data.open
+            };
+        });
+        setHatches(fetchedHatches);
+    };
 
-    setHatches(calendar);
-  }, []);
+    fetchHatches();
+}, []);
 
-  useEffect(() => {
-    hatches.length && localStorage.setItem("calendar", JSON.stringify(hatches));
-  }, [hatches]);
 
-  const handleFlipHatch = (id: number) => {
-    const updatedHatches = hatches.map((hatch) =>
+  const handleFlipHatch = async (id: string) => {
+    const updatedHatches = hatches.map(hatch =>
       hatch.id === id ? { ...hatch, open: !hatch.open } : hatch
     );
     setHatches(updatedHatches);
+
+    const hatchRef = doc(db, 'hatches', id);
+    await updateDoc(hatchRef, { open: !hatches.find(hatch => hatch.id === id)?.open });
   };
 
   return (
     <>
       <GlobalStyle />
-      <StyledApp>
-        {hatches.map((hatch) => (
-          <Hatch
-            key={hatch.id}
-            hatchData={hatch}
-            handleClick={handleFlipHatch}
-          />
-        ))}
-      </StyledApp>
+      {hatches.map((hatch) => (
+        <Hatch key={hatch.id} hatchData={hatch} handleClick={handleFlipHatch} />
+      ))}
+
+<CalendarDisplay></CalendarDisplay>
+      
     </>
   );
 }

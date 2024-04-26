@@ -3,13 +3,22 @@ import { StyledHatch } from "./HatchStyles";
 
 interface HatchProps {
   hatchData: {
-    id: number;
+    id: string;
     nr: number;
-    text: string;
+    text: {  
+        title: string;
+        titleFont: string;
+        titleFontSize: number;
+        titleColor: string;
+        subtitle: string;
+        subtitleFont: string;
+        subTitleFontSize: number;
+        subtitleColor: string;
+    };
     img: string;
     open: boolean;
-  };
-  handleClick: (id: number) => void;
+};
+  handleClick: (id: string) => void;  
 }
 
 const Hatch: React.FC<HatchProps> = ({ hatchData, handleClick }) => (
@@ -18,7 +27,6 @@ const Hatch: React.FC<HatchProps> = ({ hatchData, handleClick }) => (
       <p>{hatchData.nr}</p>
     </div>
     <div className={hatchData.open ? "back open" : "back"}>
-      <p>{hatchData.text}</p>
     </div>
   </StyledHatch>
 );
