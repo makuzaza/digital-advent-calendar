@@ -6,6 +6,7 @@ export const Router = express.Router();
 
 interface Calendar {
   calendarId: string;
+  ownerUid: string;
   calendarName: string;
   windows: string[];
   text: {
@@ -115,6 +116,7 @@ Router.get("/calendars/:id", async (req, res) => {
     const calendarData = doc.data();
     const calendar: Calendar = {
       calendarId: doc.id,
+      ownerUid: uid,
       calendarName: calendarData.title,
       windows: calendarData.windows,
       text: {

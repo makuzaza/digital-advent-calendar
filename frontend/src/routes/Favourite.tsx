@@ -9,6 +9,7 @@ interface Calendar {
   calendarId: string;
   calendarName: string;
   data: {
+    ownerUid: string;
     windows: string[];
     text: {
       title: string;
