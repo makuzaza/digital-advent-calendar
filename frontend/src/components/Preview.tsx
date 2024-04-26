@@ -48,6 +48,7 @@ interface WindowContent {
 }
 
 interface Json {
+  ownerUid: string;
   windows: string[];
   text: {
     title: string;
@@ -110,6 +111,7 @@ const Preview: React.FC<Props> = ({
   const saveCalendar = async () => {
     const json: Json = {
       windows: windows,
+      ownerUid: uid,
       text: {
         title: title,
         titleFont: titleFont,
@@ -225,7 +227,6 @@ const Preview: React.FC<Props> = ({
               day={day}
               openPreviewModal={openPreviewModal}
               setOpenPreviewModal={setOpenPreviewModal}
-             
             />
           </div>
         )}
