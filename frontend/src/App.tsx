@@ -12,19 +12,38 @@ import Root from "./routes/Root";
 import LandingPage from "./routes/LandingPage";
 import Test from "./routes/Test";
 import MainApp from "./components/Calendar/MainApp";
+// import Calendars from "./routes/Calendars";
+import CalendarSingle from "./routes/CalendarSingle";
+import CalendarsPage from "./routes/CalendarsPage";
 
 // redux
 import { store } from "./store/store";
 import { Provider } from "react-redux";
+import { useState } from "react";
 
 function App() {
+  const [search, setSearch] = useState("");
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setSearch(e.target.value);
+
   return (
     <Provider store={store}>
       <Router>
         <Routes>
           <Route path="" element={<Root />}>
             <Route path="home" element={<Home />} />
-            <Route index path="/" element={<LandingPage />} />
+            <Route
+              index
+              path="/"
+              element={
+                <LandingPage
+                  search={search}
+                  handleSearch={handleSearch}
+                  setSearch={setSearch}
+                />
+              }
+            />
             <Route path="login" element={<Home />} />
             <Route path="register" element={<Register />} />
             <Route path="*" element={<NotFound />} />
@@ -33,7 +52,10 @@ function App() {
             <Route path="/panel" element={<Panel />} />
             <Route path="/test" element={<Test />} />
             <Route path="/preview" element={<MainApp />} />
-            
+
+            <Route path="/calendars" element={<CalendarsPage />} />
+            <Route path="/calendars/:calendarId" element={<CalendarSingle />} />
+
           </Route>
          
         </Routes>

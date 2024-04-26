@@ -46,11 +46,46 @@ const Test: React.FC = () => {
       });
   };
 
+  const getUserData = async () => {
+    axios
+      .get(`http://localhost:8000/auth/users/${uid}`, {
+        params: {
+          uid: uid,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error("Could not get user data", error);
+      });
+  };
+
+  const deleteCalendar = () => {
+    const calendarId = "KQKCbe1ZtnnuqMPyywSw";
+
+    axios
+      .delete(`http://localhost:8000/firestore/calendars/${calendarId}`, {
+        params: {
+          token: token,
+          uid: uid,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error("Error sending token to backend:", error);
+      });
+  };
+
   return (
     <div>
       <Login />
       <button onClick={() => handleGetData("/storage/files")}>GET DATA</button>
       <button onClick={getCalendar}>GET CALENDAR</button>
+      <button onClick={getUserData}>GET USER DATA</button>
+      <button onClick={deleteCalendar}>Delete calendar</button>
       <Logout />
     </div>
   );

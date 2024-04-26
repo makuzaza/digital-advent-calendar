@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
-import axios from "axios";
-import { useAppSelector } from "../hooks/useAppDispatch";
 import { Link } from "react-router-dom";
-import Search from "../components/Search";
+import "./Calendar.css";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import Search from "../components/Search";
 
 interface Calendar {
   calendarId: string;
@@ -34,52 +34,34 @@ interface Calendar {
 }
 
 type Props = {
-  search: string;
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  search: string;
   setSearch: (search: string) => void;
 };
 
-const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
+const Calendars: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
   const [calendars, setCalendars] = useState<Calendar[]>([]);
   const { pathname } = useLocation();
 
-  // const token = useAppSelector((state) => state.token.token);
-  const uid = useAppSelector((state) => state.uid.uid);
-
-  const getUserCalendars = useCallback(async () => {
-    if (!uid) return;
-    console.log(`user: ${uid} calendars`);
-    axios
-      .get("http://localhost:8000/firestore/calendars/user", {
-        params: {
-          // token: token,
-          uid: uid,
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-        setCalendars(response.data);
-      });
-  }, [uid]);
+  const getCalendars = async () => {
+    axios.get("http://localhost:8000/firestore/calendars").then((response) => {
+      console.log("firestore/calendars");
+      console.log(response.data);
+      setCalendars(response.data);
+    });
+  };
 
   useEffect(() => {
-    getUserCalendars();
-  }, [getUserCalendars]);
-
-  useEffect(() => {
-    console.log(calendars);
-  }, [calendars]);
+    getCalendars();
+  }, []);
 
   return (
-    <div
-      style={{ height: "70vh", background: "transparent", textAlign: "center" }}
-    >
+    <div style={{ height: "", background: "transparent", textAlign: "center" }}>
       {(pathname === "/calendars" || pathname === "/favourites") && (
         <Search handleSearch={handleSearch} search={search} />
       )}
-      <h1>Here are your saved calendars</h1>
-      <p>User ID: {uid}</p>
-      <div>
+      <h1>All the calendars ({calendars.length}) made with this app</h1>
+      <div className="calendars">
         {calendars
           .filter((elem) =>
             elem.data.text.title.toLowerCase().includes(search.toLowerCase())
@@ -87,13 +69,16 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
           .map((calendar) => (
             <div key={calendar.calendarId} className="calendar-card">
               <h2>{calendar.data.text.title}</h2>
-              <p>Calendar ID: {calendar.calendarId}</p>
+              <p>{calendar.calendarId}</p>
+              <span>Amount of windows: {calendar.data.windows.length}</span>
               <Link
                 to={`/calendars/${calendar.calendarId}`}
                 onClick={() => setSearch("")}
+                className="calender-view "
               >
                 View
               </Link>
+              {/* <p>By: 'user name here'</p> */}
             </div>
           ))}
       </div>
@@ -101,4 +86,4 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
   );
 };
 
-export default Favourite;
+export default Calendars;

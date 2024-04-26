@@ -10,7 +10,7 @@ const upload = multer({ dest: "uploads/" }); // Define multer storage destinatio
 // ALL FILES
 
 // Endpoint to get list of all the files in storage
-Router.get("/files", verifyToken, async (req, res) => {
+Router.get("/files", async (req, res) => {
   try {
     // Access all files in the bucket
     const [files] = await bucket.getFiles();
@@ -84,7 +84,7 @@ Router.post(
 );
 
 // Endpoint to delete image
-Router.delete("/images/:imageName", async (req, res) => {
+Router.delete("/images/:imageName", verifyToken, async (req, res) => {
   try {
     const imageName = req.params.imageName;
 
@@ -176,7 +176,7 @@ Router.post(
 );
 
 // Endpoint to delete music
-Router.delete("/sounds/music/:musicName", async (req, res) => {
+Router.delete("/sounds/music/:musicName", verifyToken, async (req, res) => {
   try {
     const musicName = req.params.musicName;
 
@@ -268,7 +268,7 @@ Router.post(
 );
 
 // Endpoint to delete sound effect
-Router.delete("/sounds/soundFx/:soundFxName", async (req, res) => {
+Router.delete("/sounds/soundFx/:soundFxName", verifyToken, async (req, res) => {
   try {
     const soundFxName = req.params.soundFxName;
 

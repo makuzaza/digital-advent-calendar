@@ -6,6 +6,7 @@ import "./ExistingImageGallery.css";
 type Props = {
   setSelectedBackground: (backgroundUrl: string) => void;
   selectedBackground: string;
+  onImageSelect: (imageUrl: string) => void;
 };
 
 const CalendarEditor: React.FC<Props> = ({
@@ -38,6 +39,7 @@ const CalendarEditor: React.FC<Props> = ({
 
   const handleImageClick = (imageUrl: string) => {
     setSelectedBackground(imageUrl);
+    console.log('Selected background:', imageUrl);
   };
 
   useEffect(() => {
