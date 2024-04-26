@@ -30,12 +30,16 @@ const Header: React.FC = () => {
           <Link to="/calendars" className={styles.navLink}>
             <Button color="inherit">Browse Calendars</Button>
           </Link>
-          <Link to="/panel" className={styles.navLink}>
-            <Button color="inherit">Create Calendar</Button>
-          </Link>
-          <Link to="/favourites" className={styles.navLink}>
-            <Button color="inherit">Favourites</Button>
-          </Link>
+          {token && (
+            <>
+              <Link to="/panel" className={styles.navLink}>
+                <Button color="inherit">Create Calendar</Button>
+              </Link>
+              <Link to="/favourites" className={styles.navLink}>
+                <Button color="inherit">Favourites</Button>
+              </Link>
+            </>
+          )}
         </div>
         <div className={styles.rightAlign}>
           {token ? (
