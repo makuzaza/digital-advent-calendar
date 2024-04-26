@@ -116,7 +116,7 @@ Router.get("/calendars/:id", async (req, res) => {
     const calendarData = doc.data();
     const calendar: Calendar = {
       calendarId: doc.id,
-      ownerUid: uid,
+      ownerUid: calendarData.ownerUid,
       calendarName: calendarData.title,
       windows: calendarData.windows,
       text: {

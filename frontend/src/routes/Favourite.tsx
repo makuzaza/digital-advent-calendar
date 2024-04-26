@@ -4,6 +4,7 @@ import { useAppSelector } from "../hooks/useAppDispatch";
 import { Link } from "react-router-dom";
 import Search from "../components/Search";
 import { useLocation } from "react-router-dom";
+import { Button } from "@mui/material";
 
 interface Calendar {
   calendarId: string;
@@ -44,7 +45,7 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
   const [calendars, setCalendars] = useState<Calendar[]>([]);
   const { pathname } = useLocation();
 
-  // const token = useAppSelector((state) => state.token.token);
+  const token = useAppSelector((state) => state.token.token);
   const uid = useAppSelector((state) => state.uid.uid);
 
   const getUserCalendars = useCallback(async () => {
@@ -67,6 +68,23 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
     getUserCalendars();
   }, [getUserCalendars]);
 
+  const deleteCalendar = (calendarId: string) => {
+    axios
+      .delete(`http://localhost:8000/firestore/calendars/${calendarId}`, {
+        params: {
+          token: token,
+          uid: uid,
+        },
+      })
+      .then((response) => {
+        getUserCalendars();
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error("Error sending token to backend:", error);
+      });
+  };
+
   useEffect(() => {
     console.log(calendars);
   }, [calendars]);
@@ -79,7 +97,6 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
         <Search handleSearch={handleSearch} search={search} />
       )}
       <h1>Here are your saved calendars</h1>
-      <p>User ID: {uid}</p>
       <div>
         {calendars
           .filter((elem) =>
@@ -88,13 +105,18 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
           .map((calendar) => (
             <div key={calendar.calendarId} className="calendar-card">
               <h2>{calendar.data.text.title}</h2>
-              <p>Calendar ID: {calendar.calendarId}</p>
+              <p>{calendar.data.text.subtitle}</p>
               <Link
                 to={`/calendars/${calendar.calendarId}`}
                 onClick={() => setSearch("")}
               >
                 View
               </Link>
+              {pathname === "/favourites" && uid === calendar.data.ownerUid && (
+                <Button onClick={() => deleteCalendar(calendar.calendarId)}>
+                  Delete calendar
+                </Button>
+              )}
             </div>
           ))}
       </div>
