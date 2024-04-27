@@ -68,7 +68,7 @@ const Calendars: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
             <Calendar_Card
               key={calendar.calendarId} // Added key prop
               title={calendar.data.text.title}
-              calendarId={calendar.calendarId}
+              imageUrl={calendar.data.image.imageUrl}
               windowsNumber={calendar.data.windows.length}
               link={calendar.calendarId}
               onClick={() => setSearch("")} // Pass setSearch as a function

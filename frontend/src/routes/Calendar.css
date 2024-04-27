@@ -6,12 +6,11 @@
   gap: 30px;
 }
 .calendar-card {
-  background-color: #f5f5f5;
   border-radius: 4px;
-  border: 1px solid #0e627a;
   background-color: #ffffff;
   color: #333;
   padding: 10px;
+  margin-bottom: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,13 +20,19 @@
 
 .calendar-card h2 {
   text-transform: capitalize;
+  line-height: 1;
+  margin: 5px 0;
 }
 
 .calendar-card p {
   font-size: 18px;
 }
 .calendar-card span {
-  margin-bottom: 80px;
+  margin-bottom: 40px;
+}
+.calendar-img {
+  height: 200px;
+  width: 200px;
 }
 .calender-view {
   text-decoration: none;
@@ -38,4 +43,11 @@
   bottom: 0;
   padding: 10px 0;
   color: #ffffff;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.calender-view:hover {
+  background-color: #113a45;
+  transition: all 0.3s ease;
+  border: none;
 }

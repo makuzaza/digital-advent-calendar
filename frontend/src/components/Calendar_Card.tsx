@@ -1,17 +1,16 @@
 import { Link } from "react-router-dom";
-import "../routes/Calendar.css";
 
 interface Card {
   title: string;
-  calendarId: string;
   windowsNumber: number;
   link: string;
+  imageUrl: string;
   onClick?: () => void;
 }
 
 const Calendar_Card: React.FC<Card> = ({
   title,
-  calendarId,
+  imageUrl,
   windowsNumber,
   link,
   onClick,
@@ -24,8 +23,8 @@ const Calendar_Card: React.FC<Card> = ({
 
   return (
     <div className="calendar-card">
+      <img src={imageUrl} alt={imageUrl} className="calendar-img" />
       <h2>{title}</h2>
-      <p>{calendarId}</p>
       <span>Amount of windows: {windowsNumber}</span>
       <Link
         to={`/calendars/${link}`}
