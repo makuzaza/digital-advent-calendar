@@ -4,17 +4,17 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Home from "./routes/Home";
 import NotFound from "./routes/NotFound";
 import ErrorPage from "./routes/ErrorPage";
-// import Login from "./routes/Login";
 import Register from "./routes/Register";
 import Panel from "./routes/Panel";
 import Favourites from "./routes/Favourites";
 import Root from "./routes/Root";
 import LandingPage from "./routes/LandingPage";
 import Test from "./routes/Test";
-import MainApp from "./components/Calendar/MainApp";
-// import Calendars from "./routes/Calendars";
 import CalendarSingle from "./routes/CalendarSingle";
 import CalendarsPage from "./routes/CalendarsPage";
+import UserInfo from "./routes/UserInfo";
+
+import MainApp from "./components/Calendar/MainApp";
 
 // redux
 import { store } from "./store/store";
@@ -52,12 +52,10 @@ function App() {
             <Route path="/panel" element={<Panel />} />
             <Route path="/test" element={<Test />} />
             <Route path="/preview" element={<MainApp />} />
-
+            <Route path="/userinfo" element={<UserInfo />} />
             <Route path="/calendars" element={<CalendarsPage />} />
             <Route path="/calendars/:calendarId" element={<CalendarSingle />} />
-
           </Route>
-         
         </Routes>
       </Router>
     </Provider>

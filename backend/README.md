@@ -30,7 +30,9 @@ This saves to: 'all calendars' / { uid } / 'user calendars' / { calendar id }
 
 #### ALL
 
-- GET list of all files (returns a namelist): `/storage/files/` ✅
+- GET a list of all the files (returns a namelist): `/storage/files/` ✅
+
+- GET a list of all the user's files by uid: `/storage/files/:uid` ✅
 
 #### IMAGES
 
@@ -38,7 +40,7 @@ This saves to: 'all calendars' / { uid } / 'user calendars' / { calendar id }
 
 - POST (add) image: `/storage/images/` ✅
 
-- DELETE: `/storage/images/:imageName`
+- DELETE: `/storage/images/:imageName` ✅
 
 #### SOUNDS - MUSIC
 
@@ -46,7 +48,7 @@ This saves to: 'all calendars' / { uid } / 'user calendars' / { calendar id }
 
 - POST (add) music: `/storage/sounds/music` ✅
 
-- DELETE: `/storage/sounds/music/:musicName`
+- DELETE: `/storage/sounds/music/:musicName` ✅
 
 #### SOUNDS - SOUND-FX
 
@@ -54,7 +56,7 @@ This saves to: 'all calendars' / { uid } / 'user calendars' / { calendar id }
 
 - POST (add) soundFx: `/storage/sounds/soundFx` ✅
 
-- DELETE: `/storage/sounds/soundFx/:soundFxName`
+- DELETE: `/storage/sounds/soundFx/:soundFxName` ✅
 
 ### AUTH
 

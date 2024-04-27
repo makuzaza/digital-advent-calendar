@@ -9,7 +9,7 @@ import "../index.css";
 const Home: React.FC = () => {
   return (
     <div className="home main">
-      <div className="font">Create Your Own Advent Calendar</div>
+      <div className="font">Create Your Own Digital Advent Calendar</div>
       <div className="calendar">
         <div className="parts">
           <img

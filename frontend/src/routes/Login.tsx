@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -19,7 +20,14 @@ const Login: React.FC = () => {
       const newUser = await loginWithEmailAndPassword(email, password);
       dispatch(setToken(newUser.tokenId));
       dispatch(setUid(newUser.uid));
-      navigate("/favourites");
+      if (newUser.tokenId) {
+        setError(null);
+        navigate("/favourites");
+      } else {
+        setEmail("");
+        setPassword("");
+        setError("Invalid credentials. Please try again.");
+      }
     } catch (error) {
       console.error(error);
     }
@@ -31,7 +39,11 @@ const Login: React.FC = () => {
       style={{ background: "transparent", margin: "10px" }}
     >
       <h1>Start with Login</h1>
-      <p>Please enter your credentials to login:</p>
+      {!error ? (
+        <p>Please enter your credentials to login:</p>
+      ) : (
+        <p className="error">{error}</p>
+      )}
       <div style={{ textAlign: "center" }}>
         <Input
           style={{
@@ -67,11 +79,11 @@ const Login: React.FC = () => {
         Login
       </Button>
       <div style={{ marginTop: "10px" }}>
-      Don't have an account?
+        Don't have an account?
         <Link style={{ color: "white", margin: "10px" }} to="/register">
           Register
         </Link>
-        </div>
+      </div>
     </div>
   );
 };
