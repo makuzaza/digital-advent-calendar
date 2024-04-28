@@ -58,7 +58,6 @@ Router.get("/calendars", async (req, res) => {
 
   try {
     const data = await getAllCalendarData();
-    console.log(data);
     res.status(200).json(data);
   } catch (error) {
     console.error("Error getting calendar data:", error);
@@ -69,7 +68,6 @@ Router.get("/calendars", async (req, res) => {
 // get all calendars for a specific user
 Router.get("/calendars/user", async (req, res) => {
   const uid = req.query.uid as string;
-  console.log("uid:", uid);
 
   async function getUserCalendarData() {
     const userCalendarsRef = firestore
