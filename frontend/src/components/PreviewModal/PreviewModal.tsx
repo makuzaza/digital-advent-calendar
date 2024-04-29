@@ -23,10 +23,10 @@ const PreviewModal: React.FC<Props> = ({
     }
   }, [day]);
 
-  const { videoURL, text, imageURL } = windowContent[day - 1] || {
+  const { videoURL, text, imageURLModal } = windowContent[day - 1] || {
     videoURL: "",
     text: "",
-    imageURL: "",
+    imageURLModal: "",
   };
 
   return (
@@ -35,9 +35,9 @@ const PreviewModal: React.FC<Props> = ({
       <div className="modal-content">
       Window {day}
       <div>
-        {imageURL && (
+        {imageURLModal && (
           <>
-           <img src={imageURL} alt="Uploaded" style={{ width: "450px" }} />
+           <img src={imageURLModal} alt="Uploaded" style={{ width: "450px" }} />
           </>
         )}
       </div>

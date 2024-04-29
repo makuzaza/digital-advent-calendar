@@ -1,10 +1,11 @@
 .calendars {
   display: flex;
   justify-content: center;
+  flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
-  gap: 30px;
 }
+
 .calendar-card {
   border-radius: 4px;
   background-color: #ffffff;
@@ -16,6 +17,9 @@
   align-items: center;
   flex-direction: column;
   position: relative;
+  width: 250px;
+  height: 250px;
+  margin: 10px;
 }
 
 .calendar-card h2 {

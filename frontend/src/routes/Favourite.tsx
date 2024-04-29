@@ -91,13 +91,13 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
 
   return (
     <div
-      style={{ height: "70vh", background: "transparent", textAlign: "center" }}
+      style={{ background: "transparent", textAlign: "center" }}
     >
       {(pathname === "/calendars" || pathname === "/favourites") && (
         <Search handleSearch={handleSearch} search={search} />
       )}
       <h1>Here are your saved calendars</h1>
-      <div>
+      <div className="calendars">
         {calendars
           .filter((elem) =>
             elem.data.text.title.toLowerCase().includes(search.toLowerCase())
@@ -109,6 +109,7 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
               <Link
                 to={`/calendars/${calendar.calendarId}`}
                 onClick={() => setSearch("")}
+                className="calender-view "
               >
                 View
               </Link>

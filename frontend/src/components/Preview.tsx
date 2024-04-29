@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
+
 // styles
 import "./Preview.css";
 
@@ -40,12 +41,16 @@ type Props = {
   musicFX: string;
   selectedBackground: string;
   uploadedImageName: string;
+  windowContent: WindowContent[];
+  imageURLModal: string;
+  setImageURLModal: (imageURLModal: string) => void;
+
 };
 
 interface WindowContent {
   text: string;
   videoURL: string;
-  imageURL: string;
+  imageURLModal: string;
   uploadedImageName?: string;
 }
 
@@ -71,6 +76,8 @@ interface Json {
     uploadedImageName: string;
   };
   windowContent: WindowContent[];
+  imageURLModal: string;
+  // imageURL: string;
   // Add more properties as needed
 }
 
@@ -92,11 +99,14 @@ const Preview: React.FC<Props> = ({
   musicFX,
   selectedBackground,
   uploadedImageName,
+  setImageURLModal,
+  imageURLModal,
+  
 }) => {
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [windowContent, setWindowContent] = useState<WindowContent[]>(
-    Array(windows.length).fill({ imageURL: "", videoURL: "", text: "" })
+    Array(windows.length).fill({ imageURLModal: "", videoURL: "", text: "" })
   );
 
   const token = useAppSelector((state) => state.token.token);
@@ -135,6 +145,8 @@ const Preview: React.FC<Props> = ({
         uploadedImageName: uploadedImageName,
       },
       windowContent: windowContent,
+      imageURLModal: "",
+ 
       // Add more properties as needed...
     };
     console.log(json);
@@ -200,15 +212,17 @@ const Preview: React.FC<Props> = ({
           </Typography>
         </div>
         <div className="windows">
-          {windows.map((window) => (
+          {windows.map((window, index) => (
             <Window
               key={window}
               date={window}
-              day={windows.indexOf(window) + 1}
+              day={index + 1}
+              // day={windows.indexOf(window) + 1}
               setOpenModal={setOpenModal}
               setDay={setDay}
               setOpenPreviewModal={setOpenPreviewModal}
               musicFX={musicFX}
+              imageURLModal={imageURLModal}  
             />
           ))}
         </div>
@@ -222,6 +236,7 @@ const Preview: React.FC<Props> = ({
               amountOfWindows={windows.length}
               windowContent={windowContent}
               setWindowContent={setWindowContent}
+              setImageURLModal={setImageURLModal}
             />
           </div>
         )}
