@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
+
 // styles
 import "./Preview.css";
 
@@ -39,6 +40,8 @@ type Props = {
   musicFX: string;
   selectedBackground: string;
   uploadedImageName: string;
+  windowContent: WindowContent[];
+  imageURL: string;
 };
 
 interface WindowContent {
@@ -90,6 +93,7 @@ const Preview: React.FC<Props> = ({
   musicFX,
   selectedBackground,
   uploadedImageName,
+  
 }) => {
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
@@ -196,15 +200,17 @@ const Preview: React.FC<Props> = ({
           </Typography>
         </div>
         <div className="windows">
-          {windows.map((window) => (
+          {windows.map((window, index) => (
             <Window
               key={window}
               date={window}
-              day={windows.indexOf(window) + 1}
+              day={index + 1}
+              // day={windows.indexOf(window) + 1}
               setOpenModal={setOpenModal}
               setDay={setDay}
               setOpenPreviewModal={setOpenPreviewModal}
               musicFX={musicFX}
+              imageURL={windowContent[index]?.imageURL} 
             />
           ))}
         </div>

@@ -64,6 +64,7 @@ const Panel: React.FC = () => {
   const [subtitleColor, setSubtitleColor] = useState("#000000");
   const [selectedBackground, setSelectedBackground] = useState<string>("");
   const [uploadedImageName, setUploadedImageName] = useState("");
+  const [imageURL, setImageURL] = useState<string>("");
 
   return (
     <div className="panel">
@@ -119,6 +120,7 @@ const Panel: React.FC = () => {
         musicFX={musicFX}
         selectedBackground={selectedBackground}
         uploadedImageName={uploadedImageName}
+        imageURL={imageURL}
       />
     </div>
   );

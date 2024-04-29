@@ -14,7 +14,7 @@ type Props = {
   amountOfWindows: number;
   windowContent: WindowContent[];
   setWindowContent: (windowContent: WindowContent[]) => void;
-};
+  setImageURL: (imageURL: string) => void;};
 
 type ContentVisibility = {
   [key: string]: boolean;
