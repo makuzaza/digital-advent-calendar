@@ -12,7 +12,7 @@ type Props = {
   setDay: (day: number) => void;
   setOpenPreviewModal: (openPreviewModal: boolean) => void;
   musicFX: string;
-  imageURL: string;
+  imageURLModal: string;
 };
 
 const Window: React.FC<Props> = ({
@@ -22,7 +22,7 @@ const Window: React.FC<Props> = ({
   setDay,
   setOpenPreviewModal,
   musicFX,
-  imageURL,
+  imageURLModal,
 }) => {
   const handleAddClick = (day: number) => {
     setOpenModal(true);
@@ -61,7 +61,9 @@ const Window: React.FC<Props> = ({
 
   return (
     <div className="window-container"> 
-     <div className="open_door" style={{ backgroundImage: `url(${imageURL})` }}></div>
+     <div className="open_door" style={{ backgroundImage: `url(${imageURLModal})`, backgroundPosition: "center", backgroundSize: "cover", backgroundRepeat: "no-repeat"
+     }}></div>
+     {/* <div className="open_door" ></div> */}
       <div className="window" > 
           <div className="day" onClick={() => handleAddClick(day)}>{day}</div>
           <div className="icon-box" onClick={() => handleAddClick(day)}>

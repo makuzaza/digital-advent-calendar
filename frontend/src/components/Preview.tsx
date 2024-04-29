@@ -41,13 +41,15 @@ type Props = {
   selectedBackground: string;
   uploadedImageName: string;
   windowContent: WindowContent[];
-  imageURL: string;
+  imageURLModal: string;
+  setImageURLModal: (imageURLModal: string) => void;
+
 };
 
 interface WindowContent {
   text: string;
   videoURL: string;
-  imageURL: string;
+  imageURLModal: string;
 }
 
 interface Json {
@@ -72,6 +74,8 @@ interface Json {
     uploadedImageName: string;
   };
   windowContent: WindowContent[];
+  imageURLModal: string;
+  // imageURL: string;
   // Add more properties as needed
 }
 
@@ -93,12 +97,14 @@ const Preview: React.FC<Props> = ({
   musicFX,
   selectedBackground,
   uploadedImageName,
+  setImageURLModal,
+  imageURLModal,
   
 }) => {
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [windowContent, setWindowContent] = useState<WindowContent[]>(
-    Array(windows.length).fill({ imageUrl: "", videoURL: "", text: "" })
+    Array(windows.length).fill({ imageURLModal: "", videoURL: "", text: "" })
   );
 
   const token = useAppSelector((state) => state.token.token);
@@ -135,6 +141,8 @@ const Preview: React.FC<Props> = ({
         uploadedImageName: uploadedImageName,
       },
       windowContent: windowContent,
+      imageURLModal: "",
+ 
       // Add more properties as needed...
     };
     console.log(json);
@@ -210,7 +218,9 @@ const Preview: React.FC<Props> = ({
               setDay={setDay}
               setOpenPreviewModal={setOpenPreviewModal}
               musicFX={musicFX}
-              imageURL={windowContent[index]?.imageURL} 
+              imageURLModal={imageURLModal}
+            
+             
             />
           ))}
         </div>
@@ -224,6 +234,7 @@ const Preview: React.FC<Props> = ({
               amountOfWindows={windows.length}
               windowContent={windowContent}
               setWindowContent={setWindowContent}
+              setImageURLModal={setImageURLModal}
             />
           </div>
         )}

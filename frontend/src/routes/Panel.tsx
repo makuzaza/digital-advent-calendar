@@ -64,7 +64,7 @@ const Panel: React.FC = () => {
   const [subtitleColor, setSubtitleColor] = useState("#000000");
   const [selectedBackground, setSelectedBackground] = useState<string>("");
   const [uploadedImageName, setUploadedImageName] = useState("");
-  const [imageURL, setImageURL] = useState<string>("");
+  const [imageURLModal, setImageURLModal] = useState("");
 
   return (
     <div className="panel">
@@ -120,7 +120,13 @@ const Panel: React.FC = () => {
         musicFX={musicFX}
         selectedBackground={selectedBackground}
         uploadedImageName={uploadedImageName}
-        imageURL={imageURL}
+        setImageURLModal={setImageURLModal}
+        imageURLModal={imageURLModal}
+        windowContent={windows.map((window) => ({
+          text: "",
+          videoURL: "",
+          imageURLModal: "",
+        }))}
       />
     </div>
   );

@@ -14,7 +14,7 @@ type Props = {
   amountOfWindows: number;
   windowContent: WindowContent[];
   setWindowContent: (windowContent: WindowContent[]) => void;
-  setImageURL: (imageURL: string) => void;};
+  setImageURLModal: (imageURLModal: string) => void;};
 
 type ContentVisibility = {
   [key: string]: boolean;
@@ -23,7 +23,7 @@ type ContentVisibility = {
 export interface WindowContent {
   videoURL: string;
   text: string;
-  imageURL: string;
+  imageURLModal: string;
 }
 
 const Modal: React.FC<Props> = ({
@@ -48,7 +48,7 @@ const Modal: React.FC<Props> = ({
       const newWindowContent = Array.from({ length: amountOfWindows }, () => ({
         videoURL: "",
         text: "",
-        imageURL: "",
+        imageURLModal: "",
       }));
       setWindowContent(newWindowContent);
     }
@@ -90,17 +90,17 @@ const Modal: React.FC<Props> = ({
       const newWindowContent = [...windowContent];
       newWindowContent[day - 1] = {
         ...newWindowContent[day - 1],
-        imageURL: reader.result as string,
+        imageURLModal: reader.result as string,
       };
       setWindowContent(newWindowContent);
     };
     reader.readAsDataURL(file);
   };
 
-  const { videoURL, text, imageURL } = windowContent[day - 1] || {
+  const { videoURL, text, imageURLModal } = windowContent[day - 1] || {
     videoURL: "",
     text: "",
-    imageURL: "",
+    imageURLModal: "",
   };
 
   return (
@@ -132,11 +132,11 @@ const Modal: React.FC<Props> = ({
           onChange={handleImageUpload}
         />
         <div>
-          {imageURL && (
+          {imageURLModal && (
             <>
               <p>Your saved image:</p>
               <img
-                src={imageURL}
+                src={imageURLModal}
                 alt="Uploaded"
                 style={{ maxHeight: "150px"}}
               />
