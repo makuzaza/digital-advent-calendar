@@ -46,6 +46,7 @@ interface WindowContent {
   text: string;
   videoURL: string;
   imageURL: string;
+  uploadedImageName?: string;
 }
 
 interface Json {
