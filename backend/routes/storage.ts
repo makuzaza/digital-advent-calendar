@@ -26,6 +26,27 @@ Router.get("/files", async (req, res) => {
   }
 });
 
+// Endpoint to get list of all the files by uid in storage
+Router.get("/files/:uid", async (req, res) => {
+  try {
+    const uid = req.params.uid;
+
+    // Access all files in the bucket
+    const [files] = await bucket.getFiles();
+
+    // Extract file names
+    const fileNames = files
+      .map((file) => file.name)
+      .filter((fileName) => fileName.includes(uid));
+
+    // Send file names in response
+    res.status(200).json(fileNames);
+  } catch (error) {
+    console.error("Error fetching images:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 // IMAGES
 
 // Endpoint to download image
@@ -87,9 +108,10 @@ Router.post(
 Router.delete("/images/:imageName", verifyToken, async (req, res) => {
   try {
     const imageName = req.params.imageName;
+    const uid = req.body.uid;
 
     // Specify the full path to the image within the 'images' folder
-    const imagePath = "images/" + imageName;
+    const imagePath = `images/${uid}/${imageName}`;
 
     // Access file from the bucket
     const file = bucket.file(imagePath);
@@ -179,9 +201,10 @@ Router.post(
 Router.delete("/sounds/music/:musicName", verifyToken, async (req, res) => {
   try {
     const musicName = req.params.musicName;
+    const uid = req.body.uid;
 
     // Specify the full path to the sound within the 'sounds' folder
-    const musicPath = "sounds/music/" + musicName;
+    const musicPath = `sounds/music/${uid}/${musicName}`;
 
     // Access file from the bucket
     const file = bucket.file(musicPath);
@@ -271,9 +294,10 @@ Router.post(
 Router.delete("/sounds/soundFx/:soundFxName", verifyToken, async (req, res) => {
   try {
     const soundFxName = req.params.soundFxName;
+    const uid = req.body.uid;
 
     // Specify the full path to the sound within the 'sounds' folder
-    const soundFxPath = "sounds/soundFx/" + soundFxName;
+    const soundFxPath = `sounds/soundFx/${uid}/${soundFxName}`;
 
     // Access file from the bucket
     const file = bucket.file(soundFxPath);

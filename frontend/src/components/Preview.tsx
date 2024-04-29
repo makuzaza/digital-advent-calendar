@@ -15,6 +15,7 @@ import PreviewModal from "../components/PreviewModal/PreviewModal";
 import { Button, Typography } from "@mui/material";
 
 import { useAppSelector } from "../hooks/useAppDispatch";
+import { useNavigate } from "react-router";
 
 type Props = {
   title: string;
@@ -50,6 +51,7 @@ interface WindowContent {
   text: string;
   videoURL: string;
   imageURLModal: string;
+  uploadedImageName?: string;
 }
 
 interface Json {
@@ -70,7 +72,7 @@ interface Json {
     soundFxName: string;
   };
   image: {
-    imageUrl: string;
+    imageURL: string;
     uploadedImageName: string;
   };
   windowContent: WindowContent[];
@@ -110,6 +112,8 @@ const Preview: React.FC<Props> = ({
   const token = useAppSelector((state) => state.token.token);
   const uid = useAppSelector((state) => state.uid.uid);
 
+  const navigate = useNavigate();
+
   const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
   };
@@ -137,7 +141,7 @@ const Preview: React.FC<Props> = ({
         soundFxName: musicFX,
       },
       image: {
-        imageUrl: selectedBackground,
+        imageURL: selectedBackground,
         uploadedImageName: uploadedImageName,
       },
       windowContent: windowContent,
@@ -154,7 +158,7 @@ const Preview: React.FC<Props> = ({
         data: json,
       })
       .then((response) => {
-        console.log(response.data);
+        navigate(`/calendars/${response.data.calendarId}`);
       })
       .catch((error) => {
         console.error("Error saving calendar:", error);
@@ -218,9 +222,7 @@ const Preview: React.FC<Props> = ({
               setDay={setDay}
               setOpenPreviewModal={setOpenPreviewModal}
               musicFX={musicFX}
-              imageURLModal={imageURLModal}
-            
-             
+              imageURLModal={imageURLModal}  
             />
           ))}
         </div>

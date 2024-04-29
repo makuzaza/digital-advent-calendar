@@ -5,6 +5,8 @@ import "./Modal.css";
 import { TextField, Button } from "@mui/material";
 
 import CloseIcon from "@mui/icons-material/Close";
+import { useAppSelector } from "../../hooks/useAppDispatch";
+import axios from "axios";
 
 type Props = {
   day: number;
@@ -24,6 +26,7 @@ export interface WindowContent {
   videoURL: string;
   text: string;
   imageURLModal: string;
+  uploadedImageName?: string;
 }
 
 const Modal: React.FC<Props> = ({
@@ -36,6 +39,9 @@ const Modal: React.FC<Props> = ({
   setWindowContent,
 }) => {
   const [contentVisible, setContentVisible] = useState<ContentVisibility>({});
+
+  const uid = useAppSelector((state) => state.uid.uid);
+  const token = useAppSelector((state) => state.token.token);
 
   useEffect(() => {
     if (openModal) {
@@ -91,10 +97,34 @@ const Modal: React.FC<Props> = ({
       newWindowContent[day - 1] = {
         ...newWindowContent[day - 1],
         imageURLModal: reader.result as string,
+        uploadedImageName: file.name,
       };
       setWindowContent(newWindowContent);
     };
     reader.readAsDataURL(file);
+
+    // upload image to database
+    const formData = new FormData();
+
+    formData.append("image", file);
+    formData.append("uid", uid);
+
+    axios
+      .post(`http://localhost:8000/storage/images`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          // Send token in request headers
+          "x-access-token": token,
+        },
+      })
+      .then((response) => {
+        console.log(`image`, response.data);
+      })
+      .catch(() => {
+        console.log(
+          `Error uploading image: Login to upload. UID and / or token required. `
+        );
+      });
   };
 
   const { videoURL, text, imageURLModal } = windowContent[day - 1] || {
@@ -198,7 +228,6 @@ const Modal: React.FC<Props> = ({
       </Button>
       </div>
     </div>
- 
   );
 };
 

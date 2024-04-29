@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
 import "./Calendar.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Search from "../components/Search";
+import Calendar_Card from "../components/Calendar_Card";
 
 interface Calendar {
   calendarId: string;
@@ -17,7 +17,7 @@ interface Calendar {
       titleColor: string;
       subtitle: string;
       subtitleFont: string;
-      subTitleFontSize: number;
+      subtitleFontSize: number;
       subtitleColor: string;
     };
     sounds: {
@@ -45,8 +45,6 @@ const Calendars: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
 
   const getCalendars = async () => {
     axios.get("http://localhost:8000/firestore/calendars").then((response) => {
-      console.log("firestore/calendars");
-      console.log(response.data);
       setCalendars(response.data);
     });
   };
@@ -67,19 +65,14 @@ const Calendars: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
             elem.data.text.title.toLowerCase().includes(search.toLowerCase())
           )
           .map((calendar) => (
-            <div key={calendar.calendarId} className="calendar-card">
-              <h2>{calendar.data.text.title}</h2>
-              <p>{calendar.calendarId}</p>
-              <span>Amount of windows: {calendar.data.windows.length}</span>
-              <Link
-                to={`/calendars/${calendar.calendarId}`}
-                onClick={() => setSearch("")}
-                className="calender-view "
-              >
-                View
-              </Link>
-              {/* <p>By: 'user name here'</p> */}
-            </div>
+            <Calendar_Card
+              key={calendar.calendarId} // Added key prop
+              title={calendar.data.text.title}
+              imageUrl={calendar.data.image.imageUrl}
+              windowsNumber={calendar.data.windows.length}
+              link={calendar.calendarId}
+              onClick={() => setSearch("")} // Pass setSearch as a function
+            />
           ))}
       </div>
     </div>

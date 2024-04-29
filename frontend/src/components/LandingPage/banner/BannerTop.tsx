@@ -1,7 +1,6 @@
 import { ParallaxBanner } from "react-scroll-parallax";
 import { BannerLayer } from "react-scroll-parallax/dist/components/ParallaxBanner/types";
-import "./BannerTop.css"
-
+import "./BannerTop.css";
 
 export const BannerTop = () => {
   const background: BannerLayer = {
@@ -10,7 +9,7 @@ export const BannerTop = () => {
     translateY: [0, 50],
     opacity: [1, 0.3],
     scale: [1.05, 1, "easeOutCubic"],
-    shouldAlwaysCompleteAnimation: true
+    shouldAlwaysCompleteAnimation: true,
   };
 
   const headline: BannerLayer = {
@@ -20,9 +19,9 @@ export const BannerTop = () => {
     expanded: false,
     children: (
       <div className="inset center">
-        <h1 className="headline white">Your Own Advent Calender</h1>
+        <h1 className="headline white">Your Own Digital Advent Calender</h1>
       </div>
-    )
+    ),
   };
 
   const foreground: BannerLayer = {
@@ -30,14 +29,14 @@ export const BannerTop = () => {
       "https://s3-us-west-2.amazonaws.com/s.cdpn.io/105988/banner-foreground.png",
     translateY: [0, 15],
     scale: [1, 1.1, "easeOutCubic"],
-    shouldAlwaysCompleteAnimation: true
+    shouldAlwaysCompleteAnimation: true,
   };
 
   const gradientOverlay: BannerLayer = {
     opacity: [0, 1, "easeOutCubic"],
     shouldAlwaysCompleteAnimation: true,
     expanded: false,
-    children: <div className="gradient inset" />
+    children: <div className="gradient inset" />,
   };
 
   return (

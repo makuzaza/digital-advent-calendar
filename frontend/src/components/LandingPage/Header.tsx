@@ -1,20 +1,17 @@
 import { AppBar, Toolbar, Button } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styles from "./headerStyles.module.css";
 import Logout from "./Logout";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../auth/firebase";
 import { useAppSelector } from "../../hooks/useAppDispatch";
-import { useEffect } from "react";
 
 const Header: React.FC = () => {
   const { pathname } = useLocation();
   const [user] = useAuthState(auth);
   const token = useAppSelector((state) => state.token.token);
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  const navigate = useNavigate();
 
   if (pathname === "/panel") {
     return null;
@@ -30,17 +27,21 @@ const Header: React.FC = () => {
           <Link to="/calendars" className={styles.navLink}>
             <Button color="inherit">Browse Calendars</Button>
           </Link>
-          <Link to="/panel" className={styles.navLink}>
-            <Button color="inherit">Create Calendar</Button>
-          </Link>
-          <Link to="/favourites" className={styles.navLink}>
-            <Button color="inherit">Favourites</Button>
-          </Link>
+          {token && (
+            <>
+              <Link to="/panel" className={styles.navLink}>
+                <Button color="inherit">Create Calendar</Button>
+              </Link>
+              <Link to="/favourites" className={styles.navLink}>
+                <Button color="inherit">Favourites</Button>
+              </Link>
+            </>
+          )}
         </div>
         <div className={styles.rightAlign}>
           {token ? (
             <div style={{ display: "flex", alignItems: "center" }}>
-              <span>
+              <span onClick={() => navigate("/userinfo")}>
                 Hello, {user?.displayName ? user?.displayName : user?.email}
               </span>
               <div style={{ marginRight: "20px", marginLeft: "20px" }}>
