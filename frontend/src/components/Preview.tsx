@@ -66,7 +66,7 @@ interface Json {
     soundFxName: string;
   };
   image: {
-    imageUrl: string;
+    imageURL: string;
     uploadedImageName: string;
   };
   windowContent: WindowContent[];
@@ -95,7 +95,7 @@ const Preview: React.FC<Props> = ({
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [windowContent, setWindowContent] = useState<WindowContent[]>(
-    Array(windows.length).fill({ imageUrl: "", videoURL: "", text: "" })
+    Array(windows.length).fill({ imageURL: "", videoURL: "", text: "" })
   );
 
   const token = useAppSelector((state) => state.token.token);
@@ -130,7 +130,7 @@ const Preview: React.FC<Props> = ({
         soundFxName: musicFX,
       },
       image: {
-        imageUrl: selectedBackground,
+        imageURL: selectedBackground,
         uploadedImageName: uploadedImageName,
       },
       windowContent: windowContent,
