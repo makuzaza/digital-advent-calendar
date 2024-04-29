@@ -20,6 +20,7 @@ import MainApp from "./components/Calendar/MainApp";
 import { store } from "./store/store";
 import { Provider } from "react-redux";
 import { useState } from "react";
+import About from "./routes/About";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -50,6 +51,7 @@ function App() {
             <Route path="error" element={<ErrorPage />} />
             <Route path="/favourites" element={<Favourites />} />
             <Route path="/panel" element={<Panel />} />
+            <Route path="/about" element={<About />} />
             <Route path="/test" element={<Test />} />
             <Route path="/preview" element={<MainApp />} />
             <Route path="/userinfo" element={<UserInfo />} />

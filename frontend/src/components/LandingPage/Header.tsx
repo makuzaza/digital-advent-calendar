@@ -37,6 +37,9 @@ const Header: React.FC = () => {
               </Link>
             </>
           )}
+          <Link to="/about" className={styles.navLink}>
+            <Button color="inherit">About</Button>
+          </Link>
         </div>
         <div className={styles.rightAlign}>
           {token ? (
