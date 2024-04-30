@@ -35,13 +35,15 @@ const About = () => {
             advent calendars.
           </p>
         </div>
-        <div className="team">
+        <div>
           <h3>Meat the Team: </h3>
+          <div className="team">
+          <div className="people">
           <p>Kuznetsova Maria</p>
-          <a target="_blank" href="">
+          <a target="_blank" href="https://www.linkedin.com/in/maria-k-88543a11a">
             <LinkedInIcon />
           </a>
-          <a target="_blank" href="">
+          <a target="_blank" href="https://github.com/Makuzaza">
             <GitHubIcon />
           </a>
           <p>Tahashin Anika</p>
@@ -51,7 +53,8 @@ const About = () => {
           <a target="_blank" href="">
             <GitHubIcon />
           </a>
-          <p>Munsi Mithun</p>
+          </div>
+          <div className="people"><p>Munsi Mithun</p>
           <a target="_blank" href="">
             <LinkedInIcon />
           </a>
@@ -65,6 +68,8 @@ const About = () => {
           <a target="_blank" href="https://github.com/aj-kivimaki">
             <GitHubIcon />
           </a>
+          </div>
+          </div>
         </div>
         <div className="technologies">
           <h3>Technologies Used:</h3>

@@ -15,7 +15,6 @@ const Home: React.FC = () => {
           <img
             src={wreath}
             alt="calendar"
-            style={{ width: "400px", margin: "10px" }}
           />
         </div>
         <div className="parts">
