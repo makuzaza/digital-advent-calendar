@@ -47,8 +47,78 @@ body {
 .favourites,
 .calendars {
   min-height: 83vh;
+  text-align: center;
 }
 
 .login .error {
   color: #ff6464;
+}
+
+.parts img {
+  width: 400px;
+  margin: 10px
+}
+
+@media screen and (max-width: 700px) {
+  .calendar {
+    flex-direction: column-reverse
+  }
+
+img {
+  width: 200px;
+}
+}
+
+.about {
+  margin: 25px;
+}
+
+.team {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  background-color: #ebe7e7ba;
+  padding: 20px;
+  border-radius: 10px;
+  color: #333;
+  
+}
+
+.people {
+  align-items: center;
+  margin: 20px;
+}
+
+.linkedin, .github {
+  color: black;
+  min-width: 40px;
+  min-height: 40px;
+}
+
+.linkedin {
+  margin-right: 10px;
+}
+
+.linkedin:hover {
+  color: #0077b5;
+}
+
+.github:hover {
+  color: pink;
+}
+
+.technologies, .last-words {
+  color: #333;
+}
+
+.pics img {
+  width: 60px;
+  max-height: 60px;
+}
+
+.pics {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
