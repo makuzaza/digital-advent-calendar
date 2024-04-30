@@ -43,7 +43,13 @@ const Header: React.FC = () => {
         </div>
         <div className={styles.rightAlign}>
           {token ? (
-            <div style={{ display: "flex", alignItems: "center" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer",
+              }}
+            >
               <span onClick={() => navigate("/userinfo")}>
                 Hello, {user?.displayName ? user?.displayName : user?.email}
               </span>

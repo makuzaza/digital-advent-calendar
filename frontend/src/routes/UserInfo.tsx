@@ -1,5 +1,12 @@
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../auth/firebase";
+import { getAuth, updateProfile } from "firebase/auth";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytes,
+  deleteObject,
+} from "firebase/storage"; // Update import
 import "./UserInfo.css";
 import { Button } from "@mui/material";
 import { useAppSelector } from "../hooks/useAppDispatch";
@@ -9,6 +16,8 @@ import { useNavigate } from "react-router";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { ChangeUsername } from "../components/ChangeUsername";
 import { ChangePassword } from "../components/ChangePassword";
+import profilepic from "../assets/user_149071.png";
+import editor from "../assets/camera.png";
 
 interface CalendarData {
   text: {
@@ -22,11 +31,15 @@ interface Calendar {
 }
 
 const UserInfo: React.FC = () => {
-  const [user] = useAuthState(auth);
+  const [user] = useAuthState(getAuth());
   const [allUserFiles, setAllUserFiles] = useState<never[] | null>(null);
   const [allUserCalendars, setAllUserCalendars] = useState<Calendar[] | null>(
     null
   );
+
+  const [profilePic, setProfilePic] = useState<string | null>(profilepic); // Default profile picture
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
   const [userName, setUserName] = useState<string | null>(null);
 
   const navigate = useNavigate();
@@ -37,7 +50,57 @@ const UserInfo: React.FC = () => {
   useEffect(() => {
     if (!user) return;
     setUserName(user.displayName);
+
+    // Load user's profile picture
+    if (user.photoURL) {
+      setProfilePic(user.photoURL);
+    }
   }, [user]);
+
+  // Function to handle file selection
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setSelectedFile(event.target.files[0]);
+    }
+  };
+
+  // Function to upload profile picture to Firebase Storage
+  const uploadProfilePicture = async () => {
+    const user = getAuth().currentUser;
+
+    if (!selectedFile || !uid) return;
+
+    const storage = getStorage();
+    const fileRef = ref(storage, `profile_pictures/${uid}`);
+
+    if (user) {
+      try {
+        const snapshot = await uploadBytes(fileRef, selectedFile);
+        const downloadURL = await getDownloadURL(snapshot.ref); // Get download URL from the snapshot
+        // Update user's profile picture URL
+        await updateProfile(user, { photoURL: downloadURL });
+        setProfilePic(downloadURL);
+        console.log("Profile picture uploaded successfully");
+      } catch (error) {
+        console.error("Error uploading profile picture:", error);
+      }
+    }
+  };
+  // Function to remove profile picture
+  const removeProfilePicture = async () => {
+    const user = getAuth().currentUser;
+
+    if (!uid || !user) return;
+
+    try {
+      await deleteObject(ref(getStorage(), `profile_pictures/${uid}`));
+      await updateProfile(user, { photoURL: null }); // Remove profile picture URL
+      setProfilePic(null);
+      console.log("Profile picture removed successfully");
+    } catch (error) {
+      console.error("Error removing profile picture:", error);
+    }
+  };
 
   // Format date to be more readable
   function formatDate(dateString: string): string {
@@ -61,7 +124,6 @@ const UserInfo: React.FC = () => {
     const year = date.getFullYear();
     return ` ${month} ${day}, ${year}`;
   }
-
   // Get all calendars created by the user
   const getUserCalendars = async () => {
     if (!uid) return;
@@ -211,11 +273,12 @@ const UserInfo: React.FC = () => {
 
   if (!token) {
     navigate("/login");
+    return null;
   }
 
   // Delete user account
   const handleDeleteAccount = () => {
-    const user = auth.currentUser;
+    const user = getAuth().currentUser;
 
     if (user) {
       user
@@ -236,8 +299,38 @@ const UserInfo: React.FC = () => {
     <div className="home">
       <div className="user-info">
         <div className="info-box">
-          <h2>USER INFO</h2>
-          <div className="flex">
+          <h2>My Profile</h2>
+          <div className="profile-pic">
+            <img src={profilePic || profilepic} alt="Profile picture" />
+            <div>
+              <label htmlFor="file-input">
+                <img src={editor} alt="Edit profile picture" id="editor" />
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                style={{ display: "none" }}
+                id="file-input"
+              />
+            </div>
+            <div className="remove-and-upload">
+              <Button
+                variant="outlined"
+                onClick={uploadProfilePicture}
+                disabled={!selectedFile}
+              >
+                Upload
+              </Button>
+
+              {profilePic && (
+                <Button variant="outlined" onClick={removeProfilePicture}>
+                  Remove
+                </Button>
+              )}
+            </div>
+          </div>
+          <div className="personal-info">
             <div className="left-col">
               <p>Username </p>
               <p>Email </p>
@@ -259,9 +352,10 @@ const UserInfo: React.FC = () => {
             <ChangePassword />
           </div>
         </div>
+
         <div className="files-boxes">
           <div className="files-box">
-            <h2>USER DATA</h2>
+            <h2>MY DATA</h2>
             <Button variant="outlined" onClick={getAllFilesByUid}>
               All uploaded files
             </Button>
