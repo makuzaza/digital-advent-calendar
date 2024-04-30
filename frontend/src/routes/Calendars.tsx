@@ -25,7 +25,7 @@ interface Calendar {
       soundFxName: string;
     };
     image: {
-      imageUrl: string;
+      imageURL: string;
       uploadedImageName: string;
     };
     windowsContent: string[];
@@ -68,7 +68,7 @@ const Calendars: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
             <Calendar_Card
               key={calendar.calendarId} // Added key prop
               title={calendar.data.text.title}
-              imageUrl={calendar.data.image.imageUrl}
+              imageURL={calendar.data.image.imageURL}
               windowsNumber={calendar.data.windows.length}
               link={calendar.calendarId}
               onClick={() => setSearch("")} // Pass setSearch as a function

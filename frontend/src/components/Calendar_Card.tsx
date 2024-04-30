@@ -4,13 +4,13 @@ interface Card {
   title: string;
   windowsNumber: number;
   link: string;
-  imageUrl: string;
+  imageURL: string;
   onClick?: () => void;
 }
 
 const Calendar_Card: React.FC<Card> = ({
   title,
-  imageUrl,
+  imageURL,
   windowsNumber,
   link,
   onClick,
@@ -23,7 +23,7 @@ const Calendar_Card: React.FC<Card> = ({
 
   return (
     <div className="calendar-card">
-      <img src={imageUrl} alt={imageUrl} className="calendar-img" />
+      <img src={imageURL} alt={imageURL} className="calendar-img" />
       <h2>{title}</h2>
       <span>Amount of windows: {windowsNumber}</span>
       <Link
