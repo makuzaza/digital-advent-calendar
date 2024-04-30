@@ -24,11 +24,17 @@ interface Calendar {
     soundFxName: string;
   };
   image: {
-    imageUrl: string;
+    imageURL: string;
     uploadedImageName: string;
   };
-  windowsContent: string[];
-  // Add more properties as needed
+  windowsContent: WindowContent[];
+}
+
+interface WindowContent {
+  text: string;
+  videoURL: string;
+  imageURLModal: string;
+  uploadedImageName?: string;
 }
 
 // get all calendars in the database
@@ -128,14 +134,21 @@ Router.get("/calendars/:id", async (req, res) => {
         subtitleColor: calendarData.text.subtitleColor,
       },
       image: {
-        imageUrl: calendarData.image.imageUrl,
+        imageURL: calendarData.image.imageURL,
         uploadedImageName: calendarData.image.uploadedImageName,
       },
       sounds: {
         musicName: calendarData.sounds.musicName,
         soundFxName: calendarData.sounds.soundFxName,
       },
-      windowsContent: calendarData.windowsContent,
+      windowsContent: calendarData.windowContent.map((window: any) => {
+        return {
+          text: window.text,
+          videoURL: window.videoURL,
+          imageURLModal: window.imageURLModal,
+          uploadedImageName: window.uploadedImageName,
+        };
+      }),
       // Map other properties from the document as needed
     };
     res.status(200).json(calendar);

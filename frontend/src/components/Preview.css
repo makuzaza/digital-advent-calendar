@@ -39,9 +39,6 @@
   background-color: #f8f9fa;
   color: #495057;
   transition: all 0.15s;
-  position: absolute;
-  top: 5px;
-  right: 5px;
 }
 
 .preview .modal-create,
@@ -51,4 +48,8 @@
   right: 0;
   z-index: 1000;
   width: 100%;
+}
+
+.preview-final {
+  text-align: center;
 }

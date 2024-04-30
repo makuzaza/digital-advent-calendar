@@ -1,6 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
+import { useNavigate } from "react-router";
 
+import axios from "axios";
 
 // styles
 import "./Preview.css";
@@ -10,12 +11,10 @@ import Window from "./Window/Window";
 import MusicPlayer from "./SidebarSounds/MusicPlayer";
 import Modal from "../components/Modal/Modal";
 import PreviewModal from "../components/PreviewModal/PreviewModal";
-// import CalendarEditor from "./SidebarPictures/ExistingImageGallery";
 
 import { Button, Typography } from "@mui/material";
 
 import { useAppSelector } from "../hooks/useAppDispatch";
-import { useNavigate } from "react-router";
 
 type Props = {
   title: string;
@@ -44,7 +43,6 @@ type Props = {
   windowContent: WindowContent[];
   imageURLModal: string;
   setImageURLModal: (imageURLModal: string) => void;
-
 };
 
 interface WindowContent {
@@ -76,9 +74,6 @@ interface Json {
     uploadedImageName: string;
   };
   windowContent: WindowContent[];
-  imageURLModal: string;
-  // imageURL: string;
-  // Add more properties as needed
 }
 
 const Preview: React.FC<Props> = ({
@@ -101,7 +96,6 @@ const Preview: React.FC<Props> = ({
   uploadedImageName,
   setImageURLModal,
   imageURLModal,
-  
 }) => {
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
@@ -145,9 +139,6 @@ const Preview: React.FC<Props> = ({
         uploadedImageName: uploadedImageName,
       },
       windowContent: windowContent,
-      imageURLModal: "",
- 
-      // Add more properties as needed...
     };
     console.log(json);
 
@@ -168,7 +159,6 @@ const Preview: React.FC<Props> = ({
   return (
     <div id="preview-container">
       <div className="preview">
-        {/* <CalendarEditor setBackground={setBackground} /> */}
         <div className="preview-music">
           {musicFile && (
             <>
@@ -217,12 +207,11 @@ const Preview: React.FC<Props> = ({
               key={window}
               date={window}
               day={index + 1}
-              // day={windows.indexOf(window) + 1}
               setOpenModal={setOpenModal}
               setDay={setDay}
               setOpenPreviewModal={setOpenPreviewModal}
               musicFX={musicFX}
-              imageURLModal={imageURLModal}  
+              imageURLModal={imageURLModal}
             />
           ))}
         </div>
