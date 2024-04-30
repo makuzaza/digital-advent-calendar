@@ -43,11 +43,7 @@ const CalendarSingle = () => {
   useEffect(() => {
     const getCalendar = () => {
       axios
-        .get(`http://localhost:8000/firestore/calendars/${calendarId}`, {
-          params: {
-            uid: uid,
-          },
-        })
+        .get(`http://localhost:8000/firestore/calendars/${calendarId}`)
         .then((response) => {
           setCalendarData(response.data);
         })
