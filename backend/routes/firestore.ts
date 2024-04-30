@@ -24,11 +24,17 @@ interface Calendar {
     soundFxName: string;
   };
   image: {
-    imageUrl: string;
+    imageURL: string;
     uploadedImageName: string;
   };
-  windowsContent: string[];
-  // Add more properties as needed
+  windowsContent: WindowContent[];
+}
+
+interface WindowContent {
+  text: string;
+  videoURL: string;
+  imageURLModal: string;
+  uploadedImageName?: string;
 }
 
 // get all calendars in the database
@@ -95,50 +101,70 @@ Router.get("/calendars/user", async (req, res) => {
   }
 });
 
-// get a calendar
+// get any user's calendar by id
 Router.get("/calendars/:id", async (req, res) => {
   const calendarId = req.params.id;
-  const uid = req.query.uid as string;
 
   try {
-    const doc = await firestore
+    // Query all user folders under "all calendars"
+    const allCalendarsSnapshot = await firestore
       .collection("all calendars")
-      .doc(uid)
-      .collection("user calendars")
-      .doc(calendarId)
       .get();
-    if (!doc.exists) {
-      res.status(404).json({ error: "Calendar not found" });
-      return;
+
+    // Iterate over each user folder
+    for (const userDoc of allCalendarsSnapshot.docs) {
+      const userUid = userDoc.id;
+
+      // Try to retrieve the calendar from the current user folder
+      const calendarDoc = await firestore
+        .collection("all calendars")
+        .doc(userUid)
+        .collection("user calendars")
+        .doc(calendarId)
+        .get();
+
+      // If the calendar exists in the current user folder, return it
+      if (calendarDoc.exists) {
+        const calendarData = calendarDoc.data();
+        const calendar = {
+          calendarId: calendarDoc.id,
+          ownerUid: calendarData.ownerUid,
+          calendarName: calendarData.title,
+          windows: calendarData.windows,
+          text: {
+            title: calendarData.text.title,
+            titleFont: calendarData.text.titleFont,
+            titleFontSize: calendarData.text.titleFontSize,
+            titleColor: calendarData.text.titleColor,
+            subtitle: calendarData.text.subtitle,
+            subtitleFont: calendarData.text.subtitleFont,
+            subTitleFontSize: calendarData.text.subTitleFontSize,
+            subtitleColor: calendarData.text.subtitleColor,
+          },
+          image: {
+            imageURL: calendarData.image.imageURL,
+            uploadedImageName: calendarData.image.uploadedImageName,
+          },
+          sounds: {
+            musicName: calendarData.sounds.musicName,
+            soundFxName: calendarData.sounds.soundFxName,
+          },
+          windowsContent: calendarData.windowContent.map(
+            (window: WindowContent) => ({
+              text: window.text,
+              videoURL: window.videoURL,
+              imageURLModal: window.imageURLModal,
+              uploadedImageName: window.uploadedImageName,
+            })
+          ),
+          // Map other properties from the document as needed
+        };
+        return res.status(200).json(calendar);
+      }
     }
-    const calendarData = doc.data();
-    const calendar: Calendar = {
-      calendarId: doc.id,
-      ownerUid: calendarData.ownerUid,
-      calendarName: calendarData.title,
-      windows: calendarData.windows,
-      text: {
-        title: calendarData.text.title,
-        titleFont: calendarData.text.titleFont,
-        titleFontSize: calendarData.text.titleFontSize,
-        titleColor: calendarData.text.titleColor,
-        subtitle: calendarData.text.subtitle,
-        subtitleFont: calendarData.text.subtitleFont,
-        subTitleFontSize: calendarData.text.subTitleFontSize,
-        subtitleColor: calendarData.text.subtitleColor,
-      },
-      image: {
-        imageUrl: calendarData.image.imageUrl,
-        uploadedImageName: calendarData.image.uploadedImageName,
-      },
-      sounds: {
-        musicName: calendarData.sounds.musicName,
-        soundFxName: calendarData.sounds.soundFxName,
-      },
-      windowsContent: calendarData.windowsContent,
-      // Map other properties from the document as needed
-    };
-    res.status(200).json(calendar);
+
+    // If calendar is not found in any user folder, return 404
+    res.status(404).json({ error: "Calendar not found" });
   } catch (error) {
     console.error("Error fetching calendar:", error.message);
     res.status(500).json({ error: "Internal server error" });
