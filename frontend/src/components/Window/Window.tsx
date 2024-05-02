@@ -1,9 +1,14 @@
 // styles
 import "./Window.css";
 
+import React from "react";
+
 // icons
 // import AddIcon from "@mui/icons-material/Add";
 import PreviewIcon from "@mui/icons-material/Preview";
+
+import { useState, useEffect } from "react";
+import { WindowContent } from "../Modal/Modal";
 
 type Props = {
   day: number;
@@ -22,8 +27,17 @@ const Window: React.FC<Props> = ({
   setDay,
   setOpenPreviewModal,
   musicFX,
-  imageURLModal,
 }) => {
+
+  const [windowContent, setWindowContent] = useState<WindowContent[]>([]);
+
+  useEffect(() => {
+    const savedContent = localStorage.getItem(`day_${day}_content`);
+    if (savedContent) {
+      setWindowContent(JSON.parse(savedContent));
+    }
+  }, [day]);
+
   const handleAddClick = (day: number) => {
     setOpenModal(true);
     setDay(day);
@@ -58,6 +72,10 @@ const Window: React.FC<Props> = ({
 
     return `${month} ${day}`;
   }
+
+  const { imageURLModal } = windowContent[day - 1] || {
+    imageURLModal: "",
+  };
 
   return (
     <div className="window-container"> 

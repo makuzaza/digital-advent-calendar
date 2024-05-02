@@ -11,6 +11,7 @@ import Window from "./Window/Window";
 import MusicPlayer from "./SidebarSounds/MusicPlayer";
 import Modal from "../components/Modal/Modal";
 import PreviewModal from "../components/PreviewModal/PreviewModal";
+import { WindowContent } from "./Modal/Modal";
 
 import { Button, Typography } from "@mui/material";
 
@@ -40,17 +41,18 @@ type Props = {
   musicFX: string;
   selectedBackground: string;
   uploadedImageName: string;
-  windowContent: WindowContent[];
   imageURLModal: string;
   setImageURLModal: (imageURLModal: string) => void;
+  windowContent: WindowContent[];
+  setWindowContent: (windowContent: WindowContent[]) => void;
 };
 
-interface WindowContent {
-  text: string;
-  videoURL: string;
-  imageURLModal: string;
-  uploadedImageName?: string;
-}
+// interface WindowContent {
+//   text: string;
+//   videoURL: string;
+//   imageURLModal: string;
+//   uploadedImageName?: string;
+// }
 
 interface Json {
   ownerUid: string;
@@ -96,12 +98,14 @@ const Preview: React.FC<Props> = ({
   uploadedImageName,
   setImageURLModal,
   imageURLModal,
+  windowContent,
+  setWindowContent,
 }) => {
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const [windowContent, setWindowContent] = useState<WindowContent[]>(
-    Array(windows.length).fill({ imageURLModal: "", videoURL: "", text: "" })
-  );
+  // const [windowContent, setWindowContent] = useState<WindowContent[]>(
+  //   Array(windows.length).fill({ imageURLModal: imageURLModal, videoURL: "", text: "" })
+  // );
 
   const token = useAppSelector((state) => state.token.token);
   const uid = useAppSelector((state) => state.uid.uid);
