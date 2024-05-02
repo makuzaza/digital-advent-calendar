@@ -54,32 +54,12 @@ const PreviewFinal: React.FC<Props> = ({
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
   const [day, setDay] = useState(1);
 
+  const backgroundStyle = imageURL ? { backgroundImage: `url(${imageURL})`, minHeight: '85vh' } : {};
+
   return (
-    <div className="home">
-      <div>
-        <CopyURL />
-        <Share url={window.location.href} />
-      </div>
+    <div className="home" style={backgroundStyle}>
       <div id="preview-container">
         <div className="preview preview-final">
-          <div>
-            {musicFile && (
-              <>
-                <p>Music: </p>
-                <MusicPlayer audioSrc={musicFile} type={"music"} />
-              </>
-            )}
-          </div>
-          <div className="preview-soundfx">
-            {musicFX && (
-              <>
-                <p>FX: </p>
-                <MusicPlayer audioSrc={musicFX} type={"soundFx"} />
-              </>
-            )}
-          </div>
-          <img src={imageURL} alt="" width="100" height="100" />
-
           <div className="title">
             <Typography
               variant="h4"
@@ -104,6 +84,22 @@ const PreviewFinal: React.FC<Props> = ({
               {subtitle}
             </Typography>
           </div>
+          <div >
+            {musicFile && (
+              <>
+                <p>Music: </p>
+                <div style={{ display: 'flex', justifyContent: 'center'}}><MusicPlayer audioSrc={musicFile} type={"music"} /></div>
+              </>
+            )}
+          </div>
+          <div className="preview-soundfx">
+            {musicFX && (
+              <>
+                <p>FX: </p>
+                <div style={{ display: 'flex', justifyContent: 'center'}}><MusicPlayer audioSrc={musicFX} type={"soundFx"} /></div>
+              </>
+            )}
+          </div>
           <div className="windows">
             {windows.map((window, index) => (
               <WindowFinal
@@ -127,6 +123,10 @@ const PreviewFinal: React.FC<Props> = ({
             </div>
           )}
         </div>
+      </div>
+      <div style={{ marginBottom: '20px', display: 'flex', alignItems: 'center' }}>
+        <CopyURL />
+        <Share url={window.location.href} />
       </div>
     </div>
   );
