@@ -1,8 +1,8 @@
 import {
-  FacebookShareButton,
+  // FacebookShareButton,
   WhatsappShareButton,
   EmailShareButton,
-  FacebookIcon,
+  // FacebookIcon,
   WhatsappIcon,
   EmailIcon,
 } from "react-share";
@@ -14,9 +14,9 @@ type Props = {
 const ShareOnFacebook: React.FC<Props> = ({ url }) => {
   return (
     <>
-      <FacebookShareButton url={url} hashtag="#YODA">
+      {/* <FacebookShareButton url={url} hashtag="#YODA">
         <FacebookIcon size={32} round={true} />
-      </FacebookShareButton>
+      </FacebookShareButton> */}
       <WhatsappShareButton url={url} title="YODA calendars" separator=" | ">
         <WhatsappIcon size={32} round={true} />
       </WhatsappShareButton>

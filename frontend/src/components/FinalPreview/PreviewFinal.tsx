@@ -10,7 +10,7 @@ import PreviewModalFinal from "./PreviewModalFinal";
 
 import { Typography } from "@mui/material";
 import CopyURL from "../Share/CopyURL";
-import ShareOnWhatsappOrFacebook from "../Share/ShareOnWhatsappOrFacebook";
+import Share from "../Share/Share";
 
 type Props = {
   title: string;
@@ -60,7 +60,7 @@ const PreviewFinal: React.FC<Props> = ({
     <div className="home">
       <div>
         <CopyURL />
-        <ShareOnWhatsappOrFacebook url={window.location.href} />
+        <Share url={window.location.href} />
       </div>
       <div id="preview-container">
         <div className="preview preview-final">
