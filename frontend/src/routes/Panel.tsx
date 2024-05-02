@@ -5,6 +5,7 @@ import { useState } from "react";
 // components
 import Sidebar from "../components/Sidebar";
 import Preview from "../components/Preview";
+import { WindowContent } from "../components/Modal/Modal";
 
 const Panel: React.FC = () => {
   const fontOptions = [
@@ -65,6 +66,7 @@ const Panel: React.FC = () => {
   const [selectedBackground, setSelectedBackground] = useState<string>("");
   const [uploadedImageName, setUploadedImageName] = useState("");
   const [imageURLModal, setImageURLModal] = useState("");
+  const [windowContent, setWindowContent] = useState<WindowContent[]>([]);
 
   return (
     <div className="panel">
@@ -122,12 +124,10 @@ const Panel: React.FC = () => {
         uploadedImageName={uploadedImageName}
         setImageURLModal={setImageURLModal}
         imageURLModal={imageURLModal}
-        windowContent={windows.map((window) => ({
-          text: "",
-          videoURL: "",
-          imageURLModal: "",
-        }))}
+        windowContent={windowContent}
+        setWindowContent={setWindowContent}
       />
+
     </div>
   );
 };

@@ -41,7 +41,7 @@ const About = () => {
           </p>
         </div>
         <div>
-          <h3>Meat the Team: </h3>
+          <h3>Meet the Team: </h3>
           <div className="team">
           <div className="people">
           <p>Kuznetsova Maria</p>

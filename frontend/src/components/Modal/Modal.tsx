@@ -37,6 +37,7 @@ const Modal: React.FC<Props> = ({
   amountOfWindows,
   windowContent,
   setWindowContent,
+  setImageURLModal,
 }) => {
   const [contentVisible, setContentVisible] = useState<ContentVisibility>({});
 
@@ -77,6 +78,7 @@ const Modal: React.FC<Props> = ({
   const handleSave = () => {
     localStorage.setItem(`day_${day}_content`, JSON.stringify(windowContent));
     setOpenModal(false);
+    setImageURLModal(windowContent[day - 1].imageURLModal);
   };
 
   // show / hide content
@@ -132,6 +134,8 @@ const Modal: React.FC<Props> = ({
     text: "",
     imageURLModal: "",
   };
+
+  // console.log(imageURLModal);
 
   return (
  
