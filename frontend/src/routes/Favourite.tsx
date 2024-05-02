@@ -91,13 +91,13 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
 
   return (
     <div
-      style={{ background: "transparent", textAlign: "center" }}
+      style={{ background: "transparent", textAlign: "center"}}
     >
-      {(pathname === "/calendars" || pathname === "/favourites") && (
+   {(pathname === "/calendars" || pathname === "/favourites") && (
         <Search handleSearch={handleSearch} search={search} />
       )}
       <h1>Here are your saved calendars</h1>
-      <div className="calendars">
+      <div >
         {calendars
           .filter((elem) =>
             elem.data.text.title.toLowerCase().includes(search.toLowerCase())

@@ -18,9 +18,10 @@ const ShareOnFacebook: React.FC<Props> = ({ url }) => {
         <FacebookIcon size={32} round={true} />
       </FacebookShareButton> */}
       <WhatsappShareButton url={url} title="YODA calendars" separator=" | ">
-        <WhatsappIcon size={32} round={true} />
+        <WhatsappIcon size={32} round={true} style={{ marginLeft: "15px", paddingTop: '5px'}}/>
       </WhatsappShareButton>
       <EmailShareButton
+        style={{ marginLeft: "15px", alignItems: "center", paddingTop: '5px'}}
         url={url}
         subject="YODA calendars"
         body="We invite you to explore, create, and share joy with YODA!"
