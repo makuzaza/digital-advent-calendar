@@ -27,7 +27,6 @@ type Props = {
   imageURL: string;
   uploadedImageName: string;
   windowsContent: WindowContent[];
-  imageURLModal: string;
 };
 
 interface WindowContent {
@@ -50,7 +49,6 @@ const PreviewFinal: React.FC<Props> = ({
   musicFile,
   musicFX,
   imageURL,
-  imageURLModal,
   windowsContent,
 }) => {
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
@@ -110,7 +108,7 @@ const PreviewFinal: React.FC<Props> = ({
                 date={window}
                 day={index + 1}
                 setDay={setDay}
-                imageURLModal={imageURLModal}
+                windowsContent={windowsContent}
               />
             ))}
           </div>

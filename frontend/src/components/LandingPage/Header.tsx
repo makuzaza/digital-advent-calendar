@@ -29,7 +29,11 @@ const Header: React.FC = () => {
           </Link>
           {token && (
             <>
-              <Link to="/panel" className={styles.navLink}>
+              <Link
+                to="/panel"
+                className={styles.navLink}
+                onClick={() => localStorage.clear()}
+              >
                 <Button color="inherit">Create Calendar</Button>
               </Link>
               <Link to="/favourites" className={styles.navLink}>
