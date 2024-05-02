@@ -75,16 +75,19 @@ const Modal: React.FC<Props> = ({
   };
 
   const handleSave = () => {
-    // Convert existing localStorage data to an object if it exists
-    const existingData =
-      JSON.parse(localStorage.getItem("windowcontent") as string) || {};
+    localStorage.setItem(`windowcontent`, JSON.stringify(windowContent));
+  };
 
+  /* const handleSave = () => {
+    // Convert existing localStorage data to an object if it exists
+    const existingData = JSON.parse(localStorage.getItem('windowcontent')) || {};
+    
     // Merge existingData with windowContent, preserving empty values
     const mergedData = { ...existingData, ...windowContent };
 
     // Store the merged data in localStorage
-    localStorage.setItem("windowcontent", JSON.stringify(mergedData));
-  };
+    localStorage.setItem('windowcontent', JSON.stringify(mergedData));
+}; */
 
   // show / hide content
   const toggleContent = (contentID: string) => {
