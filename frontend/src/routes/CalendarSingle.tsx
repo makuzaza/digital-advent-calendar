@@ -30,7 +30,6 @@ interface CalendarData {
 interface WindowContent {
   text: string;
   videoURL: string;
-  imageURLModal: string;
   uploadedImageName?: string;
 }
 

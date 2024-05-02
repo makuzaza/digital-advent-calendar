@@ -33,7 +33,7 @@ interface Calendar {
 interface WindowContent {
   text: string;
   videoURL: string;
-  imageURLModal: string;
+  imageURLModal?: string;
   uploadedImageName?: string;
 }
 
@@ -153,7 +153,7 @@ Router.get("/calendars/:id", async (req, res) => {
             (window: WindowContent) => ({
               text: window.text,
               videoURL: window.videoURL,
-              imageURLModal: window.imageURLModal,
+              // imageURLModal: window.imageURLModal,
               uploadedImageName: window.uploadedImageName,
             })
           ),
