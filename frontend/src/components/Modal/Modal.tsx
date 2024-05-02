@@ -16,7 +16,7 @@ type Props = {
   amountOfWindows: number;
   windowContent: WindowContent[];
   setWindowContent: (windowContent: WindowContent[]) => void;
-  setImageURLModal: (imageURLModal: string) => void;};
+};
 
 type ContentVisibility = {
   [key: string]: boolean;
@@ -37,7 +37,6 @@ const Modal: React.FC<Props> = ({
   amountOfWindows,
   windowContent,
   setWindowContent,
-  setImageURLModal,
 }) => {
   const [contentVisible, setContentVisible] = useState<ContentVisibility>({});
 
@@ -78,7 +77,6 @@ const Modal: React.FC<Props> = ({
   const handleSave = () => {
     localStorage.setItem(`day_${day}_content`, JSON.stringify(windowContent));
     setOpenModal(false);
-    setImageURLModal(windowContent[day - 1].imageURLModal);
   };
 
   // show / hide content
@@ -135,101 +133,98 @@ const Modal: React.FC<Props> = ({
     imageURLModal: "",
   };
 
-  // console.log(imageURLModal);
-
   return (
- 
-    <div className={`modal ${openModal ? 'open' : ''}`}>
-    <div className="modal-backdrop" onClick={() => setOpenModal(false)}></div>
-    <div className="modal-content">
-      <div className="modal-navigation"> 
-        <div>Window: {day}</div>
-        <div
-          className="modal-navigation-item"
-          onClick={() => handleClick("previous")}
-        >
-          Previous window
+    <div className={`modal ${openModal ? "open" : ""}`}>
+      <div className="modal-backdrop" onClick={() => setOpenModal(false)}></div>
+      <div className="modal-content">
+        <div className="modal-navigation">
+          <div>Window: {day}</div>
+          <div
+            className="modal-navigation-item"
+            onClick={() => handleClick("previous")}
+          >
+            Previous window
+          </div>
+          <div
+            className="modal-navigation-item"
+            onClick={() => handleClick("next")}
+          >
+            Next window
+          </div>
         </div>
-        <div
-          className="modal-navigation-item"
-          onClick={() => handleClick("next")}
-        >
-          Next window
+        <div className="image-input" style={{ margin: "20px" }}>
+          <label htmlFor="image-upload">Upload Image:</label>
+          <input
+            id="image-upload"
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+          />
+          <div>
+            {imageURLModal && (
+              <>
+                <p>Your saved image:</p>
+                <img
+                  src={imageURLModal}
+                  alt="Uploaded"
+                  style={{ maxHeight: "150px" }}
+                />
+              </>
+            )}
+          </div>
         </div>
-      </div>
-      <div className="image-input" style={{ margin: "20px" }}>
-        <label htmlFor="image-upload">Upload Image:</label>
-        <input
-          id="image-upload"
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-        />
-        <div>
-          {imageURLModal && (
+
+        <div className="texts">
+          <TextField
+            id="outlined-basic"
+            multiline
+            rows={4}
+            label="Text"
+            variant="outlined"
+            value={text}
+            onChange={(e) =>
+              setWindowContent(
+                windowContent.map((item, index) =>
+                  index === day - 1 ? { ...item, text: e.target.value } : item
+                )
+              )
+            }
+          />
+        </div>
+
+        {openModal && (
+          <div className="close-modal" onClick={() => setOpenModal(false)}>
+            <CloseIcon />
+          </div>
+        )}
+
+        <label className="video-input">
+          <h3 onClick={() => toggleContent("video-input")}>
+            <button> Add a video</button>
+          </h3>
+          {contentVisible["video-input"] && (
             <>
-              <p>Your saved image:</p>
-              <img
-                src={imageURLModal}
-                alt="Uploaded"
-                style={{ maxHeight: "150px"}}
+              <span className="span-text">Paste your URL here: </span>
+              <input
+                type="text"
+                value={videoURL}
+                onChange={(e) =>
+                  setWindowContent(
+                    windowContent.map((item, index) =>
+                      index === day - 1
+                        ? { ...item, videoURL: e.target.value }
+                        : item
+                    )
+                  )
+                }
               />
+              <EmbedVideo videoURL={videoURL} />
             </>
           )}
-        </div>
-      </div>
-
-      <div className="texts">
-        <TextField
-          id="outlined-basic"
-          multiline
-          rows={4}
-          label="Text"
-          variant="outlined"
-          value={text}
-          onChange={(e) =>
-            setWindowContent(
-              windowContent.map((item, index) =>
-                index === day - 1 ? { ...item, text: e.target.value } : item
-              )
-            )
-          }
-        />
-      </div>
-
-      {openModal && (
-        <div className="close-modal" onClick={() => setOpenModal(false)}>
-          <CloseIcon />
-        </div>
-      )}
-
-      <label className="video-input">
-        <h3 onClick={() => toggleContent("video-input")}>
-          <button> Add a video</button>
-        </h3>
-        {contentVisible["video-input"] && (
-          <>
-            <span className="span-text">Paste your URL here: </span>
-            <input
-              type="text"
-              value={videoURL}
-              onChange={(e) =>
-                setWindowContent(
-                  windowContent.map((item, index) =>
-                    index === day - 1
-                      ? { ...item, videoURL: e.target.value }
-                      : item
-                  )
-                )
-              }
-            />
-            <EmbedVideo videoURL={videoURL} />
-          </>
-        )}
-      </label>
-      <Button variant="contained" color="primary" onClick={handleSave}>
-        Save
-      </Button>
+        </label>
+        <Button variant="contained" color="primary" onClick={handleSave}>
+          Save
+        </Button>
       </div>
     </div>
   );

@@ -1,13 +1,10 @@
 // styles
 import "./Window.css";
 
-import React from "react";
-
 // icons
-// import AddIcon from "@mui/icons-material/Add";
 import PreviewIcon from "@mui/icons-material/Preview";
 
-import { useState, useEffect } from "react";
+// types
 import { WindowContent } from "../Modal/Modal";
 
 type Props = {
@@ -17,7 +14,7 @@ type Props = {
   setDay: (day: number) => void;
   setOpenPreviewModal: (openPreviewModal: boolean) => void;
   musicFX: string;
-  imageURLModal: string;
+  windowContent: WindowContent[];
 };
 
 const Window: React.FC<Props> = ({
@@ -26,18 +23,9 @@ const Window: React.FC<Props> = ({
   setOpenModal,
   setDay,
   setOpenPreviewModal,
+  windowContent,
   musicFX,
 }) => {
-
-  const [windowContent, setWindowContent] = useState<WindowContent[]>([]);
-
-  useEffect(() => {
-    const savedContent = localStorage.getItem(`day_${day}_content`);
-    if (savedContent) {
-      setWindowContent(JSON.parse(savedContent));
-    }
-  }, [day]);
-
   const handleAddClick = (day: number) => {
     setOpenModal(true);
     setDay(day);
@@ -73,26 +61,28 @@ const Window: React.FC<Props> = ({
     return `${month} ${day}`;
   }
 
-  const { imageURLModal } = windowContent[day - 1] || {
-    imageURLModal: "",
-  };
-
   return (
-    <div className="window-container"> 
-     <div className="open_door" style={{ backgroundImage: `url(${imageURLModal})`, backgroundPosition: "center", backgroundSize: "cover", backgroundRepeat: "no-repeat"
-     }}></div>
-     {/* <div className="open_door" ></div> */}
-      <div className="window" > 
-          <div className="day" onClick={() => handleAddClick(day)}>{day}</div>
-          <div className="icon-box" onClick={() => handleAddClick(day)}>
-        {/* <AddIcon fontSize="large" /> */}
+    <div className="window-container">
+      <div
+        className="open_door"
+        style={{
+          backgroundImage: `url(${windowContent[day - 1]?.imageURLModal})`,
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+        }}
+      ></div>
+      {/* <div className="open_door" ></div> */}
+      <div className="window">
+        <div className="day" onClick={() => handleAddClick(day)}>
+          {day}
+        </div>
+        <div className="icon-box" onClick={() => handleAddClick(day)}>
           <div>{formatDate(date)}</div>
         </div>
         <div className="preview-icon" onClick={() => handlePreviewClick(day)}>
-        <PreviewIcon style={{ fontSize: 40 }}/>
-  
-        </div>   
-      
+          <PreviewIcon style={{ fontSize: 40 }} />
+        </div>
       </div>
     </div>
   );

@@ -41,18 +41,9 @@ type Props = {
   musicFX: string;
   selectedBackground: string;
   uploadedImageName: string;
-  imageURLModal: string;
-  setImageURLModal: (imageURLModal: string) => void;
   windowContent: WindowContent[];
   setWindowContent: (windowContent: WindowContent[]) => void;
 };
-
-// interface WindowContent {
-//   text: string;
-//   videoURL: string;
-//   imageURLModal: string;
-//   uploadedImageName?: string;
-// }
 
 interface Json {
   ownerUid: string;
@@ -96,16 +87,11 @@ const Preview: React.FC<Props> = ({
   musicFX,
   selectedBackground,
   uploadedImageName,
-  setImageURLModal,
-  imageURLModal,
   windowContent,
   setWindowContent,
 }) => {
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  // const [windowContent, setWindowContent] = useState<WindowContent[]>(
-  //   Array(windows.length).fill({ imageURLModal: imageURLModal, videoURL: "", text: "" })
-  // );
 
   const token = useAppSelector((state) => state.token.token);
   const uid = useAppSelector((state) => state.uid.uid);
@@ -215,7 +201,7 @@ const Preview: React.FC<Props> = ({
               setDay={setDay}
               setOpenPreviewModal={setOpenPreviewModal}
               musicFX={musicFX}
-              imageURLModal={imageURLModal}
+              windowContent={windowContent}
             />
           ))}
         </div>
@@ -229,7 +215,6 @@ const Preview: React.FC<Props> = ({
               amountOfWindows={windows.length}
               windowContent={windowContent}
               setWindowContent={setWindowContent}
-              setImageURLModal={setImageURLModal}
             />
           </div>
         )}
