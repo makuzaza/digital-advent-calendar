@@ -224,6 +224,8 @@ const Preview: React.FC<Props> = ({
               day={day}
               openPreviewModal={openPreviewModal}
               setOpenPreviewModal={setOpenPreviewModal}
+              windowContent={windowContent}
+              setWindowContent={setWindowContent}
             />
           </div>
         )}

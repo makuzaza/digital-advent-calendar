@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 import PreviewFinal from "../components/FinalPreview/PreviewFinal";
-import { useAppSelector } from "../hooks/useAppDispatch";
 
 interface CalendarData {
   text: {
@@ -38,22 +37,22 @@ interface WindowContent {
 const CalendarSingle = () => {
   const { calendarId } = useParams();
   const [calendarData, setCalendarData] = useState<CalendarData>();
-  const uid = useAppSelector((state) => state.uid.uid);
 
   useEffect(() => {
     const getCalendar = () => {
       axios
         .get(`http://localhost:8000/firestore/calendars/${calendarId}`)
         .then((response) => {
+          console.log(response.data);
           setCalendarData(response.data);
         })
         .catch((error) => {
-          console.error("Error sending token to backend:", error);
+          console.error("Error", error);
         });
     };
 
     getCalendar();
-  }, [calendarId, uid]);
+  }, [calendarId]);
 
   if (!calendarData) {
     return <div>Loading...</div>;
@@ -75,7 +74,6 @@ const CalendarSingle = () => {
         musicFX={calendarData.sounds.soundFxName}
         imageURL={calendarData.image.imageURL}
         uploadedImageName={calendarData.image.uploadedImageName}
-        imageURLModal={calendarData.image.imageURLModal}
         windowsContent={calendarData.windowsContent}
       />
     </div>

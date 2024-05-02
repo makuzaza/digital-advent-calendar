@@ -1,27 +1,31 @@
 import CloseIcon from "@mui/icons-material/Close";
 import EmbedVideo from "../EmbedVideo/EmbedVideo";
-import { useState, useEffect } from "react";
+import { /* useState,  */ useEffect } from "react";
 import { WindowContent } from "../Modal/Modal";
 
 type Props = {
   openPreviewModal: boolean;
   setOpenPreviewModal: (openPreviewModal: boolean) => void;
   day: number;
+  windowContent: WindowContent[];
+  setWindowContent: (windowContent: WindowContent[]) => void;
 };
 
 const PreviewModal: React.FC<Props> = ({
   openPreviewModal,
   setOpenPreviewModal,
   day,
+  windowContent,
+  setWindowContent,
 }) => {
-  const [windowContent, setWindowContent] = useState<WindowContent[]>([]);
+  // const [windowContent, setWindowContent] = useState<WindowContent[]>([]);
 
   useEffect(() => {
-    const savedContent = localStorage.getItem(`day_${day}_content`);
+    const savedContent = localStorage.getItem(`windowcontent`);
     if (savedContent) {
       setWindowContent(JSON.parse(savedContent));
     }
-  }, [day]);
+  }, [day, setWindowContent]);
 
   const { videoURL, text, imageURLModal } = windowContent[day - 1] || {
     videoURL: "",
@@ -31,31 +35,40 @@ const PreviewModal: React.FC<Props> = ({
 
   return (
     <div className={`modal ${openPreviewModal ? "open" : ""}`}>
-      <div className="modal-backdrop" onClick={() => setOpenPreviewModal(false)}></div>
+      <div
+        className="modal-backdrop"
+        onClick={() => setOpenPreviewModal(false)}
+      ></div>
       <div className="modal-content">
-      Window {day}
-      <div>
-        {imageURLModal && (
-          <>
-           <img src={imageURLModal} alt="Uploaded" style={{ width: "450px" }} />
-          </>
+        Window {day}
+        <div>
+          {imageURLModal && (
+            <>
+              <img
+                src={imageURLModal}
+                alt="Uploaded"
+                style={{ width: "450px" }}
+              />
+            </>
+          )}
+        </div>
+        <div>
+          <p>{text}</p>
+        </div>
+        {videoURL && (
+          <div style={{ width: "450" }}>
+            <EmbedVideo videoURL={videoURL} />
+          </div>
+        )}
+        {openPreviewModal && (
+          <div
+            className="close-modal"
+            onClick={() => setOpenPreviewModal(false)}
+          >
+            <CloseIcon />
+          </div>
         )}
       </div>
-      <div>
-        <p>{text}</p>
-      </div>
-      {videoURL && (
-        <div style={{ width: "450"  }}>
-          <EmbedVideo videoURL={videoURL} />
-        </div>
-      )}
-
-      {openPreviewModal && (
-        <div className="close-modal" onClick={() => setOpenPreviewModal(false)}>
-          <CloseIcon />
-        </div>
-      )}
-    </div>
     </div>
   );
 };

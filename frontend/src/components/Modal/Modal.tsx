@@ -45,7 +45,7 @@ const Modal: React.FC<Props> = ({
 
   useEffect(() => {
     if (openModal) {
-      const savedContent = localStorage.getItem(`day_${day}_content`);
+      const savedContent = localStorage.getItem(`windowcontent`);
       if (savedContent) {
         setWindowContent(JSON.parse(savedContent));
       }
@@ -75,8 +75,7 @@ const Modal: React.FC<Props> = ({
   };
 
   const handleSave = () => {
-    localStorage.setItem(`day_${day}_content`, JSON.stringify(windowContent));
-    setOpenModal(false);
+    localStorage.setItem(`windowcontent`, JSON.stringify(windowContent));
   };
 
   // show / hide content
@@ -141,13 +140,19 @@ const Modal: React.FC<Props> = ({
           <div>Window: {day}</div>
           <div
             className="modal-navigation-item"
-            onClick={() => handleClick("previous")}
+            onClick={() => {
+              handleClick("previous");
+              handleSave();
+            }}
           >
             Previous window
           </div>
           <div
             className="modal-navigation-item"
-            onClick={() => handleClick("next")}
+            onClick={() => {
+              handleClick("next");
+              handleSave();
+            }}
           >
             Next window
           </div>
@@ -204,7 +209,7 @@ const Modal: React.FC<Props> = ({
           </h3>
           {contentVisible["video-input"] && (
             <>
-              <span className="span-text">Paste your URL here: </span>
+              <span className="span-text">Paste your YouTube link here: </span>
               <input
                 type="text"
                 value={videoURL}
@@ -222,7 +227,14 @@ const Modal: React.FC<Props> = ({
             </>
           )}
         </label>
-        <Button variant="contained" color="primary" onClick={handleSave}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            handleSave();
+            setOpenModal(false);
+          }}
+        >
           Save
         </Button>
       </div>

@@ -1,10 +1,11 @@
 // styles
+import { WindowContent } from "../Modal/Modal";
 import "../Window/Window.css";
 
 type Props = {
   day: number;
   date: string;
-  imageURLModal: string;
+  windowsContent: WindowContent[];
   setDay: (value: number) => void;
   setOpenPreviewModal: (value: boolean) => void;
 };
@@ -12,7 +13,7 @@ type Props = {
 const WindowFinal: React.FC<Props> = ({
   date,
   day,
-  imageURLModal,
+  windowsContent,
   setOpenPreviewModal,
   setDay,
 }) => {
@@ -48,7 +49,7 @@ const WindowFinal: React.FC<Props> = ({
       <div
         className="open_door"
         style={{
-          backgroundImage: `url(${imageURLModal})`,
+          backgroundImage: `url(${windowsContent[day - 1]?.imageURLModal})`,
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",

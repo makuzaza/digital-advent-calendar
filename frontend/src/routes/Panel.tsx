@@ -65,8 +65,13 @@ const Panel: React.FC = () => {
   const [subtitleColor, setSubtitleColor] = useState("#000000");
   const [selectedBackground, setSelectedBackground] = useState<string>("");
   const [uploadedImageName, setUploadedImageName] = useState("");
-  const [imageURLModal, setImageURLModal] = useState("");
-  const [windowContent, setWindowContent] = useState<WindowContent[]>([]);
+  const [windowContent, setWindowContent] = useState<WindowContent[]>(
+    Array.from({ length: windows.length }, () => ({
+      videoURL: "",
+      text: "",
+      imageURLModal: "",
+    }))
+  );
 
   return (
     <div className="panel">
@@ -122,12 +127,9 @@ const Panel: React.FC = () => {
         musicFX={musicFX}
         selectedBackground={selectedBackground}
         uploadedImageName={uploadedImageName}
-        setImageURLModal={setImageURLModal}
-        imageURLModal={imageURLModal}
         windowContent={windowContent}
         setWindowContent={setWindowContent}
       />
-
     </div>
   );
 };
