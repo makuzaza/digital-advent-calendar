@@ -97,7 +97,7 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
         <Search handleSearch={handleSearch} search={search} />
       )}
       <h1>Here are your saved calendars</h1>
-      <div >
+      <div className="calends">
         {calendars
           .filter((elem) =>
             elem.data.text.title.toLowerCase().includes(search.toLowerCase())

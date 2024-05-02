@@ -10,7 +10,7 @@ const Favourites: React.FC = () => {
   };
   
   return (
-    <div className=" favourites">
+    <div className="favourites">
       <Favourite search={search} setSearch={setSearch} handleSearch={handleSearch}/>
     </div>
   );
