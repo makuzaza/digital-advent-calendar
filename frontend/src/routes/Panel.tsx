@@ -70,6 +70,7 @@ const Panel: React.FC = () => {
       videoURL: "",
       text: "",
       imageURLModal: "",
+      uploadedImageName: "",
     }))
   );
 
