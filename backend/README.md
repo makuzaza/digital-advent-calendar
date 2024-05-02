@@ -36,6 +36,16 @@ This saves to: 'all calendars' / { uid } / 'user calendars' / { calendar id }
 
 #### IMAGES
 
+##### Profile picture
+
+- GET profile picture by name: `/storage/profile_pictures/:profile_picture` ✅
+
+- POST (add) profile picture: `/storage/profile_pictures/` ✅
+
+- DELETE: `/storage/profile_pictures/:profile_picture` ✅
+
+##### Other images
+
 - GET image by name: `/storage/images/:imageName` ✅
 
 - POST (add) image: `/storage/images/` ✅

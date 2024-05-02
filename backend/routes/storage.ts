@@ -126,6 +126,87 @@ Router.delete("/images/:imageName", verifyToken, async (req, res) => {
   }
 });
 
+// Endpoint to download profile picture
+Router.get("/profile_pictures/:profile_picture", async (req, res) => {
+  try {
+    const imageName = req.params.profile_picture;
+
+    // Specify the full path to the image within the 'images' folder
+    const imagePath = "profile_pictures/" + imageName;
+
+    // Access file from the bucket
+    const file = bucket.file(imagePath);
+
+    // Download file as buffer
+    const fileBuffer = await file.download();
+
+    // Set response content type
+    res.contentType("image/jpeg"); // Adjust content type based on your image type
+
+    // Send image buffer in response
+    res.send(fileBuffer[0]);
+  } catch (error) {
+    console.error("Error downloading image:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Endpoint to upload profile picture
+Router.post(
+  "/profile_pictures",
+  verifyToken,
+  upload.single("image"),
+  async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).send("No file uploaded");
+      }
+
+      // Get file path
+      const filePath = req.file.path;
+
+      // Access UID data
+      const uid = req.body.uid;
+
+      // Upload file to Firebase Storage
+      await bucket.upload(filePath, {
+        destination: `profile_pictures/${uid}/${req.file.originalname}`, // Define destination path in Firebase Storage
+      });
+
+      return res.status(200).send("File uploaded successfully");
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  }
+);
+
+// Endpoint to delete profile picture
+Router.delete(
+  "/profile_pictures/:profile_picture",
+  verifyToken,
+  async (req, res) => {
+    try {
+      const imageName = req.params.profile_picture;
+      const uid = req.body.uid;
+
+      // Specify the full path to the image within the 'images' folder
+      const imagePath = `profile_pictures/${uid}/${imageName}`;
+
+      // Access file from the bucket
+      const file = bucket.file(imagePath);
+
+      // Delete the file
+      await file.delete();
+
+      return res.status(200).send("File deleted successfully");
+    } catch (error) {
+      console.error("Error deleting file:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  }
+);
+
 // SOUNDS - MUSIC
 
 // Endpoint to download music
