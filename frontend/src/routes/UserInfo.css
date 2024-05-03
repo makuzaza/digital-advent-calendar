@@ -1,30 +1,59 @@
 .user-info {
-  background-color: rgba(217, 217, 217, 0.7);
+  background-color: #ffffff;
   color: #333;
   margin: 20px;
+  padding: 20px;
   border-radius: 5px;
-}
-
-.user-info .flex {
   display: flex;
-  justify-content: space-between;
+  height: 70vh;
 }
 
 .user-info .info-box {
   margin: 5px;
-  padding: 0 10px 10px;
-  border: 1px solid #10617a;
-  border-radius: 2px;
+  padding: 10px;
+  border-radius: 14px;
+  background-color: #eaeaea;
+}
+.user-info .info-box .profile-pic img,
+.user-info .info-box .profile-pic {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  border-radius: 100px;
+  position: relative;
 }
 
+#editor {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  bottom: 5px;
+  right: -10px;
+}
+#editor:hover {
+  cursor: pointer;
+}
+.remove-and-upload {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+.personal-info {
+  display: flex;
+  margin: 40px 0 0 0;
+}
+.user-info .info-box h2 {
+  text-align: center;
+}
 .user-info .info-box .button {
   margin: 10px 0;
 }
 
 .user-info .files-boxes {
   margin: 5px;
-  border: 1px solid #10617a;
-  border-radius: 2px;
+  padding: 10px;
+  border-radius: 14px;
+  background-color: #eaeaea;
 }
 
 .user-info .files-box {
@@ -34,9 +63,9 @@
 
 .user-info .danger-zone {
   margin: 5px;
-  padding: 0 10px 10px;
-  border: 1px solid #d00000;
-  border-radius: 2px;
+  padding: 10px;
+  background-color: #eaeaea;
+  border-radius: 14px;
   color: #d00000;
 }
 
