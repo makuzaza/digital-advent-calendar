@@ -32,7 +32,6 @@ type Props = {
 interface WindowContent {
   text: string;
   videoURL: string;
-  imageURLModal: string;
   uploadedImageName?: string;
 }
 
@@ -52,9 +51,12 @@ const PreviewFinal: React.FC<Props> = ({
   windowsContent,
 }) => {
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
+
   const [day, setDay] = useState(1);
 
-  const backgroundStyle = imageURL ? { backgroundImage: `url(${imageURL})`, minHeight: '85vh' } : {};
+  const backgroundStyle = imageURL
+    ? { backgroundImage: `url(${imageURL})`, minHeight: "85vh" }
+    : {};
 
   return (
     <div className="home" style={backgroundStyle}>
@@ -84,11 +86,13 @@ const PreviewFinal: React.FC<Props> = ({
               {subtitle}
             </Typography>
           </div>
-          <div >
+          <div>
             {musicFile && (
               <>
                 <p>Music: </p>
-                <div style={{ display: 'flex', justifyContent: 'center'}}><MusicPlayer audioSrc={musicFile} type={"music"} /></div>
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <MusicPlayer audioSrc={musicFile} type={"music"} />
+                </div>
               </>
             )}
           </div>
@@ -96,7 +100,9 @@ const PreviewFinal: React.FC<Props> = ({
             {musicFX && (
               <>
                 <p>FX: </p>
-                <div style={{ display: 'flex', justifyContent: 'center'}}><MusicPlayer audioSrc={musicFX} type={"soundFx"} /></div>
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <MusicPlayer audioSrc={musicFX} type={"soundFx"} />
+                </div>
               </>
             )}
           </div>
@@ -124,7 +130,9 @@ const PreviewFinal: React.FC<Props> = ({
           )}
         </div>
       </div>
-      <div style={{ marginBottom: '20px', display: 'flex', alignItems: 'center' }}>
+      <div
+        style={{ marginBottom: "20px", display: "flex", alignItems: "center" }}
+      >
         <CopyURL />
         <Share url={window.location.href} />
       </div>

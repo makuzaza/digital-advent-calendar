@@ -6,12 +6,10 @@ import axios from "axios";
 interface UploadPictureProps {
   setSelectedBackground: (backgroundUrl: string) => void;
   selectedBackground: string;
-  // existingImages: string[];
   setUploadedImageName: (name: string) => void;
 }
 
 const UploadPicture: React.FC<UploadPictureProps> = ({
-  // existingImages,
   setSelectedBackground,
   selectedBackground,
   setUploadedImageName,
@@ -72,7 +70,6 @@ const UploadPicture: React.FC<UploadPictureProps> = ({
         <ExistingImageGallery
           setSelectedBackground={setSelectedBackground}
           selectedBackground={selectedBackground}
-          // existingImages={existingImages}
           onImageSelect={handleBackgroundSelect}
         />
       </div>

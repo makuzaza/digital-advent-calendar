@@ -1,6 +1,9 @@
 // styles
+import axios from "axios";
 import { WindowContent } from "../Modal/Modal";
 import "../Window/Window.css";
+import { useCallback, useEffect, useState } from "react";
+import { useAppSelector } from "../../hooks/useAppDispatch";
 
 type Props = {
   day: number;
@@ -17,6 +20,9 @@ const WindowFinal: React.FC<Props> = ({
   setOpenPreviewModal,
   setDay,
 }) => {
+  const uid = useAppSelector((state) => state.uid.uid);
+  const [windowsImageURL, setWindowsImageURL] = useState("");
+
   function formatDate(inputDate: string) {
     const date = new Date(inputDate);
     const monthNames = [
@@ -39,6 +45,30 @@ const WindowFinal: React.FC<Props> = ({
     return `${month} ${day}`;
   }
 
+  // get image by name from database
+  const getImage = useCallback(() => {
+    const image = windowsContent[day - 1].uploadedImageName;
+    if (!image) return;
+    axios
+      .get(`http://localhost:8000/storage/images/${image}`, {
+        params: {
+          uid: uid,
+        },
+        responseType: "blob", // Set the response type to 'blob'
+      })
+      .then((response) => {
+        // Create a blob URL from the binary data received in the response
+        const imageUrl = URL.createObjectURL(response.data);
+
+        // Set the blob URL as the background image URL
+        setWindowsImageURL(imageUrl);
+      });
+  }, [day, windowsContent, uid, setWindowsImageURL]);
+
+  useEffect(() => {
+    getImage();
+  }, [getImage]);
+
   const handleClick = () => {
     setOpenPreviewModal(true);
     setDay(day - 1);
@@ -49,7 +79,7 @@ const WindowFinal: React.FC<Props> = ({
       <div
         className="open_door"
         style={{
-          backgroundImage: `url(${windowsContent[day - 1]?.imageURLModal})`,
+          backgroundImage: `url(${windowsImageURL})`,
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",

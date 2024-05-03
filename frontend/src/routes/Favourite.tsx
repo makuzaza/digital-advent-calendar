@@ -50,16 +50,14 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
 
   const getUserCalendars = useCallback(async () => {
     if (!uid) return;
-    console.log(`user: ${uid} calendars`);
+
     axios
       .get("http://localhost:8000/firestore/calendars/user", {
         params: {
-          // token: token,
           uid: uid,
         },
       })
       .then((response) => {
-        console.log(response.data);
         setCalendars(response.data);
       });
   }, [uid]);
@@ -85,15 +83,9 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
       });
   };
 
-  useEffect(() => {
-    console.log(calendars);
-  }, [calendars]);
-
   return (
-    <div
-      style={{ background: "transparent", textAlign: "center"}}
-    >
-   {(pathname === "/calendars" || pathname === "/favourites") && (
+    <div style={{ background: "transparent", textAlign: "center" }}>
+      {(pathname === "/calendars" || pathname === "/favourites") && (
         <Search handleSearch={handleSearch} search={search} />
       )}
       <h1>Here are your saved calendars</h1>

@@ -53,9 +53,10 @@ Router.get("/files/:uid", async (req, res) => {
 Router.get("/images/:imageName", async (req, res) => {
   try {
     const imageName = req.params.imageName;
+    const uid = req.query.uid;
 
     // Specify the full path to the image within the 'images' folder
-    const imagePath = "images/" + imageName;
+    const imagePath = `images/${uid}/${imageName}`;
 
     // Access file from the bucket
     const file = bucket.file(imagePath);

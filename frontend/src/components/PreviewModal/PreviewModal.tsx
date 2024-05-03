@@ -18,8 +18,6 @@ const PreviewModal: React.FC<Props> = ({
   windowContent,
   setWindowContent,
 }) => {
-  // const [windowContent, setWindowContent] = useState<WindowContent[]>([]);
-
   useEffect(() => {
     const savedContent = localStorage.getItem(`windowcontent`);
     if (savedContent) {

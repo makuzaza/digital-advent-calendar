@@ -125,10 +125,14 @@ const Preview: React.FC<Props> = ({
         soundFxName: musicFX,
       },
       image: {
-        imageURL: selectedBackground,
+        imageURL: !uploadedImageName ? selectedBackground : "",
         uploadedImageName: uploadedImageName,
       },
-      windowContent: windowContent,
+      windowContent: windowContent.map((window: WindowContent) => ({
+        text: window.text,
+        videoURL: window.videoURL,
+        uploadedImageName: window.uploadedImageName,
+      })),
     };
     console.log(json);
 
