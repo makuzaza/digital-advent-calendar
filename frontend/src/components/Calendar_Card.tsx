@@ -23,7 +23,14 @@ const Calendar_Card: React.FC<Card> = ({
 
   return (
     <div className="calendar-card">
-      <img src={imageURL} alt={imageURL} className="calendar-img" />
+      <div style={{
+        backgroundImage: `url(${imageURL})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        borderRadius: "10px",
+        width: "100%",
+        height: "200px",
+      }}></div>
       <h2>{title}</h2>
       <span>Amount of windows: {windowsNumber}</span>
       <Link
