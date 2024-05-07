@@ -109,7 +109,7 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
               {/* <p>{calendar.data.text.subtitle}</p> */}
             <div className="calendar_buttons">
                 <div className="calendar_button_one">
-                <Link style={{textDecoration: "none", marginBottom: 0}}
+                <Link style={{textDecoration: "none", marginBottom: 0, width: "100%"}}
                 to={`/calendars/${calendar.calendarId}`}
                 onClick={() => setSearch("")} >
                 View
