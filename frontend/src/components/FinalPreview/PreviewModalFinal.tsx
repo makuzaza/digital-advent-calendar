@@ -4,33 +4,34 @@ import EmbedVideo from "../EmbedVideo/EmbedVideo";
 import { WindowContent } from "../Modal/Modal";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { useAppSelector } from "../../hooks/useAppDispatch";
+// import { useAppSelector } from "../../hooks/useAppDispatch";
 
 type Props = {
   openPreviewModal: boolean;
   setOpenPreviewModal: (openPreviewModal: boolean) => void;
   day: number;
   windowsContent: WindowContent[];
+  ownerUid: string;
 };
 
 const PreviewModalFinal: React.FC<Props> = ({
   openPreviewModal,
   setOpenPreviewModal,
+  ownerUid,
   day,
   windowsContent,
 }) => {
-  const uid = useAppSelector((state) => state.uid.uid);
+  // const uid = useAppSelector((state) => state.uid.uid);
   const [windowsImageURL, setWindowsImageURL] = useState("");
 
   // get image by name from database
   const getImage = useCallback(() => {
-    console.log(day);
     const image = windowsContent[day].uploadedImageName;
     if (!image) return;
     axios
       .get(`http://localhost:8000/storage/images/${image}`, {
         params: {
-          uid: uid,
+          ownerUid: ownerUid,
         },
         responseType: "blob", // Set the response type to 'blob'
       })
@@ -41,7 +42,7 @@ const PreviewModalFinal: React.FC<Props> = ({
         // Set the blob URL as the background image URL
         setWindowsImageURL(imageUrl);
       });
-  }, [day, windowsContent, uid, setWindowsImageURL]);
+  }, [day, windowsContent, ownerUid, setWindowsImageURL]);
 
   useEffect(() => {
     getImage();

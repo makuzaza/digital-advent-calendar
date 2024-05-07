@@ -27,6 +27,7 @@ type Props = {
   imageURL: string;
   uploadedImageName: string;
   windowsContent: WindowContent[];
+  ownerUid: string;
 };
 
 interface WindowContent {
@@ -49,6 +50,7 @@ const PreviewFinal: React.FC<Props> = ({
   musicFX,
   imageURL,
   windowsContent,
+  ownerUid,
 }) => {
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
 
@@ -115,6 +117,7 @@ const PreviewFinal: React.FC<Props> = ({
                 day={index + 1}
                 setDay={setDay}
                 windowsContent={windowsContent}
+                ownerUid={ownerUid}
               />
             ))}
           </div>
@@ -125,6 +128,7 @@ const PreviewFinal: React.FC<Props> = ({
                 openPreviewModal={openPreviewModal}
                 setOpenPreviewModal={setOpenPreviewModal}
                 windowsContent={windowsContent}
+                ownerUid={ownerUid}
               />
             </div>
           )}

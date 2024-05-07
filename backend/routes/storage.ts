@@ -53,10 +53,10 @@ Router.get("/files/:uid", async (req, res) => {
 Router.get("/images/:imageName", async (req, res) => {
   try {
     const imageName = req.params.imageName;
-    const uid = req.query.uid;
+    const ownerUid = req.query.ownerUid;
 
     // Specify the full path to the image within the 'images' folder
-    const imagePath = `images/${uid}/${imageName}`;
+    const imagePath = `images/${ownerUid}/${imageName}`;
 
     // Access file from the bucket
     const file = bucket.file(imagePath);
@@ -214,7 +214,7 @@ Router.delete(
 Router.get("/sounds/music/:musicName", async (req, res) => {
   try {
     const musicName = req.params.musicName;
-    const uid = req.query.uid as string;
+    const ownerUid = req.query.ownerUid as string;
 
     let musicPath = "sounds/music";
 
@@ -226,7 +226,7 @@ Router.get("/sounds/music/:musicName", async (req, res) => {
     ) {
       musicPath += `/default/${musicName}`;
     } else {
-      musicPath += `/${uid}/${musicName}`;
+      musicPath += `/${ownerUid}/${musicName}`;
     }
 
     // Access file from the bucket
@@ -307,7 +307,7 @@ Router.delete("/sounds/music/:musicName", verifyToken, async (req, res) => {
 Router.get("/sounds/soundFx/:soundFxName", async (req, res) => {
   try {
     const soundFxName = req.params.soundFxName;
-    const uid = req.query.uid as string;
+    const ownerUid = req.query.ownerUid as string;
 
     let soundFxPath = "sounds/soundFx";
 
@@ -319,7 +319,7 @@ Router.get("/sounds/soundFx/:soundFxName", async (req, res) => {
     ) {
       soundFxPath += `/default/${soundFxName}`;
     } else {
-      soundFxPath += `/${uid}/${soundFxName}`;
+      soundFxPath += `/${ownerUid}/${soundFxName}`;
     }
 
     // Access file from the bucket
