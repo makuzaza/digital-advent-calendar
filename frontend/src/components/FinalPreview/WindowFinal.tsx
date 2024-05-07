@@ -3,12 +3,13 @@ import axios from "axios";
 import { WindowContent } from "../Modal/Modal";
 import "../Window/Window.css";
 import { useCallback, useEffect, useState } from "react";
-import { useAppSelector } from "../../hooks/useAppDispatch";
+// import { useAppSelector } from "../../hooks/useAppDispatch";
 
 type Props = {
   day: number;
   date: string;
   windowsContent: WindowContent[];
+  ownerUid: string;
   setDay: (value: number) => void;
   setOpenPreviewModal: (value: boolean) => void;
 };
@@ -17,10 +18,11 @@ const WindowFinal: React.FC<Props> = ({
   date,
   day,
   windowsContent,
+  ownerUid,
   setOpenPreviewModal,
   setDay,
 }) => {
-  const uid = useAppSelector((state) => state.uid.uid);
+  // const uid = useAppSelector((state) => state.uid.uid);
   const [windowsImageURL, setWindowsImageURL] = useState("");
 
   function formatDate(inputDate: string) {
@@ -52,7 +54,7 @@ const WindowFinal: React.FC<Props> = ({
     axios
       .get(`http://localhost:8000/storage/images/${image}`, {
         params: {
-          uid: uid,
+          ownerUid: ownerUid,
         },
         responseType: "blob", // Set the response type to 'blob'
       })
@@ -63,7 +65,7 @@ const WindowFinal: React.FC<Props> = ({
         // Set the blob URL as the background image URL
         setWindowsImageURL(imageUrl);
       });
-  }, [day, windowsContent, uid, setWindowsImageURL]);
+  }, [day, windowsContent, ownerUid, setWindowsImageURL]);
 
   useEffect(() => {
     getImage();

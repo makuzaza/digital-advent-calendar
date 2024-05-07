@@ -4,6 +4,7 @@ import axios from "axios";
 import PreviewFinal from "../components/FinalPreview/PreviewFinal";
 
 interface CalendarData {
+  ownerUid: string;
   text: {
     title: string;
     subtitle: string;
@@ -74,6 +75,7 @@ const CalendarSingle = () => {
         imageURL={calendarData.image.imageURL}
         uploadedImageName={calendarData.image.uploadedImageName}
         windowsContent={calendarData.windowsContent}
+        ownerUid={calendarData.ownerUid}
       />
     </div>
   );
