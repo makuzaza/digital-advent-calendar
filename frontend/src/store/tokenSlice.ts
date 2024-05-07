@@ -1,12 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+
+// Define slice state type
+export interface TokenState {
+  token: string;
+}
+
+// Initial state
+const initialState: TokenState = {
+  token: "",
+};
 
 export const tokenSlice = createSlice({
   name: "token",
-  initialState: {
-    token: "",
-  },
+  initialState: initialState,
   reducers: {
-    setToken(state, action) {
+    setToken(state, action: PayloadAction<string>) {
       state.token = action.payload;
     },
   },
