@@ -139,3 +139,16 @@
   left:65%;
   animation-delay:2.5s
 } */
+.login button {
+  background-color: #0e627a;
+}
+
+.login button:hover {
+  background-color: #0b5164;
+}
+.register button {
+  background-color: #0e627a;
+}
+.register button:hover {
+  background-color: #0b5164;
+}
