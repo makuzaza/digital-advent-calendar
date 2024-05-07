@@ -128,6 +128,7 @@ const PreviewFinal: React.FC<Props> = ({
                 openPreviewModal={openPreviewModal}
                 setOpenPreviewModal={setOpenPreviewModal}
                 windowsContent={windowsContent}
+                ownerUid={ownerUid}
               />
             </div>
           )}
