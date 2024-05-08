@@ -126,20 +126,19 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
               <div className="calendar_buttons">
                 <div className="calendar_button_one">
                   <Link
-                    style={{ textDecoration: "none", marginBottom: 0 }}
+                    style={{
+                      textDecoration: "none",
+                      marginBottom: 0,
+                      width: "100%",
+                    }}
                     to={`/calendars/${calendar.calendarId}`}
                     onClick={() => setSearch("")}
                   >
                     View
                   </Link>
-                <Link style={{textDecoration: "none", marginBottom: 0, width: "100%"}}
-                to={`/calendars/${calendar.calendarId}`}
-                onClick={() => setSearch("")} >
-                View
-                </Link>
                 </div>
                 <div className="calendar_button_two">
-                  {pathname === "/favourites" &&
+                  {(pathname === "/favourites" || pathname === "/") &&
                     uid === calendar.data.ownerUid && (
                       <Button
                         onClick={() => deleteCalendar(calendar.calendarId)}
@@ -150,14 +149,6 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
                 </div>
               </div>
             </div>
-              <div className="calendar_button_two">{(pathname === "/favourites" || pathname === "/") && uid === calendar.data.ownerUid && (
-                 <Button onClick={() => deleteCalendar(calendar.calendarId)}>
-                 <DeleteOutlineIcon/>
-                </Button>
-              )}  
-              </div>
-            </div>
-          </div>
           ))}
       </div>
     </div>
