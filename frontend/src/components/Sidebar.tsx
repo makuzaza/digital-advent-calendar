@@ -206,15 +206,6 @@ const Sidebar: React.FC<Props> = ({
             <MenuIcon />
           </IconButton>
           <div className="button-container">
-            <Link to="/preview">
-              <Button
-                className="preview-button"
-                variant="contained"
-                style={{ backgroundColor: "#15728e", color: "white" }}
-              >
-                Preview
-              </Button>
-            </Link>
             <Link to="/">
               <Button
                 className="home-button"

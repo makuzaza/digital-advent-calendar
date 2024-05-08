@@ -5,6 +5,11 @@
   text-align: center;
 }
 
-.time .buttons {
+.time .buttons button {
   margin-top: 10px;
+  background-color: #0e627a;
+  border: none;
+  outline: none;
+  float: right;
+  width: 80px;
 }

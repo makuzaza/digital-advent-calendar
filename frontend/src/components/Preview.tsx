@@ -242,7 +242,7 @@ const Preview: React.FC<Props> = ({
           </div>
         )}
       </div>
-      <div>
+      <div className="preview-buttons">
         <Button variant="contained" color="primary" onClick={saveCalendar}>
           SAVE CALENDAR
         </Button>
