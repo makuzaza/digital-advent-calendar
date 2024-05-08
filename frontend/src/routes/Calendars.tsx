@@ -9,6 +9,7 @@ export interface Calendar {
   calendarId: string;
   calendarName: string;
   data: {
+    isPrivate: boolean;
     windows: string[];
     text: {
       title: string;
@@ -45,6 +46,7 @@ const Calendars: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
 
   const getCalendars = async () => {
     axios.get("http://localhost:8000/firestore/calendars").then((response) => {
+      console.log(response.data);
       setCalendars(response.data);
     });
   };
@@ -62,6 +64,14 @@ const Calendars: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
       )}
       <div className="calendars">
         {calendars
+          .filter((elem) => {
+            // If current location is '/calendars', filter out private calendars
+            if (location.pathname.includes("/calendars")) {
+              return !elem.data.isPrivate;
+            } else {
+              return true; // Keep all elements if current location is something else
+            }
+          })
           .filter((elem) =>
             elem.data.text.title.toLowerCase().includes(search.toLowerCase())
           )

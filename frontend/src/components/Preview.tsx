@@ -48,6 +48,7 @@ type Props = {
 interface Json {
   ownerUid: string;
   windows: string[];
+  isPrivate: boolean;
   text: {
     title: string;
     titleFont: string;
@@ -92,6 +93,7 @@ const Preview: React.FC<Props> = ({
 }) => {
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [isPrivate, setIsPrivate] = useState(false);
 
   const token = useAppSelector((state) => state.token.token);
   const uid = useAppSelector((state) => state.uid.uid);
@@ -110,6 +112,7 @@ const Preview: React.FC<Props> = ({
     const json: Json = {
       windows: windows,
       ownerUid: uid,
+      isPrivate: isPrivate,
       text: {
         title: title,
         titleFont: titleFont,
@@ -233,6 +236,18 @@ const Preview: React.FC<Props> = ({
             />
           </div>
         )}
+      </div>
+      <div className="private">
+        <label>
+          Private:
+          <input
+            type="checkbox"
+            name="privateCheckbox"
+            onClick={() => {
+              setIsPrivate(!isPrivate);
+            }}
+          />
+        </label>
       </div>
       <div>
         <Button variant="contained" color="primary" onClick={saveCalendar}>
