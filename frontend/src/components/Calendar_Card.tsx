@@ -2,19 +2,12 @@ import { Link } from "react-router-dom";
 
 interface Card {
   title: string;
-  windowsNumber: number;
   link: string;
   imageURL: string;
   onClick?: () => void;
 }
 
-const Calendar_Card: React.FC<Card> = ({
-  title,
-  imageURL,
-  windowsNumber,
-  link,
-  onClick,
-}) => {
+const Calendar_Card: React.FC<Card> = ({ title, imageURL, link, onClick }) => {
   const handleClick = () => {
     if (onClick) {
       onClick();
@@ -23,16 +16,17 @@ const Calendar_Card: React.FC<Card> = ({
 
   return (
     <div className="calendar-card">
-      <div style={{
-        backgroundImage: `url(${imageURL})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        borderRadius: "10px",
-        width: "100%",
-        height: "200px",
-      }}></div>
+      <div
+        style={{
+          backgroundImage: `url(${imageURL})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          borderRadius: "10px",
+          width: "100%",
+          height: "200px",
+        }}
+      ></div>
       <h2>{title}</h2>
-      <span>Amount of windows: {windowsNumber}</span>
       <Link
         to={`/calendars/${link}`}
         className="calender-view"

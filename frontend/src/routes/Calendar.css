@@ -1,4 +1,5 @@
-.calendars, .calendars_new {
+.calendars,
+.calendars_new {
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -8,7 +9,7 @@
 
 .calendar-card {
   border-radius: 4px;
-  background-color: #ffffff;
+  background-color: #edebeb;
   color: #333;
   padding: 10px;
   margin-bottom: 10px;
@@ -23,10 +24,16 @@
   border-radius: 10px;
 }
 
+.calendar-card:hover {
+  box-shadow: 0 0 10px 0 rgb(222, 221, 221);
+  transition: all 0.3s ease;
+}
+
 .calendar-card h2 {
   text-transform: capitalize;
   line-height: 1;
   margin: 5px 0;
+  margin-bottom: 50px;
 }
 
 .calendar-card p {
@@ -85,7 +92,6 @@
   transition: all 0.3s ease;
   border: none;
 }
-
 
 .calendar_buttons {
   display: flex;

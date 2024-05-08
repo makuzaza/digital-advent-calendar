@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import Swal from "sweetalert2";
 
 import axios from "axios";
 
@@ -147,6 +148,13 @@ const Preview: React.FC<Props> = ({
       })
       .then((response) => {
         navigate(`/calendars/${response.data.calendarId}`);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your calendar has been saved",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       })
       .catch((error) => {
         console.error("Error saving calendar:", error);
@@ -249,7 +257,7 @@ const Preview: React.FC<Props> = ({
           />
         </label>
       </div>
-      <div>
+      <div className="preview-buttons">
         <Button variant="contained" color="primary" onClick={saveCalendar}>
           SAVE CALENDAR
         </Button>

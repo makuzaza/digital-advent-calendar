@@ -139,3 +139,34 @@
   left:65%;
   animation-delay:2.5s
 } */
+.login button {
+  background-color: #0e627a;
+}
+
+.login button:hover {
+  background-color: #0b5164;
+}
+.register button {
+  background-color: #0e627a;
+}
+.register button:hover {
+  background-color: #0b5164;
+}
+
+@media only screen and (min-width: 768px) {
+  header {
+    font-size: 0.675rem;
+  }
+  header .css-1y942vo-MuiButtonBase-root-MuiButton-root {
+    font-size: 0.675rem;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  header {
+    font-size: 1rem;
+  }
+  header .css-1y942vo-MuiButtonBase-root-MuiButton-root {
+    font-size: 0.875rem;
+  }
+}

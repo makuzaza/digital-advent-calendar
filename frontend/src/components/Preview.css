@@ -53,3 +53,13 @@
 .preview-final {
   text-align: center;
 }
+.preview-buttons button {
+  margin-top: 10px;
+  background-color: #0e627a;
+  border: none;
+  outline: none;
+  float: right;
+}
+.preview-buttons button:hover {
+  background-color: #0b5063;
+}

@@ -6,6 +6,7 @@ import Search from "../components/Search";
 import { useLocation } from "react-router-dom";
 import { Button } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import Swal from "sweetalert2";
 
 interface Calendar {
   calendarId: string;
@@ -68,20 +69,33 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
   }, [getUserCalendars]);
 
   const deleteCalendar = (calendarId: string) => {
-    axios
-      .delete(`http://localhost:8000/firestore/calendars/${calendarId}`, {
-        params: {
-          token: token,
-          uid: uid,
-        },
-      })
-      .then((response) => {
-        getUserCalendars();
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error("Error sending token to backend:", error);
-      });
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`http://localhost:8000/firestore/calendars/${calendarId}`, {
+            params: {
+              token: token,
+              uid: uid,
+            },
+          })
+          .then((response) => {
+            getUserCalendars();
+            Swal.fire("Deleted!", "Your calendar has been deleted", "success");
+            console.log(response);
+          })
+          .catch((error) => {
+            console.error("Error sending token to backend:", error);
+          });
+      }
+    });
   };
 
   return (
@@ -118,6 +132,11 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
                   >
                     View
                   </Link>
+                <Link style={{textDecoration: "none", marginBottom: 0, width: "100%"}}
+                to={`/calendars/${calendar.calendarId}`}
+                onClick={() => setSearch("")} >
+                View
+                </Link>
                 </div>
                 <div className="calendar_button_two">
                   {pathname === "/favourites" &&
@@ -131,6 +150,14 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
                 </div>
               </div>
             </div>
+              <div className="calendar_button_two">{(pathname === "/favourites" || pathname === "/") && uid === calendar.data.ownerUid && (
+                 <Button onClick={() => deleteCalendar(calendar.calendarId)}>
+                 <DeleteOutlineIcon/>
+                </Button>
+              )}  
+              </div>
+            </div>
+          </div>
           ))}
       </div>
     </div>
