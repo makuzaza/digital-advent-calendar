@@ -57,6 +57,7 @@ const Calendars: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
 
   return (
     <div style={{ background: "transparent", textAlign: "center" }}>
+      {pathname === "/calendars" && <h1>Public Calendars</h1>}
       {(pathname === "/calendars" ||
         pathname === "/favourites" ||
         pathname == "/admin") && (

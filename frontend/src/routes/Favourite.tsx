@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Search from "../components/Search";
 import { useLocation } from "react-router-dom";
 import { Button } from "@mui/material";
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 interface Calendar {
   calendarId: string;
@@ -89,7 +89,7 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
       {(pathname === "/calendars" || pathname === "/favourites") && (
         <Search handleSearch={handleSearch} search={search} />
       )}
-      <h1>Here are your saved calendars</h1>
+      <h1>Your saved calendars</h1>
       <div className="calendars_new">
         {calendars
           .filter((elem) =>
@@ -97,32 +97,40 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
           )
           .map((calendar) => (
             <div key={calendar.calendarId} className="calendar-card">
-               <div style={{
-                backgroundImage: `url(${calendar.data.image.imageURL})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                borderRadius: "10px",
-                width: "100%",
-                height: "200px",
-                }}></div>
+              <div
+                style={{
+                  backgroundImage: `url(${calendar.data.image.imageURL})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  borderRadius: "10px",
+                  width: "100%",
+                  height: "200px",
+                }}
+              ></div>
               <h2>{calendar.data.text.title}</h2>
               {/* <p>{calendar.data.text.subtitle}</p> */}
-            <div className="calendar_buttons">
+              <div className="calendar_buttons">
                 <div className="calendar_button_one">
-                <Link style={{textDecoration: "none", marginBottom: 0}}
-                to={`/calendars/${calendar.calendarId}`}
-                onClick={() => setSearch("")} >
-                View
-                </Link>
+                  <Link
+                    style={{ textDecoration: "none", marginBottom: 0 }}
+                    to={`/calendars/${calendar.calendarId}`}
+                    onClick={() => setSearch("")}
+                  >
+                    View
+                  </Link>
                 </div>
-              <div className="calendar_button_two">{pathname === "/favourites" && uid === calendar.data.ownerUid && (
-                 <Button onClick={() => deleteCalendar(calendar.calendarId)}>
-                 <DeleteOutlineIcon/>
-                </Button>
-              )}  
+                <div className="calendar_button_two">
+                  {pathname === "/favourites" &&
+                    uid === calendar.data.ownerUid && (
+                      <Button
+                        onClick={() => deleteCalendar(calendar.calendarId)}
+                      >
+                        <DeleteOutlineIcon />
+                      </Button>
+                    )}
+                </div>
               </div>
             </div>
-          </div>
           ))}
       </div>
     </div>
