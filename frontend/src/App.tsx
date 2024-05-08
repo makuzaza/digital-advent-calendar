@@ -9,7 +9,6 @@ import Panel from "./routes/Panel";
 import Favourites from "./routes/Favourites";
 import Root from "./routes/Root";
 import LandingPage from "./routes/LandingPage";
-import Test from "./routes/Test";
 import CalendarSingle from "./routes/CalendarSingle";
 import CalendarsPage from "./routes/CalendarsPage";
 import UserInfo from "./routes/UserInfo";
@@ -53,7 +52,6 @@ function App() {
             <Route path="/favourites" element={<Favourites />} />
             <Route path="/panel" element={<Panel />} />
             <Route path="/about" element={<About />} />
-            <Route path="/test" element={<Test />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/preview" element={<MainApp />} />
             <Route path="/userinfo" element={<UserInfo />} />

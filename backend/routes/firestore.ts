@@ -153,7 +153,6 @@ Router.get("/calendars/:id", async (req, res) => {
             (window: WindowContent) => ({
               text: window.text,
               videoURL: window.videoURL,
-              // imageURLModal: window.imageURLModal,
               uploadedImageName: window.uploadedImageName,
             })
           ),

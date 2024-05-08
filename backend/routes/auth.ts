@@ -10,7 +10,7 @@ Router.post("/signup", async (req, res) => {
     password: req.body.password,
     emailVerified: false,
     displayName: req.body.displayName,
-    photoURL: "http://www.example.com/12345678/photo.png",
+    photoURL: "",
     disabled: false,
   };
 
@@ -47,7 +47,6 @@ Router.get("/users/:uid", async (req, res) => {
       // User found
       res.status(200).json({
         message: "Successfully fetched user data:",
-        // user: userRecord.toJSON(),
         user: {
           uid: userRecord.uid,
           email: userRecord.email,
