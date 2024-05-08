@@ -1,0 +1,18 @@
+.panel-data {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+}
+
+.panel-data th,
+.panel-data td {
+  padding-right: 30px;
+}
+
+.panel-data th {
+  background-color: #b2b2b2;
+}

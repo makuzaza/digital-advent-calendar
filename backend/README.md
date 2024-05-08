@@ -76,4 +76,6 @@ This saves to: 'all calendars' / { uid } / 'user calendars' / { calendar id }
   - email
   - password
 
+- GET all user's data: `/auth/users`
+
 - GET user data: `/auth/users/:uid`

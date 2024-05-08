@@ -61,3 +61,18 @@ Router.get("/users/:uid", async (req, res) => {
       console.log("Error fetching user data:", error);
     });
 });
+
+// get list of users
+Router.get("/users", async (req, res) => {
+  auth
+    .listUsers()
+    .then((listUsersResult) => {
+      res.status(200).json({
+        message: "Successfully fetched list of users",
+        users: listUsersResult.users,
+      });
+    })
+    .catch((error: Error) => {
+      console.log("Error fetching list of users:", error);
+    });
+});
