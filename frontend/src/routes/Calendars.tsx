@@ -58,7 +58,6 @@ const Calendars: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
       {(pathname === "/calendars" || pathname === "/favourites") && (
         <Search handleSearch={handleSearch} search={search} />
       )}
-      <h1>All the calendars ({calendars.length}) made with this app</h1>
       <div className="calendars">
         {calendars
           .filter((elem) =>
@@ -69,7 +68,6 @@ const Calendars: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
               key={calendar.calendarId} // Added key prop
               title={calendar.data.text.title}
               imageURL={calendar.data.image.imageURL}
-              windowsNumber={calendar.data.windows.length}
               link={calendar.calendarId}
               onClick={() => setSearch("")} // Pass setSearch as a function
             />
