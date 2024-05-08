@@ -6,6 +6,7 @@ import Search from "../components/Search";
 import { useLocation } from "react-router-dom";
 import { Button } from "@mui/material";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import Swal from "sweetalert2";
 
 interface Calendar {
   calendarId: string;
@@ -68,6 +69,16 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
   }, [getUserCalendars]);
 
   const deleteCalendar = (calendarId: string) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
     axios
       .delete(`http://localhost:8000/firestore/calendars/${calendarId}`, {
         params: {
@@ -77,12 +88,19 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
       })
       .then((response) => {
         getUserCalendars();
+        Swal.fire(
+          "Deleted!",
+          "Your calendar has been deleted",
+          "success"
+        );
         console.log(response);
       })
       .catch((error) => {
         console.error("Error sending token to backend:", error);
       });
   };
+});
+};
 
   return (
     <div style={{ background: "transparent", textAlign: "center" }}>
@@ -109,13 +127,13 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
               {/* <p>{calendar.data.text.subtitle}</p> */}
             <div className="calendar_buttons">
                 <div className="calendar_button_one">
-                <Link style={{textDecoration: "none", marginBottom: 0}}
+                <Link style={{textDecoration: "none", marginBottom: 0, width: "100%"}}
                 to={`/calendars/${calendar.calendarId}`}
                 onClick={() => setSearch("")} >
                 View
                 </Link>
                 </div>
-              <div className="calendar_button_two">{pathname === "/favourites" && uid === calendar.data.ownerUid && (
+              <div className="calendar_button_two">{(pathname === "/favourites" || pathname === "/") && uid === calendar.data.ownerUid && (
                  <Button onClick={() => deleteCalendar(calendar.calendarId)}>
                  <DeleteOutlineIcon/>
                 </Button>

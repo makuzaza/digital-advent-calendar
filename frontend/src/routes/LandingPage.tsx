@@ -8,10 +8,9 @@ type Props = {
   search: string;
   setSearch: (search: string) => void;
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  imageURL: string;
 };
 
-const LandingPage: React.FC<Props> = ({ search, handleSearch, setSearch, imageURL }) => {
+const LandingPage: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
   const token = useAppSelector((state) => state.token.token);
 
   return (
