@@ -29,7 +29,7 @@ const PreviewModalFinal: React.FC<Props> = ({
     const image = windowsContent[day].uploadedImageName;
     if (!image) return;
     axios
-      .get(`http://localhost:8000/storage/images/${image}`, {
+      .get(`https://caas-deploy.onrender.com/storage/images/${image}`, {
         params: {
           ownerUid: ownerUid,
         },

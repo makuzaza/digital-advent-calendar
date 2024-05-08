@@ -45,10 +45,12 @@ const Calendars: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
   const { pathname } = useLocation();
 
   const getCalendars = async () => {
-    axios.get("http://localhost:8000/firestore/calendars").then((response) => {
-      console.log(response.data);
-      setCalendars(response.data);
-    });
+    axios
+      .get("https://caas-deploy.onrender.com/firestore/calendars")
+      .then((response) => {
+        console.log(response.data);
+        setCalendars(response.data);
+      });
   };
 
   useEffect(() => {

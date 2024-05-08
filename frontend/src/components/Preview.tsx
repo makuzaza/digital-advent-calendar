@@ -141,7 +141,7 @@ const Preview: React.FC<Props> = ({
     console.log(json);
 
     axios
-      .post(`http://localhost:8000/firestore/calendars`, {
+      .post(`https://caas-deploy.onrender.com/firestore/calendars`, {
         token: token,
         uid: uid,
         data: json,

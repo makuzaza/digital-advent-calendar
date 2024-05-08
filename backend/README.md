@@ -3,7 +3,7 @@
 ```shell
 Server:
 
-localhost:8000
+https://caas-deploy.onrender.com
 ```
 
 ## Endpoints

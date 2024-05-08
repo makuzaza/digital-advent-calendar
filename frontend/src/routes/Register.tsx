@@ -26,10 +26,12 @@ const Register: React.FC = () => {
     };
 
     // register new user
-    axios.post("http://localhost:8000/auth/signup", newUser).then((res) => {
-      console.log(res.data);
-      navigate("/login");
-    });
+    axios
+      .post("https://caas-deploy.onrender.com/auth/signup", newUser)
+      .then((res) => {
+        console.log(res.data);
+        navigate("/login");
+      });
   };
 
   return (

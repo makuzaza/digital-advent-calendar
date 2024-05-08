@@ -8,9 +8,11 @@ const Admin: React.FC = () => {
   const [calendars, setCalendars] = useState<Calendar[]>([]);
 
   const getCalendars = async () => {
-    axios.get("http://localhost:8000/firestore/calendars").then((response) => {
-      setCalendars(response.data);
-    });
+    axios
+      .get("https://caas-deploy.onrender.com/firestore/calendars")
+      .then((response) => {
+        setCalendars(response.data);
+      });
   };
 
   useEffect(() => {

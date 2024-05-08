@@ -54,7 +54,7 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
     if (!uid) return;
 
     axios
-      .get("http://localhost:8000/firestore/calendars/user", {
+      .get("https://caas-deploy.onrender.com/firestore/calendars/user", {
         params: {
           uid: uid,
         },
@@ -80,12 +80,15 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:8000/firestore/calendars/${calendarId}`, {
-            params: {
-              token: token,
-              uid: uid,
-            },
-          })
+          .delete(
+            `https://caas-deploy.onrender.com/firestore/calendars/${calendarId}`,
+            {
+              params: {
+                token: token,
+                uid: uid,
+              },
+            }
+          )
           .then((response) => {
             getUserCalendars();
             Swal.fire("Deleted!", "Your calendar has been deleted", "success");
