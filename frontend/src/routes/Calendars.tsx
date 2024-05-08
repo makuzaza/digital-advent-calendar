@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 import Search from "../components/Search";
 import Calendar_Card from "../components/Calendar_Card";
 
-interface Calendar {
+export interface Calendar {
   calendarId: string;
   calendarName: string;
   data: {
@@ -55,10 +55,11 @@ const Calendars: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
 
   return (
     <div style={{ background: "transparent", textAlign: "center" }}>
-      {(pathname === "/calendars" || pathname === "/favourites") && (
+      {(pathname === "/calendars" ||
+        pathname === "/favourites" ||
+        pathname == "/admin") && (
         <Search handleSearch={handleSearch} search={search} />
       )}
-      <h1>All the calendars ({calendars.length}) made with this app</h1>
       <div className="calendars">
         {calendars
           .filter((elem) =>

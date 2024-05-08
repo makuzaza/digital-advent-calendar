@@ -21,6 +21,7 @@ import { store } from "./store/store";
 import { Provider } from "react-redux";
 import { useState } from "react";
 import About from "./routes/About";
+import Admin from "./routes/Admin";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -53,6 +54,7 @@ function App() {
             <Route path="/panel" element={<Panel />} />
             <Route path="/about" element={<About />} />
             <Route path="/test" element={<Test />} />
+            <Route path="/admin" element={<Admin />} />
             <Route path="/preview" element={<MainApp />} />
             <Route path="/userinfo" element={<UserInfo />} />
             <Route path="/calendars" element={<CalendarsPage />} />

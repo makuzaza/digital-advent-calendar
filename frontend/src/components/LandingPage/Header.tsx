@@ -39,6 +39,9 @@ const Header: React.FC = () => {
               <Link to="/favourites" className={styles.navLink}>
                 <Button color="inherit">Favourites</Button>
               </Link>
+              <Link to="/admin" className={styles.navLink}>
+                <Button color="inherit">Admin Panel</Button>
+              </Link>
             </>
           )}
           <Link to="/about" className={styles.navLink}>
