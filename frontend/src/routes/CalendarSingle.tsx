@@ -41,7 +41,9 @@ const CalendarSingle = () => {
   useEffect(() => {
     const getCalendar = () => {
       axios
-        .get(`http://localhost:8000/firestore/calendars/${calendarId}`)
+        .get(
+          `https://caas-deploy.onrender.com/firestore/calendars/${calendarId}`
+        )
         .then((response) => {
           console.log(response.data);
           setCalendarData(response.data);

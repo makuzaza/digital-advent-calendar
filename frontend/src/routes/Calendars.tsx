@@ -5,10 +5,11 @@ import { useLocation } from "react-router-dom";
 import Search from "../components/Search";
 import Calendar_Card from "../components/Calendar_Card";
 
-interface Calendar {
+export interface Calendar {
   calendarId: string;
   calendarName: string;
   data: {
+    isPrivate: boolean;
     windows: string[];
     text: {
       title: string;
@@ -44,9 +45,12 @@ const Calendars: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
   const { pathname } = useLocation();
 
   const getCalendars = async () => {
-    axios.get("http://localhost:8000/firestore/calendars").then((response) => {
-      setCalendars(response.data);
-    });
+    axios
+      .get("https://caas-deploy.onrender.com/firestore/calendars")
+      .then((response) => {
+        console.log(response.data);
+        setCalendars(response.data);
+      });
   };
 
   useEffect(() => {
@@ -55,11 +59,22 @@ const Calendars: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
 
   return (
     <div style={{ background: "transparent", textAlign: "center" }}>
-      {(pathname === "/calendars" || pathname === "/favourites") && (
+      {pathname === "/calendars" && <h1>Public Calendars</h1>}
+      {(pathname === "/calendars" ||
+        pathname === "/favourites" ||
+        pathname == "/admin") && (
         <Search handleSearch={handleSearch} search={search} />
       )}
       <div className="calendars">
         {calendars
+          .filter((elem) => {
+            // If current location is '/calendars', filter out private calendars
+            if (location.pathname.includes("/calendars")) {
+              return !elem.data.isPrivate;
+            } else {
+              return true; // Keep all elements if current location is something else
+            }
+          })
           .filter((elem) =>
             elem.data.text.title.toLowerCase().includes(search.toLowerCase())
           )

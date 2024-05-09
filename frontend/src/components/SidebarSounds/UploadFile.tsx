@@ -28,13 +28,17 @@ const UploadFile: React.FC<Props> = ({
     formData.append("uid", uid);
 
     axios
-      .post(`http://localhost:8000/storage/sounds/${soundType}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          // Send token in request headers
-          "x-access-token": token,
-        },
-      })
+      .post(
+        `https://caas-deploy.onrender.com/storage/sounds/${soundType}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            // Send token in request headers
+            "x-access-token": token,
+          },
+        }
+      )
       .then((response) => {
         console.log(`${soundType}:`, response.data);
         if (soundType === "music") {

@@ -25,7 +25,10 @@ const Header: React.FC = () => {
             <Button color="inherit">Home</Button>
           </Link>
           <Link to="/calendars" className={styles.navLink}>
-            <Button color="inherit">Browse Calendars</Button>
+            <Button color="inherit">Browse</Button>
+          </Link>
+          <Link to="/about" className={styles.navLink}>
+            <Button color="inherit">About</Button>
           </Link>
           {token && (
             <>
@@ -34,16 +37,16 @@ const Header: React.FC = () => {
                 className={styles.navLink}
                 onClick={() => localStorage.clear()}
               >
-                <Button color="inherit">Create Calendar</Button>
+                <Button color="inherit">Create</Button>
               </Link>
               <Link to="/favourites" className={styles.navLink}>
                 <Button color="inherit">Favourites</Button>
               </Link>
+              <Link to="/admin" className={styles.navLink}>
+                <Button color="inherit">Admin Panel</Button>
+              </Link>
             </>
           )}
-          <Link to="/about" className={styles.navLink}>
-            <Button color="inherit">About</Button>
-          </Link>
         </div>
         <div className={styles.rightAlign}>
           {token ? (
