@@ -9,7 +9,7 @@
 
 .calendar-card {
   border-radius: 4px;
-  background-color: #ffffff;
+  background-color: #edebeb;
   color: #333;
   padding: 10px;
   margin-bottom: 10px;
@@ -22,6 +22,11 @@
   height: 250px;
   margin: 10px;
   border-radius: 10px;
+}
+
+.calendar-card:hover {
+  box-shadow: 0 0 10px 0 rgb(222, 221, 221);
+  transition: all 0.3s ease;
 }
 
 .calendar-card h2 {

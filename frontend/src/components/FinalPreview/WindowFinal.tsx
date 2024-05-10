@@ -52,7 +52,7 @@ const WindowFinal: React.FC<Props> = ({
     const image = windowsContent[day - 1].uploadedImageName;
     if (!image) return;
     axios
-      .get(`http://localhost:8000/storage/images/${image}`, {
+      .get(`https://caas-deploy.onrender.com/storage/images/${image}`, {
         params: {
           ownerUid: ownerUid,
         },

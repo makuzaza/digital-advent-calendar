@@ -19,11 +19,14 @@ const Header: React.FC = () => {
     { text: "Create Calendar", link: "/panel" },
     { text: "Favourites", link: "/favourites" },
     { text: "About", link: "/about" },
+    { text: "Admin", link: "/admin" },
+    
   ];
 
   const mobileView = window.matchMedia("(max-width: 480px)").matches;
 
   return (
+
     <>
       <AppBar position="static" sx={{ backgroundColor: "#10617a" }}>
         <Toolbar>

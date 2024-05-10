@@ -109,7 +109,7 @@ const Modal: React.FC<Props> = ({
     formData.append("uid", uid);
 
     axios
-      .post(`http://localhost:8000/storage/images`, formData, {
+      .post(`https://caas-deploy.onrender.com/storage/images`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           // Send token in request headers
