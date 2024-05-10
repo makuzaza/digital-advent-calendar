@@ -17,9 +17,11 @@ const Logout: React.FC = () => {
   };
 
   return (
-    <Button onClick={handleLogout} color="inherit">
-      Logout
-    </Button>
+    <div>
+      <Button onClick={handleLogout} color="inherit">
+        Logout
+      </Button>
+    </div>
   );
 };
 
