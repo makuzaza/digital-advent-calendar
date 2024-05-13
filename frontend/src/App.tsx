@@ -12,7 +12,6 @@ import LandingPage from "./routes/LandingPage";
 import CalendarSingle from "./routes/CalendarSingle";
 import CalendarsPage from "./routes/CalendarsPage";
 import UserInfo from "./routes/UserInfo";
-
 import MainApp from "./components/Calendar/MainApp";
 
 // redux
