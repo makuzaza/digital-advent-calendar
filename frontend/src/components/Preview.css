@@ -9,7 +9,7 @@
 }
 
 .panel .preview {
-  margin: 20px 20px 10px 20px;
+  margin: 20px 20px 0 20px;
   border-radius: 2px;
   width: 100%;
   background-color: transparent;
@@ -54,7 +54,7 @@
   text-align: center;
 }
 .preview-buttons button {
-  margin-top: 10px;
+  margin-top: 20px;
   background-color: #0e627a;
   border: none;
   outline: none;
@@ -62,4 +62,21 @@
 }
 .preview-buttons button:hover {
   background-color: #0b5063;
+}
+
+.private label {
+  background-color: #f8f9fa;
+  color: #495057;
+  border-radius: 5px;
+  padding: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  cursor: pointer;
+}
+
+.private label:hover {
+  background-color: #0e627a;
+  color: white;
 }

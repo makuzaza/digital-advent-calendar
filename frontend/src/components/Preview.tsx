@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router";
 import Swal from "sweetalert2";
 
 import axios from "axios";
@@ -44,6 +44,11 @@ type Props = {
   uploadedImageName: string;
   windowContent: WindowContent[];
   setWindowContent: (windowContent: WindowContent[]) => void;
+  setWindows: (windows: string[]) => void;
+  setMusicFile: (musicFile: string) => void;
+  setMusicFX: (musicFX: string) => void;
+  setSelectedBackground: (selectedBackground: string) => void;
+
 };
 
 interface Json {
@@ -77,29 +82,85 @@ const Preview: React.FC<Props> = ({
   setTitle,
   setSubtitle,
   titleFont,
+  setTitleFont,
   titleFontSize,
+  setTitleFontSize,
   subtitleFont,
+  setSubtitleFont,
   subTitleFontSize,
-  setDay,
+  setSubTitleFontSize,
   day,
+  setDay,
   windows,
+  setWindows,
   titleColor,
+  setTitleColor,
   subtitleColor,
+  setSubtitleColor,
   musicFile,
+  setMusicFile,
   musicFX,
+  setMusicFX,
   selectedBackground,
   uploadedImageName,
   windowContent,
   setWindowContent,
+  setSelectedBackground
+  
 }) => {
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const [isPrivate, setIsPrivate] = useState(false);
+  const [isPrivate, setIsPrivate] = useState<boolean>(false);
+  const [calendarData, setCalendarData] = useState<Json | null>(null);
+  const [calendarId, setCalendarId] = useState("");
 
   const token = useAppSelector((state) => state.token.token);
   const uid = useAppSelector((state) => state.uid.uid);
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state && location.state.calendarId) {
+      setCalendarId(location.state.calendarId);
+      fetchCalendarData(location.state.calendarId); // Fetch data from Firebase with the passed calendarId
+    }
+  }, [location]);
+
+  const fetchCalendarData = async (calendarId: string) => {
+    try {
+      const response = await fetch(`https://caas-deploy.onrender.com/firestore/calendars/${calendarId}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch calendar data");
+      }
+      const data: Json = await response.json();
+      setCalendarData(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (calendarData) {
+      setTitle(calendarData.text?.title || title);
+      setSubtitle(calendarData.text?.subtitle || subtitle);
+      setTitleFont(calendarData.text?.titleFont || titleFont);
+      setSubtitleFont(calendarData.text?.subtitleFont || subtitleFont);
+      setTitleFontSize(calendarData.text?.titleFontSize || titleFontSize);
+      setSubTitleFontSize(calendarData.text?.subTitleFontSize || subTitleFontSize);
+      setTitleColor(calendarData.text?.titleColor || titleColor);
+      setSubtitleColor(calendarData.text?.subtitleColor || subtitleColor);
+      setWindowContent(calendarData.windowContent || windowContent);
+      setSelectedBackground(calendarData.image?.imageURL || selectedBackground);
+      setMusicFile(calendarData.sounds?.musicName || musicFile);
+      setMusicFX(calendarData.sounds?.soundFxName || musicFX);
+      setWindows(calendarData.windows || windows);
+    }
+  }, [calendarData]);
+
+  console.log(calendarData);
+  console.log(calendarId);
+  console.log(location.state);
 
   const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -247,8 +308,8 @@ const Preview: React.FC<Props> = ({
       </div>
       <div className="private">
         <label>
-          Private:
-          <input
+          Make it private:
+          <input style={{marginLeft: '10px', cursor: 'pointer'}}
             type="checkbox"
             name="privateCheckbox"
             onClick={() => {

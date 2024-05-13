@@ -130,6 +130,10 @@ const Panel: React.FC = () => {
         uploadedImageName={uploadedImageName}
         windowContent={windowContent}
         setWindowContent={setWindowContent}
+        setSelectedBackground={setSelectedBackground}
+        setMusicFX={setMusicFX}
+        setMusicFile={setMusicFile}
+        setWindows={setWindows}
       />
     </div>
   );

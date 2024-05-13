@@ -1,7 +1,6 @@
 .panel {
   position: relative;
   display: flex;
-  margin-top: 65px;
   min-height: 100vh;
 }
 
