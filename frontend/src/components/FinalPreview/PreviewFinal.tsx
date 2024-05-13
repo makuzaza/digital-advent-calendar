@@ -12,6 +12,7 @@ import PreviewModalFinal from "./PreviewModalFinal";
 import { Typography, Button } from "@mui/material";
 import CopyURL from "../Share/CopyURL";
 import Share from "../Share/Share";
+import EditIcon from '@mui/icons-material/Edit';
 
 type Props = {
   title: string;
@@ -148,8 +149,8 @@ const PreviewFinal: React.FC<Props> = ({
       >
         <CopyURL />
         <Share url={window.location.href} />
-        <Button variant="contained" onClick={handleEdit}>
-          EDIT
+        <Button style={{ marginLeft: "20px" }} variant="contained" onClick={handleEdit}>
+          <EditIcon style={{ marginRight: "10px" }} />EDIT
         </Button>
       </div>
     </div>

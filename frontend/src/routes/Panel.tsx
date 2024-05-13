@@ -134,6 +134,7 @@ const Panel: React.FC = () => {
         setMusicFX={setMusicFX}
         setMusicFile={setMusicFile}
         setWindows={setWindows}
+        imageURL={selectedBackground}
       />
     </div>
   );

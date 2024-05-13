@@ -48,6 +48,7 @@ type Props = {
   setMusicFile: (musicFile: string) => void;
   setMusicFX: (musicFX: string) => void;
   setSelectedBackground: (selectedBackground: string) => void;
+  imageURL: string;
 
 };
 
@@ -105,7 +106,8 @@ const Preview: React.FC<Props> = ({
   uploadedImageName,
   windowContent,
   setWindowContent,
-  setSelectedBackground
+  setSelectedBackground,
+  imageURL,
   
 }) => {
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
@@ -161,6 +163,7 @@ const Preview: React.FC<Props> = ({
   console.log(calendarData);
   console.log(calendarId);
   console.log(location.state);
+  console.log(imageURL);
 
   const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -223,7 +226,7 @@ const Preview: React.FC<Props> = ({
   };
 
   return (
-    <div id="preview-container">
+    <div id="preview-container" style={{ backgroundImage: `url(${selectedBackground})` }}>
       <div className="preview">
         <div className="preview-music">
           {musicFile && (
