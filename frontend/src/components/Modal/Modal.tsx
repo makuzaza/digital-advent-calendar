@@ -44,21 +44,34 @@ const Modal: React.FC<Props> = ({
   const token = useAppSelector((state) => state.token.token);
 
   useEffect(() => {
-    if (openModal) {
-      const savedContent = localStorage.getItem(`windowcontent`);
-      if (savedContent) {
-        setWindowContent(JSON.parse(savedContent));
-      }
-    } else {
+    if (!openModal) {
       // Initialize content for each day if not present
       const newWindowContent = Array.from({ length: amountOfWindows }, () => ({
         videoURL: "",
         text: "",
         imageURLModal: "",
+        uploadedImageName: "",
       }));
       setWindowContent(newWindowContent);
     }
-  }, [openModal, day, setWindowContent, amountOfWindows]);
+  }, [openModal, setWindowContent, amountOfWindows]);
+
+  // useEffect(() => {
+  //   if (openModal) {
+  //     const savedContent = localStorage.getItem(`windowcontent`);
+  //     if (savedContent) {
+  //       setWindowContent(JSON.parse(savedContent));
+  //     }
+  //   } else {
+  //     // Initialize content for each day if not present
+  //     const newWindowContent = Array.from({ length: amountOfWindows }, () => ({
+  //       videoURL: "",
+  //       text: "",
+  //       imageURLModal: "",
+  //     }));
+  //     setWindowContent(newWindowContent);
+  //   }
+  // }, [openModal, day, setWindowContent, amountOfWindows]);
 
   const handleClick = (direction: string) => {
     if (direction === "previous") {
@@ -74,9 +87,9 @@ const Modal: React.FC<Props> = ({
     }
   };
 
-  const handleSave = () => {
-    localStorage.setItem(`windowcontent`, JSON.stringify(windowContent));
-  };
+  // const handleSave = () => {
+  //   localStorage.setItem(`windowcontent`, JSON.stringify(windowContent));
+  // };
 
   // show / hide content
   const toggleContent = (contentID: string) => {
@@ -109,7 +122,7 @@ const Modal: React.FC<Props> = ({
     formData.append("uid", uid);
 
     axios
-      .post(`https://caas-deploy.onrender.com/storage/images`, formData, {
+      .post(`https://caas-deploy.onrender.com/storage/images/`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           // Send token in request headers
@@ -126,10 +139,11 @@ const Modal: React.FC<Props> = ({
       });
   };
 
-  const { videoURL, text, imageURLModal } = windowContent[day - 1] || {
+  const { videoURL, text, imageURLModal, uploadedImageName } = windowContent[day - 1] || {
     videoURL: "",
     text: "",
     imageURLModal: "",
+    uploadedImageName: "",
   };
 
   return (
@@ -142,7 +156,7 @@ const Modal: React.FC<Props> = ({
             className="modal-navigation-item"
             onClick={() => {
               handleClick("previous");
-              handleSave();
+              // handleSave();
             }}
           >
             Previous window
@@ -151,7 +165,7 @@ const Modal: React.FC<Props> = ({
             className="modal-navigation-item"
             onClick={() => {
               handleClick("next");
-              handleSave();
+              // handleSave();
             }}
           >
             Next window
@@ -231,7 +245,7 @@ const Modal: React.FC<Props> = ({
           variant="contained"
           color="primary"
           onClick={() => {
-            handleSave();
+            // handleSave();
             setOpenModal(false);
           }}
         >

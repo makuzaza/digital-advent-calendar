@@ -111,7 +111,7 @@ const PreviewFinal: React.FC<Props> = ({
           <div className="preview-soundfx">
             {musicFX && (
               <>
-                <p>FX: </p>
+                <p>Sound effect: </p>
                 <div style={{ display: "flex", justifyContent: "center" }}>
                   <MusicPlayer audioSrc={musicFX} type={"soundFx"} />
                 </div>
@@ -149,7 +149,8 @@ const PreviewFinal: React.FC<Props> = ({
       >
         <CopyURL />
         <Share url={window.location.href} />
-        <Button style={{ marginLeft: "20px" }} variant="contained" onClick={handleEdit}>
+        <Button style={{ marginLeft: "20px" }} className="edit"
+        variant="contained" onClick={handleEdit}>
           <EditIcon style={{ marginRight: "10px" }} />EDIT
         </Button>
       </div>

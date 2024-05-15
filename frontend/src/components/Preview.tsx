@@ -49,7 +49,6 @@ type Props = {
   setMusicFX: (musicFX: string) => void;
   setSelectedBackground: (selectedBackground: string) => void;
   imageURL: string;
-
 };
 
 interface Json {
@@ -152,18 +151,26 @@ const Preview: React.FC<Props> = ({
       setSubTitleFontSize(calendarData.text?.subTitleFontSize || subTitleFontSize);
       setTitleColor(calendarData.text?.titleColor || titleColor);
       setSubtitleColor(calendarData.text?.subtitleColor || subtitleColor);
-      setWindowContent(calendarData.windowContent || windowContent);
+      // setWindowContent(calendarData.windowContent || windowContent);
+      setWindowContent(   
+        calendarData.windowContent?.map((window: WindowContent) => ({
+        text: window.text || "",
+        imageURLModal: window.imageURLModal || "",
+        uploadedImageName: window.uploadedImageName || "",
+        videoURL: window.videoURL || "",
+      })) || []);
       setSelectedBackground(calendarData.image?.imageURL || selectedBackground);
       setMusicFile(calendarData.sounds?.musicName || musicFile);
       setMusicFX(calendarData.sounds?.soundFxName || musicFX);
       setWindows(calendarData.windows || windows);
-    }
+    } 
   }, [calendarData]);
 
   console.log(calendarData);
   console.log(calendarId);
   console.log(location.state);
   console.log(imageURL);
+  console.log(windowContent)
 
   const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -226,7 +233,8 @@ const Preview: React.FC<Props> = ({
   };
 
   return (
-    <div id="preview-container" style={{ backgroundImage: `url(${selectedBackground})` }}>
+    <div id="preview-container" style={{ backgroundImage: `url(${selectedBackground})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', minHeight: '100vh', backgroundPosition: 'center'
+    }}>
       <div className="preview">
         <div className="preview-music">
           {musicFile && (
@@ -239,7 +247,7 @@ const Preview: React.FC<Props> = ({
         <div className="preview-soundfx">
           {musicFX && (
             <>
-              <p className="preview-sound-btn">FX: </p>
+              <p className="preview-sound-btn">Sound effect: </p>
               <MusicPlayer audioSrc={musicFX} type={"soundFx"} />
             </>
           )}
