@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // styles
 import "../Preview.css";
@@ -8,9 +9,10 @@ import WindowFinal from "./WindowFinal";
 import MusicPlayer from "../SidebarSounds/MusicPlayer";
 import PreviewModalFinal from "./PreviewModalFinal";
 
-import { Typography } from "@mui/material";
+import { Typography, Button } from "@mui/material";
 import CopyURL from "../Share/CopyURL";
 import Share from "../Share/Share";
+import EditIcon from '@mui/icons-material/Edit';
 
 type Props = {
   title: string;
@@ -28,6 +30,7 @@ type Props = {
   uploadedImageName: string;
   windowsContent: WindowContent[];
   ownerUid: string;
+  calendarId: string;
 };
 
 interface WindowContent {
@@ -51,8 +54,15 @@ const PreviewFinal: React.FC<Props> = ({
   imageURL,
   windowsContent,
   ownerUid,
+  calendarId,
 }) => {
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
+
+  const navigate = useNavigate(); // useNavigate hook
+
+  const handleEdit = () => {
+    navigate("/panel", { state: { calendarId } }); // Pass calendarId to Preview.tsx
+  };
 
   const [day, setDay] = useState(1);
 
@@ -139,6 +149,9 @@ const PreviewFinal: React.FC<Props> = ({
       >
         <CopyURL />
         <Share url={window.location.href} />
+        <Button style={{ marginLeft: "20px" }} variant="contained" onClick={handleEdit}>
+          <EditIcon style={{ marginRight: "10px" }} />EDIT
+        </Button>
       </div>
     </div>
   );

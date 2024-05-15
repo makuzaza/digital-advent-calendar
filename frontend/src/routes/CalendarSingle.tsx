@@ -5,6 +5,7 @@ import PreviewFinal from "../components/FinalPreview/PreviewFinal";
 
 interface CalendarData {
   ownerUid: string;
+  calendarId: string;
   text: {
     title: string;
     subtitle: string;
@@ -78,6 +79,7 @@ const CalendarSingle = () => {
         uploadedImageName={calendarData.image.uploadedImageName}
         windowsContent={calendarData.windowsContent}
         ownerUid={calendarData.ownerUid}
+        calendarId={calendarData.calendarId}
       />
     </div>
   );
