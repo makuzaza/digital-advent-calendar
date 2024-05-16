@@ -18,6 +18,7 @@ import { ChangeUsername } from "../components/ChangeUsername";
 import { ChangePassword } from "../components/ChangePassword";
 import profilepic from "../assets/user_149071.png";
 import editor from "../assets/camera.png";
+import Swal from "sweetalert2";
 
 interface CalendarData {
   text: {
@@ -67,12 +68,12 @@ const UserInfo: React.FC = () => {
   // Function to upload profile picture to Firebase Storage
   const uploadProfilePicture = async () => {
     const user = getAuth().currentUser;
-
+  
     if (!selectedFile || !uid) return;
-
+  
     const storage = getStorage();
     const fileRef = ref(storage, `profile_pictures/${uid}`);
-
+  
     if (user) {
       try {
         const snapshot = await uploadBytes(fileRef, selectedFile);
@@ -81,6 +82,15 @@ const UserInfo: React.FC = () => {
         await updateProfile(user, { photoURL: downloadURL });
         setProfilePic(downloadURL);
         console.log("Profile picture uploaded successfully");
+  
+        // Display success popup
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Profile picture uploaded successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       } catch (error) {
         console.error("Error uploading profile picture:", error);
       }
@@ -306,7 +316,7 @@ const UserInfo: React.FC = () => {
       <div className="user-info">
         <div className="info-box">
           <h2>My Profile</h2>
-          {/* <div className="profile-pic">
+          <div className="profile-pic">
             <img src={profilePic || profilepic} alt="Profile picture" />
             <div>
               <label htmlFor="file-input">
@@ -335,7 +345,7 @@ const UserInfo: React.FC = () => {
                 </Button>
               )}
             </div>
-          </div> */}
+          </div>
           <div className="personal-info">
             <div className="left-col">
               <p>Username </p>
