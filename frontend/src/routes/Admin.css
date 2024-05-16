@@ -4,15 +4,26 @@
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  background-color: #fff;
+  background-color: #ffffffc1;
   color: #333;
 }
 
 .panel-data th,
 .panel-data td {
-  padding-right: 30px;
+  padding: 5px 10px;
 }
 
 .panel-data th {
   background-color: #b2b2b2;
+}
+
+@media screen and (max-width: 728px){
+
+  .panel-data {
+    width: 90%;
+  }
+  .hide {
+    display: none;
+    width: 0;
+  }
 }

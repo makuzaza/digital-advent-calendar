@@ -46,7 +46,7 @@ const CalendarSingle = () => {
           `https://caas-deploy.onrender.com/firestore/calendars/${calendarId}`
         )
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           setCalendarData(response.data);
         })
         .catch((error) => {

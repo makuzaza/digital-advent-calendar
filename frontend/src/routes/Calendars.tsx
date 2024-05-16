@@ -48,7 +48,7 @@ const Calendars: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
     axios
       .get("https://caas-deploy.onrender.com/firestore/calendars")
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setCalendars(response.data);
       });
   };

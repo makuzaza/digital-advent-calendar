@@ -59,7 +59,7 @@ const Admin: React.FC = () => {
               <th>Username</th>
               <th>Email</th>
               <th>Calendars</th>
-              <th>UID</th>
+              <th className="hide">UID</th>
             </tr>
           </thead>
           <tbody>
@@ -77,7 +77,7 @@ const Admin: React.FC = () => {
                       ).length
                     }
                   </td>
-                  <td>{user.uid}</td>
+                  <td className="hide">{user.uid}</td>
                 </tr>
               ))}
           </tbody>

@@ -80,3 +80,8 @@
   background-color: #0e627a;
   color: white;
 }
+
+.edit:hover {
+  background-color: #ee7d8c !important;
+  color: white;
+}

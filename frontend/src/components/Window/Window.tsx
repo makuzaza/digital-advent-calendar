@@ -6,6 +6,7 @@ import PreviewIcon from "@mui/icons-material/Preview";
 
 // types
 import { WindowContent } from "../Modal/Modal";
+import { useEffect, useState } from "react";
 
 type Props = {
   day: number;
@@ -15,6 +16,8 @@ type Props = {
   setOpenPreviewModal: (openPreviewModal: boolean) => void;
   musicFX: string;
   windowContent: WindowContent[];
+  ownerUid: string;
+  uploadedImageName: string;
 };
 
 const Window: React.FC<Props> = ({
@@ -23,9 +26,18 @@ const Window: React.FC<Props> = ({
   setOpenModal,
   setDay,
   setOpenPreviewModal,
+  // musicFX,
   windowContent,
-  musicFX,
+  ownerUid,
 }) => {
+  const [uploadedImageName, setUploadedImageName] = useState<string>("");
+
+  useEffect(() => {
+    const content = windowContent[day - 1];
+    if (content && content.uploadedImageName) {
+      setUploadedImageName(content.uploadedImageName);
+    }
+  }, [windowContent, day]);
   const handleAddClick = (day: number) => {
     setOpenModal(true);
     setDay(day);
@@ -34,7 +46,7 @@ const Window: React.FC<Props> = ({
   const handlePreviewClick = (day: number) => {
     // if sound effect is chosen, play when opening the window
     // if (musicFX) new Audio(musicFX).play();
-    console.log(musicFX);
+    // console.log(musicFX);
     setOpenPreviewModal(true);
     setDay(day);
   };
@@ -60,13 +72,15 @@ const Window: React.FC<Props> = ({
 
     return `${month} ${day}`;
   }
+  // console.log(uploadedImageName);
+  // console.log(ownerUid);
 
   return (
     <div className="window-container">
       <div
         className="open_door"
         style={{
-          backgroundImage: `url(${windowContent[day - 1]?.imageURLModal})`,
+          backgroundImage: `url(https://caas-deploy.onrender.com/storage/images/${uploadedImageName}/?ownerUid=${ownerUid})`,
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
