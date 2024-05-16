@@ -141,8 +141,9 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
                   </Link>
                 </div>
                 <div className="calendar_button_two">
-                  {(pathname === "/favourites" || pathname === "/") &&
-                    uid === calendar.data.ownerUid && (
+                  {(pathname === "/favourites" || pathname === "/" || pathname === "/") &&
+                    // uid === calendar.data.ownerUid && 
+                    (
                       <Button
                         onClick={() => deleteCalendar(calendar.calendarId)}
                       >

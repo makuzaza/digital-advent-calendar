@@ -55,6 +55,7 @@ const PreviewFinal: React.FC<Props> = ({
   windowsContent,
   ownerUid,
   calendarId,
+  uploadedImageName,
 }) => {
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
 
@@ -128,6 +129,7 @@ const PreviewFinal: React.FC<Props> = ({
                 setDay={setDay}
                 windowsContent={windowsContent}
                 ownerUid={ownerUid}
+                uploadedImageName={uploadedImageName}
               />
             ))}
           </div>

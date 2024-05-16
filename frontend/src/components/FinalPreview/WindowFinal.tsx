@@ -4,6 +4,7 @@ import { WindowContent } from "../Modal/Modal";
 import "../Window/Window.css";
 import { useCallback, useEffect, useState } from "react";
 // import { useAppSelector } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppDispatch";
 
 type Props = {
   day: number;
@@ -12,6 +13,8 @@ type Props = {
   ownerUid: string;
   setDay: (value: number) => void;
   setOpenPreviewModal: (value: boolean) => void;
+  uploadedImageName: string;
+
 };
 
 const WindowFinal: React.FC<Props> = ({
@@ -24,6 +27,8 @@ const WindowFinal: React.FC<Props> = ({
 }) => {
   // const uid = useAppSelector((state) => state.uid.uid);
   const [windowsImageURL, setWindowsImageURL] = useState("");
+
+  const uid = useAppSelector((state) => state.uid.uid); 
 
   function formatDate(inputDate: string) {
     const date = new Date(inputDate);
@@ -46,7 +51,6 @@ const WindowFinal: React.FC<Props> = ({
 
     return `${month} ${day}`;
   }
-
   // get image by name from database
   const getImage = useCallback(() => {
     const image = windowsContent[day - 1].uploadedImageName;
@@ -54,7 +58,7 @@ const WindowFinal: React.FC<Props> = ({
     axios
       .get(`https://caas-deploy.onrender.com/storage/images/${image}`, {
         params: {
-          ownerUid: ownerUid,
+          ownerUid: uid,
         },
         responseType: "blob", // Set the response type to 'blob'
       })

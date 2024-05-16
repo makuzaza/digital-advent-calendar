@@ -52,7 +52,7 @@ type Props = {
 };
 
 interface Json {
-  ownerUid: string;
+  uid: string;
   windows: string[];
   isPrivate: boolean;
   text: {
@@ -74,6 +74,7 @@ interface Json {
     uploadedImageName: string;
   };
   windowsContent: WindowContent[];
+  ownerUid: string;
 }
 
 const Preview: React.FC<Props> = ({
@@ -114,9 +115,11 @@ const Preview: React.FC<Props> = ({
   const [isPrivate, setIsPrivate] = useState<boolean>(false);
   const [calendarData, setCalendarData] = useState<Json | null>(null);
   const [calendarId, setCalendarId] = useState("");
+  const [ownerUid, setOwnerUid] = useState<string>("");
 
   const token = useAppSelector((state) => state.token.token);
   const uid = useAppSelector((state) => state.uid.uid);
+  // const ownerUid = useAppSelector((state) => state.ownerUid.ownerUid);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -136,6 +139,7 @@ const Preview: React.FC<Props> = ({
       }
       const data: Json = await response.json();
       setCalendarData(data);
+      setOwnerUid(data.ownerUid);
       console.log("Calendar data:", data);
     } catch (error) {
       console.error("Error:", error);
@@ -194,11 +198,12 @@ const Preview: React.FC<Props> = ({
     windows,
   ]);
   
-  console.log(calendarData);
-  console.log(calendarId);
-  console.log(location.state);
-  console.log(imageURL);
-  console.log(windowContent)
+  // console.log(calendarData);
+  // console.log(calendarId);
+  // console.log(location.state);
+  // console.log(imageURL);
+  // console.log(windowContent)
+  // console.log(ownerUid)
 
   const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -211,6 +216,7 @@ const Preview: React.FC<Props> = ({
   const saveCalendar = async () => {
     const json: Json = {
       windows: windows,
+      uid: uid,
       ownerUid: uid,
       isPrivate: isPrivate,
       text: {
@@ -231,7 +237,7 @@ const Preview: React.FC<Props> = ({
         imageURL: !uploadedImageName ? selectedBackground : "",
         uploadedImageName: uploadedImageName,
       },
-      windowsContent: windowContent.map((window: WindowContent) => ({
+      windowContent: windowContent.map((window: WindowContent) => ({
         text: window.text,
         videoURL: window.videoURL,
         uploadedImageName: window.uploadedImageName,
@@ -244,6 +250,7 @@ const Preview: React.FC<Props> = ({
         token: token,
         uid: uid,
         data: json,
+        ownerUid: uid,
       })
       .then((response) => {
         navigate(`/calendars/${response.data.calendarId}`);
@@ -317,6 +324,8 @@ const Preview: React.FC<Props> = ({
               setOpenPreviewModal={setOpenPreviewModal}
               musicFX={musicFX}
               windowContent={windowContent}
+              uploadedImageName={uploadedImageName}
+              ownerUid={ownerUid}
             />
           ))}
         </div>
@@ -330,6 +339,8 @@ const Preview: React.FC<Props> = ({
               amountOfWindows={windows.length}
               windowContent={windowContent}
               setWindowContent={setWindowContent}
+              uploadedImageName={uploadedImageName}
+              ownerUid={ownerUid}
             />
           </div>
         )}
@@ -340,7 +351,8 @@ const Preview: React.FC<Props> = ({
               openPreviewModal={openPreviewModal}
               setOpenPreviewModal={setOpenPreviewModal}
               windowContent={windowContent}
-              setWindowContent={setWindowContent}
+              // setWindowContent={setWindowContent}
+              ownerUid = {ownerUid}
             />
           </div>
         )}

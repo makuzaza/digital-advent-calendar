@@ -16,6 +16,8 @@ type Props = {
   amountOfWindows: number;
   windowContent: WindowContent[];
   setWindowContent: (windowContent: WindowContent[]) => void;
+  uploadedImageName: string;
+  ownerUid?: string;
 };
 
 type ContentVisibility = {
@@ -37,6 +39,7 @@ const Modal: React.FC<Props> = ({
   amountOfWindows,
   windowContent,
   setWindowContent,
+  ownerUid
 }) => {
   const [contentVisible, setContentVisible] = useState<ContentVisibility>({});
 
@@ -139,12 +142,16 @@ const Modal: React.FC<Props> = ({
       });
   };
 
-  const { videoURL, text, imageURLModal } = windowContent[day - 1] || {
+
+
+  const { videoURL, text, uploadedImageName } = windowContent[day - 1] || {
     videoURL: "",
     text: "",
     imageURLModal: "",
     uploadedImageName: "",
   };
+  const currentOwnerUid = ownerUid !== '' ? ownerUid : uid;
+  console.log('currentOwnerUid', currentOwnerUid)
 
   return (
     <div className={`modal ${openModal ? "open" : ""}`}>
@@ -180,11 +187,11 @@ const Modal: React.FC<Props> = ({
             onChange={handleImageUpload}
           />
           <div>
-            {imageURLModal && (
+            {uploadedImageName && (
               <>
                 <p>Your saved image:</p>
                 <img
-                  src={imageURLModal}
+                  src={`https://caas-deploy.onrender.com/storage/images/${uploadedImageName}/?ownerUid=${currentOwnerUid}`}
                   alt="Uploaded"
                   style={{ maxHeight: "150px" }}
                 />
