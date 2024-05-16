@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -18,7 +18,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../auth/firebase";
 import { useAppSelector } from "../../hooks/useAppDispatch";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useState, useEffect } from "react";
 import { AccountCircle } from "@mui/icons-material";
 
 const Header: React.FC = () => {
@@ -33,7 +32,9 @@ const Header: React.FC = () => {
   const menuItems = [
     { text: "Home", link: "/" },
     { text: "Browse", link: "/calendars" },
-    { text: "Create", link: "/panel" },
+    ...(token
+      ? [{ text: "Create", link: "/panel" }] // Add 'Create' menu item for authenticated users
+      : []),
     { text: "Favourites", link: "/favourites" },
     { text: "About", link: "/about" },
   ];
@@ -82,6 +83,7 @@ const Header: React.FC = () => {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+
   return (
     <>
       <AppBar position="static" sx={{ backgroundColor: "#10617a" }}>
