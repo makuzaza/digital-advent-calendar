@@ -73,7 +73,7 @@ interface Json {
     imageURL: string;
     uploadedImageName: string;
   };
-  windowContent: WindowContent[];
+  windowsContent: WindowContent[];
 }
 
 const Preview: React.FC<Props> = ({
@@ -136,6 +136,7 @@ const Preview: React.FC<Props> = ({
       }
       const data: Json = await response.json();
       setCalendarData(data);
+      console.log("Calendar data:", data);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -151,21 +152,48 @@ const Preview: React.FC<Props> = ({
       setSubTitleFontSize(calendarData.text?.subTitleFontSize || subTitleFontSize);
       setTitleColor(calendarData.text?.titleColor || titleColor);
       setSubtitleColor(calendarData.text?.subtitleColor || subtitleColor);
-      // setWindowContent(calendarData.windowContent || windowContent);
-      setWindowContent(   
-        calendarData.windowContent?.map((window: WindowContent) => ({
-        text: window.text || "",
-        imageURLModal: window.imageURLModal || "",
-        uploadedImageName: window.uploadedImageName || "",
-        videoURL: window.videoURL || "",
-      })) || []);
       setSelectedBackground(calendarData.image?.imageURL || selectedBackground);
       setMusicFile(calendarData.sounds?.musicName || musicFile);
       setMusicFX(calendarData.sounds?.soundFxName || musicFX);
       setWindows(calendarData.windows || windows);
+  
+      // Set windowContent here
+      if (calendarData.windowsContent) {
+        // Use `windowsContent` if available, otherwise use `windowContent`
+        const content = calendarData.windowsContent || calendarData.windowsContent;
+        const newWindowContent = content.map((window: WindowContent) => ({
+          text: window.text || "",
+          videoURL: window.videoURL || "",
+          uploadedImageName: window.uploadedImageName || "",
+          imageURLModal: window.uploadedImageName ? `https://caas-deploy.onrender.com/storage/images/${window.uploadedImageName}` : ""
+        }));
+        setWindowContent(newWindowContent);
+      } else {
+        const newWindowContent = windows.map(() => ({
+          text: "",
+          videoURL: "",
+          uploadedImageName: "",
+          imageURLModal: ""
+        }));
+        setWindowContent(newWindowContent);
+      }
     } 
-  }, [calendarData]);
-
+  }, [
+    calendarData,
+    title,
+    subtitle,
+    titleFont,
+    subtitleFont,
+    titleFontSize,
+    subTitleFontSize,
+    titleColor,
+    subtitleColor,
+    selectedBackground,
+    musicFile,
+    musicFX,
+    windows,
+  ]);
+  
   console.log(calendarData);
   console.log(calendarId);
   console.log(location.state);
@@ -203,7 +231,7 @@ const Preview: React.FC<Props> = ({
         imageURL: !uploadedImageName ? selectedBackground : "",
         uploadedImageName: uploadedImageName,
       },
-      windowContent: windowContent.map((window: WindowContent) => ({
+      windowsContent: windowContent.map((window: WindowContent) => ({
         text: window.text,
         videoURL: window.videoURL,
         uploadedImageName: window.uploadedImageName,

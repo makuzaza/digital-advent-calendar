@@ -139,7 +139,7 @@ const Modal: React.FC<Props> = ({
       });
   };
 
-  const { videoURL, text, imageURLModal, uploadedImageName } = windowContent[day - 1] || {
+  const { videoURL, text, imageURLModal } = windowContent[day - 1] || {
     videoURL: "",
     text: "",
     imageURLModal: "",
