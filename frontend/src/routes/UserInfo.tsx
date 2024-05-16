@@ -306,7 +306,7 @@ const UserInfo: React.FC = () => {
       <div className="user-info">
         <div className="info-box">
           <h2>My Profile</h2>
-          <div className="profile-pic">
+          {/* <div className="profile-pic">
             <img src={profilePic || profilepic} alt="Profile picture" />
             <div>
               <label htmlFor="file-input">
@@ -335,7 +335,7 @@ const UserInfo: React.FC = () => {
                 </Button>
               )}
             </div>
-          </div>
+          </div> */}
           <div className="personal-info">
             <div className="left-col">
               <p>Username </p>
