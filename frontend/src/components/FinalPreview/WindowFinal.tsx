@@ -79,7 +79,7 @@ const WindowFinal: React.FC<Props> = ({
     setDay(day - 1);
   };
 
-  console.log(ownerUid);
+  // console.log(ownerUid);
 
   return (
     <div className="window-container" onClick={handleClick}>

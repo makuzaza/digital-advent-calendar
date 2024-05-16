@@ -1,3 +1,4 @@
+
 # Calendar as as Service
 
 Welcome to Your Own Digital Advent [ YODA ] calendars platform!
@@ -8,3 +9,4 @@ In this project our mission is to blend the traditional advent calendars with th
 YODA is a Software Development Team Project developed as part of the curriculum at Business College Helsinki.
 
 It was created in response to the needs of a client, simulating a real-life scrum project, to provide a modern solution for digital advent calendars.
+

@@ -13,6 +13,7 @@ import { Typography, Button } from "@mui/material";
 import CopyURL from "../Share/CopyURL";
 import Share from "../Share/Share";
 import EditIcon from '@mui/icons-material/Edit';
+import { useAppSelector } from "../../hooks/useAppDispatch";
 
 type Props = {
   title: string;
@@ -70,6 +71,8 @@ const PreviewFinal: React.FC<Props> = ({
   const backgroundStyle = imageURL
     ? { backgroundImage: `url(${imageURL})`, minHeight: "85vh" }
     : {};
+
+  const uid = useAppSelector((state) => state.uid.uid); 
 
   return (
     <div className="home" style={backgroundStyle}>
@@ -151,10 +154,12 @@ const PreviewFinal: React.FC<Props> = ({
       >
         <CopyURL />
         <Share url={window.location.href} />
+        {uid === ownerUid && (
         <Button style={{ marginLeft: "20px" }} className="edit"
         variant="contained" onClick={handleEdit}>
           <EditIcon style={{ marginRight: "10px" }} />EDIT
         </Button>
+         )}
       </div>
     </div>
   );
