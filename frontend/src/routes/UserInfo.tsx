@@ -1,23 +1,23 @@
 import { useAuthState } from "react-firebase-hooks/auth";
-import { getAuth, updateProfile } from "firebase/auth";
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytes,
-  deleteObject,
-} from "firebase/storage"; // Update import
+import { getAuth } from "firebase/auth";
+// import {
+//   getDownloadURL,
+//   getStorage,
+//   ref,
+//   uploadBytes,
+//   deleteObject,
+// } from "firebase/storage"; // Update import
 import "./UserInfo.css";
 import { Button } from "@mui/material";
 import { useAppSelector } from "../hooks/useAppDispatch";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { ChangeUsername } from "../components/ChangeUsername";
 import { ChangePassword } from "../components/ChangePassword";
-import profilepic from "../assets/user_149071.png";
-import editor from "../assets/camera.png";
+// import profilepic from "../assets/user_149071.png";
+// import editor from "../assets/camera.png";
 
 interface CalendarData {
   text: {
@@ -37,8 +37,8 @@ const UserInfo: React.FC = () => {
     null
   );
 
-  const [profilePic, setProfilePic] = useState<string | null>(profilepic); // Default profile picture
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  // const [profilePic, setProfilePic] = useState<string | null>(profilepic); // Default profile picture
+  // const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const [userName, setUserName] = useState<string | null>(null);
 
@@ -47,60 +47,60 @@ const UserInfo: React.FC = () => {
   const uid = useAppSelector((state) => state.uid.uid);
   const token = useAppSelector((state) => state.token.token);
 
-  useEffect(() => {
-    if (!user) return;
-    setUserName(user.displayName);
+  // useEffect(() => {
+  //   if (!user) return;
+  //   setUserName(user.displayName);
 
-    // Load user's profile picture
-    if (user.photoURL) {
-      setProfilePic(user.photoURL);
-    }
-  }, [user]);
+  //   // Load user's profile picture
+  //   if (user.photoURL) {
+  //     setProfilePic(user.photoURL);
+  //   }
+  // }, [user]);
 
   // Function to handle file selection
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      setSelectedFile(event.target.files[0]);
-    }
-  };
+  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (event.target.files && event.target.files[0]) {
+  //     setSelectedFile(event.target.files[0]);
+  //   }
+  // };
 
-  // Function to upload profile picture to Firebase Storage
-  const uploadProfilePicture = async () => {
-    const user = getAuth().currentUser;
+  // // Function to upload profile picture to Firebase Storage
+  // const uploadProfilePicture = async () => {
+  //   const user = getAuth().currentUser;
 
-    if (!selectedFile || !uid) return;
+  //   if (!selectedFile || !uid) return;
 
-    const storage = getStorage();
-    const fileRef = ref(storage, `profile_pictures/${uid}`);
+  //   const storage = getStorage();
+  //   const fileRef = ref(storage, `profile_pictures/${uid}`);
 
-    if (user) {
-      try {
-        const snapshot = await uploadBytes(fileRef, selectedFile);
-        const downloadURL = await getDownloadURL(snapshot.ref); // Get download URL from the snapshot
-        // Update user's profile picture URL
-        await updateProfile(user, { photoURL: downloadURL });
-        setProfilePic(downloadURL);
-        console.log("Profile picture uploaded successfully");
-      } catch (error) {
-        console.error("Error uploading profile picture:", error);
-      }
-    }
-  };
-  // Function to remove profile picture
-  const removeProfilePicture = async () => {
-    const user = getAuth().currentUser;
+  //   if (user) {
+  //     try {
+  //       const snapshot = await uploadBytes(fileRef, selectedFile);
+  //       const downloadURL = await getDownloadURL(snapshot.ref); // Get download URL from the snapshot
+  //       // Update user's profile picture URL
+  //       await updateProfile(user, { photoURL: downloadURL });
+  //       setProfilePic(downloadURL);
+  //       console.log("Profile picture uploaded successfully");
+  //     } catch (error) {
+  //       console.error("Error uploading profile picture:", error);
+  //     }
+  //   }
+  // };
+  // // Function to remove profile picture
+  // const removeProfilePicture = async () => {
+  //   const user = getAuth().currentUser;
 
-    if (!uid || !user) return;
+  //   if (!uid || !user) return;
 
-    try {
-      await deleteObject(ref(getStorage(), `profile_pictures/${uid}`));
-      await updateProfile(user, { photoURL: null }); // Remove profile picture URL
-      setProfilePic(null);
-      console.log("Profile picture removed successfully");
-    } catch (error) {
-      console.error("Error removing profile picture:", error);
-    }
-  };
+  //   try {
+  //     await deleteObject(ref(getStorage(), `profile_pictures/${uid}`));
+  //     await updateProfile(user, { photoURL: null }); // Remove profile picture URL
+  //     setProfilePic(null);
+  //     console.log("Profile picture removed successfully");
+  //   } catch (error) {
+  //     console.error("Error removing profile picture:", error);
+  //   }
+  // };
 
   // Format date to be more readable
   function formatDate(dateString: string): string {

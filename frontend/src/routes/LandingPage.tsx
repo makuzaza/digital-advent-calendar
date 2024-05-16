@@ -19,9 +19,6 @@ const LandingPage: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
         <BannerTop />
         <div style={{ marginBottom: "250px" }}>
           {!token && <Login />}
-          {/* <div className="center full">
-            <h1 className="headline gray"></h1>
-          </div>  */}
           {token && (
             <Favourite
               search={search}
