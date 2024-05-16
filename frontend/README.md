@@ -1,2 +1,0 @@
-# Calendar as as Service
-
