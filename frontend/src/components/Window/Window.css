@@ -71,7 +71,7 @@
 }
 
 .window:hover {
-  transform: perspective(100px) rotateY(-10deg) scaleX(0.7);
+  transform: perspective(100px) rotateY(-10deg) scaleX(0.65);
   transform-origin: left;
 }
 

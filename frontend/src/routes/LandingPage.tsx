@@ -3,7 +3,7 @@ import Login from "./Login";
 import Favourite from "./Favourite";
 import { useAppSelector } from "../hooks/useAppDispatch";
 import MainPricing from "../components/LandingPage/Pricing/MainPricing";
-import Ban from "../components/LandingPage/banner/Ban";
+import Ban from "../components/LandingPage/banner/ban";
 import Services from "../components/LandingPage/services/Services";
 
 type Props = {

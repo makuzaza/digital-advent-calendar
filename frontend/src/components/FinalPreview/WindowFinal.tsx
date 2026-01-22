@@ -92,7 +92,7 @@ const WindowFinal: React.FC<Props> = ({
           backgroundRepeat: "no-repeat",
         }}
       >
-        <p>{formatDate(date)}</p>
+        <p style={{ color: "black"}}>{formatDate(date)}</p>
       </div>
       <div className="window">{day}</div>
     </div>

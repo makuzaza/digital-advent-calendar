@@ -317,7 +317,7 @@ const UserInfo: React.FC = () => {
         <div className="info-box">
           <h2>My Profile</h2>
           <div className="profile-pic">
-            <img src={profilePic || profilepic} alt="Profile picture" />
+            <img src={profilepic || profilepic} alt="Profile picture" />
             <div>
               <label htmlFor="file-input">
                 <img src={editor} alt="Edit profile picture" id="editor" />
