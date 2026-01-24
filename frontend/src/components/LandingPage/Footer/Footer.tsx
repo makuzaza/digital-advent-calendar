@@ -6,6 +6,7 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import { Typography } from "@mui/material";
 import { useLocation } from "react-router-dom";
+import { LinkedIn } from "@mui/icons-material";
 
 const Footer: React.FC = () => {
     const location = useLocation();
@@ -29,7 +30,7 @@ const Footer: React.FC = () => {
                     </Typography>
                 </div>
                 <a
-                    href="https://github.com/aj-kivimaki/digital-calendar"
+                    href="https://github.com/makuzaza/digital-advent-calendar"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="item3"
@@ -37,12 +38,12 @@ const Footer: React.FC = () => {
                     <GitHubIcon />
                 </a>
                 <a
-                    href="https://www.facebook.com/"
+                    href="https://www.linkedin.com/in/maria-kuznetcova/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="item4"
                 >
-                    <FacebookIcon />
+                    <LinkedIn />
                 </a>
                 <a
                     href="https://www.youtube.com/"

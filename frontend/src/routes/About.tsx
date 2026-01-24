@@ -31,7 +31,7 @@ const About = () => {
         </div>
         <div className="project-details">
           <p>
-            YODA is a Software Development Team Project developed as part of the
+            YODA is a Software Development Project developed as part of the
             curriculum at Business College Helsinki.
           </p>
           <p>
@@ -41,36 +41,14 @@ const About = () => {
           </p>
         </div>
         <div>
-          <h3>Meet the Team: </h3>
+          <h3>Links:</h3>
           <div className="team">
           <div className="people">
           <p>Kuznetsova Maria</p>
-          <a target="_blank" href="https://www.linkedin.com/in/maria-k-88543a11a">
+          <a target="_blank" href="https://www.linkedin.com/in/maria-kuznetcova/">
             <LinkedInIcon className="linkedin"/>
           </a>
-          <a target="_blank" href="https://github.com/Makuzaza">
-            <GitHubIcon className="github"/>
-          </a>
-          <p>Tahashin Anika</p>
-          <a target="_blank" href="">
-            <LinkedInIcon className="linkedin"/>
-          </a>
-          <a target="_blank" href="">
-            <GitHubIcon className="github"/>
-          </a>
-          </div>
-          <div className="people"><p>Munsi Mithun</p>
-          <a target="_blank" href="">
-            <LinkedInIcon className="linkedin"/>
-          </a>
-          <a target="_blank" href="">
-            <GitHubIcon className="github"/>
-          </a>
-          <p>Kivimäki Atte</p>
-          <a target="_blank" href="https://www.linkedin.com/in/aj-kivimaki/">
-            <LinkedInIcon className="linkedin"/>
-          </a>
-          <a target="_blank" href="https://github.com/aj-kivimaki">
+          <a target="_blank" href="https://github.com/makuzaza">
             <GitHubIcon className="github"/>
           </a>
           </div>
@@ -88,7 +66,7 @@ const About = () => {
           <p>Typescript</p>
           </div>
           <div className="pics">
-            <img src={node} alt="reanodect"/>
+            <img src={node} alt="node"/>
           <p>Node.js</p>
           </div>
           <div className="pics">

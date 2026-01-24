@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { useAppSelector } from "../hooks/useAppDispatch";
+import { useAppSelector, useAppDispatch } from "../hooks/useAppDispatch";
 import { Link } from "react-router-dom";
 import Search from "../components/Search";
 import { useLocation } from "react-router-dom";
 import { Button } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import Swal from "sweetalert2";
+import { refreshFirebaseToken } from "../utils/tokenUtils";
+import { setToken } from "../store/tokenSlice";
 
 interface Calendar {
   calendarId: string;
@@ -46,6 +48,7 @@ type Props = {
 const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
   const [calendars, setCalendars] = useState<Calendar[]>([]);
   const { pathname } = useLocation();
+  const dispatch = useAppDispatch();
 
   const token = useAppSelector((state) => state.token.token);
   const uid = useAppSelector((state) => state.uid.uid);
@@ -77,26 +80,50 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        axios
-          .delete(
-            `http://localhost:8000/firestore/calendars/${calendarId}`,
-            {
-              params: {
-                token: token,
-                uid: uid,
-              },
-            }
-          )
-          .then((response) => {
-            getUserCalendars();
-            Swal.fire("Deleted!", "Your calendar has been deleted", "success");
-            console.log(response);
-          })
-          .catch((error) => {
-            console.error("Error sending token to backend:", error);
-          });
+        try {
+          // Get fresh token in case it expired
+          const freshToken = await refreshFirebaseToken();
+          const tokenToUse = freshToken || token;
+
+          if (!tokenToUse) {
+            Swal.fire("Error", "Authentication token is missing. Please log in again.", "error");
+            return;
+          }
+
+          axios
+            .delete(
+              `http://localhost:8000/firestore/calendars/${calendarId}`,
+              {
+                params: {
+                  token: tokenToUse,
+                  uid: uid,
+                },
+              }
+            )
+            .then((response) => {
+              // Update token in store if it was refreshed
+              if (freshToken && freshToken !== token) {
+                dispatch(setToken(freshToken));
+              }
+              getUserCalendars();
+              Swal.fire("Deleted!", "Your calendar has been deleted", "success");
+              console.log(response);
+            })
+            .catch((error) => {
+              // Handle 401 error specifically
+              if (error.response?.status === 401) {
+                Swal.fire("Error", "Your session has expired. Please log in again.", "error");
+              } else {
+                console.error("Error deleting calendar:", error);
+                Swal.fire("Error", "Failed to delete calendar. Please try again.", "error");
+              }
+            });
+        } catch (error) {
+          console.error("Error in deleteCalendar:", error);
+          Swal.fire("Error", "An unexpected error occurred. Please try again.", "error");
+        }
       }
     });
   };

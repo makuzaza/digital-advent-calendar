@@ -9,7 +9,7 @@ import {
 } from "firebase/storage"; // Update import
 import "./UserInfo.css";
 import { Button } from "@mui/material";
-import { useAppSelector } from "../hooks/useAppDispatch";
+import { useAppSelector, useAppDispatch } from "../hooks/useAppDispatch";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
@@ -19,6 +19,8 @@ import { ChangePassword } from "../components/ChangePassword";
 import profilepic from "../assets/user_149071.png";
 import editor from "../assets/camera.png";
 import Swal from "sweetalert2";
+import { refreshFirebaseToken } from "../utils/tokenUtils";
+import { setToken } from "../store/tokenSlice";
 
 interface CalendarData {
   text: {
@@ -44,6 +46,7 @@ const UserInfo: React.FC = () => {
   const [userName, setUserName] = useState<string | null>(null);
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const uid = useAppSelector((state) => state.uid.uid);
   const token = useAppSelector((state) => state.token.token);
@@ -152,24 +155,48 @@ const UserInfo: React.FC = () => {
   };
 
   // Delete calendar by calendarId
-  const deleteCalendar = (calendarId: string) => {
-    axios
-      .delete(
-        `http://localhost:8000/firestore/calendars/${calendarId}`,
-        {
-          params: {
-            token: token,
-            uid: uid,
-          },
-        }
-      )
-      .then((response) => {
-        getUserCalendars();
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error("Error sending token to backend:", error);
-      });
+  const deleteCalendar = async (calendarId: string) => {
+    try {
+      // Get fresh token in case it expired
+      const freshToken = await refreshFirebaseToken();
+      const tokenToUse = freshToken || token;
+
+      if (!tokenToUse) {
+        Swal.fire("Error", "Authentication token is missing. Please log in again.", "error");
+        return;
+      }
+
+      axios
+        .delete(
+          `http://localhost:8000/firestore/calendars/${calendarId}`,
+          {
+            params: {
+              token: tokenToUse,
+              uid: uid,
+            },
+          }
+        )
+        .then((response) => {
+          // Update token in store if it was refreshed
+          if (freshToken && freshToken !== token) {
+            dispatch(setToken(freshToken));
+          }
+          getUserCalendars();
+          console.log(response);
+        })
+        .catch((error) => {
+          // Handle 401 error specifically
+          if (error.response?.status === 401) {
+            Swal.fire("Error", "Your session has expired. Please log in again.", "error");
+          } else {
+            console.error("Error deleting calendar:", error);
+            Swal.fire("Error", "Failed to delete calendar. Please try again.", "error");
+          }
+        });
+    } catch (error) {
+      console.error("Error in deleteCalendar:", error);
+      Swal.fire("Error", "An unexpected error occurred. Please try again.", "error");
+    }
   };
 
   // Get all files uploaded by the user
@@ -201,11 +228,20 @@ const UserInfo: React.FC = () => {
   // Delete image file from storage
   const deleteImageFile = async (fileName: string) => {
     try {
+      // Get fresh token in case it expired
+      const freshToken = await refreshFirebaseToken();
+      const tokenToUse = freshToken || token;
+
+      if (!tokenToUse) {
+        Swal.fire("Error", "Authentication token is missing. Please log in again.", "error");
+        return;
+      }
+
       await axios.delete(
         `http://localhost:8000/storage/images/${fileName}`,
         {
           headers: {
-            "x-access-token": token,
+            "x-access-token": tokenToUse,
           },
           data: {
             uid: uid,
@@ -213,19 +249,38 @@ const UserInfo: React.FC = () => {
         }
       );
       console.log("Image file deleted:", fileName);
+
+      // Update token in store if it was refreshed
+      if (freshToken && freshToken !== token) {
+        dispatch(setToken(freshToken));
+      }
     } catch (error) {
-      console.error("Error deleting image file:", error);
+      if ((error as any).response?.status === 401) {
+        Swal.fire("Error", "Your session has expired. Please log in again.", "error");
+      } else {
+        console.error("Error deleting image file:", error);
+        Swal.fire("Error", "Failed to delete image. Please try again.", "error");
+      }
     }
   };
 
   // Delete music file from storage
   const deleteMusicFile = async (fileName: string) => {
     try {
+      // Get fresh token in case it expired
+      const freshToken = await refreshFirebaseToken();
+      const tokenToUse = freshToken || token;
+
+      if (!tokenToUse) {
+        Swal.fire("Error", "Authentication token is missing. Please log in again.", "error");
+        return;
+      }
+
       await axios.delete(
         `http://localhost:8000/storage/sounds/music/${fileName}`,
         {
           headers: {
-            "x-access-token": token,
+            "x-access-token": tokenToUse,
           },
           data: {
             uid: uid,
@@ -233,19 +288,38 @@ const UserInfo: React.FC = () => {
         }
       );
       console.log("Music file deleted:", fileName);
+
+      // Update token in store if it was refreshed
+      if (freshToken && freshToken !== token) {
+        dispatch(setToken(freshToken));
+      }
     } catch (error) {
-      console.error("Error deleting music file:", error);
+      if ((error as any).response?.status === 401) {
+        Swal.fire("Error", "Your session has expired. Please log in again.", "error");
+      } else {
+        console.error("Error deleting music file:", error);
+        Swal.fire("Error", "Failed to delete music file. Please try again.", "error");
+      }
     }
   };
 
   // Delete soundFx file from storage
   const deleteSoundFxFile = async (fileName: string) => {
     try {
+      // Get fresh token in case it expired
+      const freshToken = await refreshFirebaseToken();
+      const tokenToUse = freshToken || token;
+
+      if (!tokenToUse) {
+        Swal.fire("Error", "Authentication token is missing. Please log in again.", "error");
+        return;
+      }
+
       await axios.delete(
         `http://localhost:8000/storage/sounds/soundFx/${fileName}`,
         {
           headers: {
-            "x-access-token": token,
+            "x-access-token": tokenToUse,
           },
           data: {
             uid: uid,
@@ -253,8 +327,18 @@ const UserInfo: React.FC = () => {
         }
       );
       console.log("SoundFx file deleted:", fileName);
+
+      // Update token in store if it was refreshed
+      if (freshToken && freshToken !== token) {
+        dispatch(setToken(freshToken));
+      }
     } catch (error) {
-      console.error("Error deleting soundFx file:", error);
+      if ((error as any).response?.status === 401) {
+        Swal.fire("Error", "Your session has expired. Please log in again.", "error");
+      } else {
+        console.error("Error deleting sound effects file:", error);
+        Swal.fire("Error", "Failed to delete sound file. Please try again.", "error");
+      }
     }
   };
 
