@@ -73,7 +73,11 @@ Router.get("/calendars", async (req, res) => {
 
 // get all calendars for a specific user
 Router.get("/calendars/user", async (req, res) => {
-  const uid = req.query.uid as string;
+  const uid = (req.query.uid as string)?.trim();
+
+  if (!uid) {
+    return res.status(400).json({ error: "uid query param is required" });
+  }
 
   async function getUserCalendarData() {
     const userCalendarsRef = firestore

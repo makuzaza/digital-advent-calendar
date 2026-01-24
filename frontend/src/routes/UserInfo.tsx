@@ -139,7 +139,7 @@ const UserInfo: React.FC = () => {
     if (!uid) return;
     console.log(`user: ${uid} calendars`);
     axios
-      .get("https://caas-deploy.onrender.com/firestore/calendars/user", {
+      .get("http://localhost:8000/firestore/calendars/user", {
         params: {
           // token: token,
           uid: uid,
@@ -155,7 +155,7 @@ const UserInfo: React.FC = () => {
   const deleteCalendar = (calendarId: string) => {
     axios
       .delete(
-        `https://caas-deploy.onrender.com/firestore/calendars/${calendarId}`,
+        `http://localhost:8000/firestore/calendars/${calendarId}`,
         {
           params: {
             token: token,
@@ -176,7 +176,7 @@ const UserInfo: React.FC = () => {
   const getAllFilesByUid = async () => {
     try {
       const response = await axios.get(
-        `https://caas-deploy.onrender.com/storage/files/${uid}`
+        `http://localhost:8000/storage/files/${uid}`
       );
       console.log(response.data);
       setAllUserFiles(response.data);
@@ -202,7 +202,7 @@ const UserInfo: React.FC = () => {
   const deleteImageFile = async (fileName: string) => {
     try {
       await axios.delete(
-        `https://caas-deploy.onrender.com/storage/images/${fileName}`,
+        `http://localhost:8000/storage/images/${fileName}`,
         {
           headers: {
             "x-access-token": token,
@@ -222,7 +222,7 @@ const UserInfo: React.FC = () => {
   const deleteMusicFile = async (fileName: string) => {
     try {
       await axios.delete(
-        `https://caas-deploy.onrender.com/storage/sounds/music/${fileName}`,
+        `http://localhost:8000/storage/sounds/music/${fileName}`,
         {
           headers: {
             "x-access-token": token,
@@ -242,7 +242,7 @@ const UserInfo: React.FC = () => {
   const deleteSoundFxFile = async (fileName: string) => {
     try {
       await axios.delete(
-        `https://caas-deploy.onrender.com/storage/sounds/soundFx/${fileName}`,
+        `http://localhost:8000/storage/sounds/soundFx/${fileName}`,
         {
           headers: {
             "x-access-token": token,

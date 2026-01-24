@@ -47,7 +47,7 @@ const PreviewModal: React.FC<Props> = ({
         {uploadedImageName && (
           <>
             <img
-                src={`https://caas-deploy.onrender.com/storage/images/${uploadedImageName}/?ownerUid=${currentOwnerUid}`}
+                src={`http://localhost:8000/storage/images/${uploadedImageName}/?ownerUid=${currentOwnerUid}`}
                 alt="Uploaded"
                 style={{ width: "450px" }}
               />
@@ -59,7 +59,7 @@ const PreviewModal: React.FC<Props> = ({
         <p>{text}</p>
       </div>
       {videoURL && (
-        <div style={{ width: "450"  }}>
+        <div style={{ width: "450px" }}>
           <EmbedVideo videoURL={videoURL} />
         </div>
       )}

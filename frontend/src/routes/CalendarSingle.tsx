@@ -43,7 +43,7 @@ const CalendarSingle = () => {
     const getCalendar = () => {
       axios
         .get(
-          `https://caas-deploy.onrender.com/firestore/calendars/${calendarId}`
+          `http://localhost:8000/firestore/calendars/${calendarId}`
         )
         .then((response) => {
           // console.log(response.data);

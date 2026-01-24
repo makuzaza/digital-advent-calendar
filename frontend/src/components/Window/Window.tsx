@@ -80,7 +80,7 @@ const Window: React.FC<Props> = ({
       <div
         className="open_door"
         style={{
-          backgroundImage: `url(https://caas-deploy.onrender.com/storage/images/${uploadedImageName}/?ownerUid=${ownerUid})`,
+          backgroundImage: `url(http://localhost:8000/storage/images/${uploadedImageName}/?ownerUid=${ownerUid})`,
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",

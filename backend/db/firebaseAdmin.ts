@@ -1,8 +1,13 @@
 import * as admin from "firebase-admin";
-import serviceAccount from "../serviceAccountKey.json";
 import dotenv from "dotenv";
+import * as path from "path";
+import * as fs from "fs";
 
 dotenv.config();
+
+// Load service account from file
+const serviceAccountPath = path.join(__dirname, "../../serviceAccountKey.json");
+const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, "utf8"));
 
 // Initialize Firebase Admin
 admin.initializeApp({

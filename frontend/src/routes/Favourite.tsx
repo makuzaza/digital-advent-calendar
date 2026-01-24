@@ -54,7 +54,7 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
     if (!uid) return;
 
     axios
-      .get("https://caas-deploy.onrender.com/firestore/calendars/user", {
+      .get("http://localhost:8000/firestore/calendars/user", {
         params: {
           uid: uid,
         },
@@ -81,7 +81,7 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
       if (result.isConfirmed) {
         axios
           .delete(
-            `https://caas-deploy.onrender.com/firestore/calendars/${calendarId}`,
+            `http://localhost:8000/firestore/calendars/${calendarId}`,
             {
               params: {
                 token: token,

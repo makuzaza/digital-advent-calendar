@@ -29,7 +29,7 @@ const UploadFile: React.FC<Props> = ({
 
     axios
       .post(
-        `https://caas-deploy.onrender.com/storage/sounds/${soundType}`,
+        `http://localhost:8000/storage/sounds/${soundType}`,
         formData,
         {
           headers: {

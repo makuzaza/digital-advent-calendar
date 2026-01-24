@@ -133,7 +133,7 @@ const Preview: React.FC<Props> = ({
 
   const fetchCalendarData = async (calendarId: string) => {
     try {
-      const response = await fetch(`https://caas-deploy.onrender.com/firestore/calendars/${calendarId}`);
+      const response = await fetch(`http://localhost:8000/firestore/calendars/${calendarId}`);
       if (!response.ok) {
         throw new Error("Failed to fetch calendar data");
       }
@@ -169,7 +169,7 @@ const Preview: React.FC<Props> = ({
           text: window.text || "",
           videoURL: window.videoURL || "",
           uploadedImageName: window.uploadedImageName || "",
-          imageURLModal: window.uploadedImageName ? `https://caas-deploy.onrender.com/storage/images/${window.uploadedImageName}` : ""
+          imageURLModal: window.uploadedImageName ? `http://localhost:8000/storage/images/${window.uploadedImageName}` : ""
         }));
         setWindowContent(newWindowContent);
       } else {
@@ -246,7 +246,7 @@ const Preview: React.FC<Props> = ({
     console.log(json);
 
     axios
-      .post(`https://caas-deploy.onrender.com/firestore/calendars`, {
+      .post(`http://localhost:8000/firestore/calendars`, {
         token: token,
         uid: uid,
         data: json,

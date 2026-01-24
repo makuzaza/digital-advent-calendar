@@ -14,11 +14,11 @@ const Admin: React.FC = () => {
   const [search, setSearch] = useState("");
 
   const [calendars, setCalendars] = useState<Calendar[]>([]);
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<User[]>([]);
 
   const getCalendars = async () => {
     axios
-      .get("https://caas-deploy.onrender.com/firestore/calendars")
+      .get("http://localhost:8000/firestore/calendars")
       .then((response) => {
         console.log("calendars", response.data);
         setCalendars(response.data);
@@ -27,7 +27,7 @@ const Admin: React.FC = () => {
 
   const getListUsers = async () => {
     axios
-      .get("https://caas-deploy.onrender.com/auth/users")
+      .get("http://localhost:8000/auth/users")
       .then((response) => {
         console.log("users", response.data.users);
         setUsers(response.data.users);

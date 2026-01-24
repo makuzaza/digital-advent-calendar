@@ -28,12 +28,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.bucket = exports.storage = exports.firestore = exports.auth = void 0;
 const admin = __importStar(require("firebase-admin"));
-const serviceAccountKey_json_1 = __importDefault(require("../serviceAccountKey.json"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const path = __importStar(require("path"));
+const fs = __importStar(require("fs"));
 dotenv_1.default.config();
+// Load service account from file
+const serviceAccountPath = path.join(__dirname, "../../serviceAccountKey.json");
+const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, "utf8"));
 // Initialize Firebase Admin
 admin.initializeApp({
-    credential: admin.credential.cert(serviceAccountKey_json_1.default),
+    credential: admin.credential.cert(serviceAccount),
     databaseURL: process.env.FIREBASE_DATABASE_URL,
     storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
 });

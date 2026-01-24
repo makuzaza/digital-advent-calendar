@@ -106,6 +106,15 @@ const Modal: React.FC<Props> = ({
     if (!e.target.files || e.target.files.length === 0) return;
 
     const file = e.target.files[0];
+    console.log("Token:", token);
+    console.log("UID:", uid);
+    console.log("Token exists:", !!token);
+    console.log("UID exists:", !!uid);
+  
+    if (!token || !uid) {
+      console.error("Missing token or uid - cannot upload");
+      return;
+    }
     const reader = new FileReader();
     reader.onloadend = () => {
       const newWindowContent = [...windowContent];
@@ -125,7 +134,7 @@ const Modal: React.FC<Props> = ({
     formData.append("uid", uid);
 
     axios
-      .post(`https://caas-deploy.onrender.com/storage/images/`, formData, {
+      .post(`http://localhost:8000/storage/images/`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           // Send token in request headers
@@ -191,7 +200,7 @@ const Modal: React.FC<Props> = ({
               <>
                 <p>Your saved image:</p>
                 <img
-                  src={`https://caas-deploy.onrender.com/storage/images/${uploadedImageName}/?ownerUid=${currentOwnerUid}`}
+                  src={`http://localhost:8000/storage/images/${uploadedImageName}/?ownerUid=${currentOwnerUid}`}
                   alt="Uploaded"
                   style={{ maxHeight: "150px" }}
                 />

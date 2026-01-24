@@ -30,7 +30,7 @@ const MusicPlayer: React.FC<Props> = ({ audioSrc, type }) => {
         setIsLoading(true);
         try {
           const response = await axios.get(
-            `https://caas-deploy.onrender.com/storage/sounds/${urlPart}/${audioSrc}`,
+            `http://localhost:8000/storage/sounds/${urlPart}/${audioSrc}`,
             {
               params: {
                 uid: uid,
