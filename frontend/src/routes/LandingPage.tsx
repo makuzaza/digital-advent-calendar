@@ -14,10 +14,10 @@ const LandingPage: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
   const token = useAppSelector((state) => state.token.token);
 
   return (
-    <div>
+    <div id="screen">
       <ParallaxProvider>
         <BannerTop />
-        <div style={{ marginBottom: "250px" }}>
+        <div style={{ margin: "100px 0"}}>
           {!token && <Login />}
           {token && (
             <Favourite

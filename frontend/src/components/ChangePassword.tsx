@@ -6,13 +6,14 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useState } from "react";
-import { updatePassword } from "firebase/auth";
+import { updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
 import { auth } from "../auth/firebase";
+import Swal from "sweetalert2";
 
 export const ChangePassword: React.FC = () => {
   const user = auth.currentUser;
-
   const [open, setOpen] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -20,6 +21,7 @@ export const ChangePassword: React.FC = () => {
 
   const handleClose = () => {
     setOpen(false);
+    setCurrentPassword("");
   };
 
   return (
@@ -32,51 +34,85 @@ export const ChangePassword: React.FC = () => {
         onClose={handleClose}
         PaperProps={{
           component: "form",
-          onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+          onSubmit: async (event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
             const formJson = Object.fromEntries(Array.from(formData.entries()));
-            const password = formJson.password;
-            const confirmPassword = formJson.confirmPassword;
+            const newPassword = formJson.password as string;
+            const confirmPassword = formJson.confirmPassword as string;
 
-            if (password !== confirmPassword)
-              return console.log("Passwords do not match");
-            if (password) {
-              if (user) {
-                updatePassword(user, password as string)
-                  .then(() => {
-                    console.log("Password updated successfully");
-                  })
-                  .catch((error: Error) => {
-                    console.error("Error updating password:", error);
-                  });
-              }
+            if (!currentPassword) {
+              Swal.fire("Error", "Please enter your current password", "error");
+              return;
             }
-            handleClose();
+
+            if (newPassword !== confirmPassword) {
+              Swal.fire("Error", "New passwords do not match", "error");
+              return;
+            }
+
+            if (newPassword.length < 6) {
+              Swal.fire("Error", "Password must be at least 6 characters", "error");
+              return;
+            }
+
+            try {
+              if (user && user.email) {
+                // Step 1: Reauthenticate with current password
+                const credential = EmailAuthProvider.credential(user.email, currentPassword);
+                await reauthenticateWithCredential(user, credential);
+
+                // Step 2: Update password
+                await updatePassword(user, newPassword);
+
+                Swal.fire("Success", "Password updated successfully", "success");
+                handleClose();
+              }
+            } catch (error: any) {
+              if (error.code === "auth/wrong-password") {
+                Swal.fire("Error", "Current password is incorrect", "error");
+              } else if (error.code === "auth/weak-password") {
+                Swal.fire("Error", "New password is too weak", "error");
+              } else {
+                Swal.fire("Error", `Error: ${error.message}`, "error");
+              }
+              console.error("Error updating password:", error);
+            }
           },
         }}
       >
         <DialogTitle>Change password</DialogTitle>
         <DialogContent>
-          <DialogContentText>Enter new password.</DialogContentText>
+          <DialogContentText>Enter your current password and new password.</DialogContentText>
           <TextField
             autoFocus
             required
             margin="dense"
+            id="currentPassword"
+            name="currentPassword"
+            label="Current Password"
+            type="password"
+            fullWidth
+            variant="standard"
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
+          />
+          <TextField
+            required
+            margin="dense"
             id="password"
             name="password"
-            label="Password"
+            label="New Password"
             type="password"
             fullWidth
             variant="standard"
           />
           <TextField
-            autoFocus
             required
             margin="dense"
             id="confirmPassword"
             name="confirmPassword"
-            label="Confirm"
+            label="Confirm New Password"
             type="password"
             fullWidth
             variant="standard"
@@ -84,7 +120,7 @@ export const ChangePassword: React.FC = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">OK</Button>
+          <Button type="submit">Change Password</Button>
         </DialogActions>
       </Dialog>
     </>

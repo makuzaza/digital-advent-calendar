@@ -4,7 +4,8 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';import { creat
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import { useEffect } from 'react';
+import Swal from 'sweetalert2';
 
 const theme = createTheme();
 
@@ -14,10 +15,12 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [randomImages, setRandomImages] = useState<string[]>([]);
+  const [backgroundImage, setBackgroundImage] = useState<string>("");
 
   const navigate = useNavigate();
 
-  const handleRegister = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleRegister = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     setPasswordError("");
@@ -37,16 +40,60 @@ export default function Register() {
       displayName: name,
     };
 
-    axios.post("http://localhost:8000/auth/signup", newUser)
-      .then(() => navigate("/login"))
-      .catch(error => {
-        console.error("Registration failed: ", error.response?.data);
+    try {
+      await axios.post("http://localhost:8000/auth/signup", newUser);
+      Swal.fire({
+        icon: "success",
+        title: "Registered!",
+        text: "Your account has been created successfully.",
+        confirmButtonColor: "#10617a",
+      }).then(() => navigate("/login"));
+    } catch (error) {
+      console.error("Registration failed: ", error);
+      Swal.fire({
+        icon: "error",
+        title: "Registration Failed",
+        text: "Please try again with a different email or check your information.",
+        confirmButtonColor: "#10617a",
       });
+    }
   };
+
+  useEffect(() => {
+    const fetchRandomImages = async () => {
+      try {
+        const unsplashKey = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
+        if (!unsplashKey) {
+          console.error("Unsplash API key is missing. Set VITE_UNSPLASH_ACCESS_KEY in .env");
+          return;
+        }
+
+        const response = await axios.get(
+          "https://api.unsplash.com/photos/random",
+          {
+            params: {
+              client_id: unsplashKey,
+            },
+          }
+        );
+
+        const imageUrl = response.data.urls.regular;
+        setRandomImages([imageUrl]);
+
+        if (imageUrl) {
+          setBackgroundImage(imageUrl);
+        }
+      } catch (error) {
+        console.error("Error fetching random images:", error);
+      }
+    };
+
+    fetchRandomImages();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid container component="main" sx={{ flex: 1 }} >
         <CssBaseline />
         <Grid
           item
@@ -54,23 +101,24 @@ export default function Register() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
+            backgroundImage: `url(${backgroundImage})`,
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
         />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square
+                      sx={{ backgroundColor: '#e1e2e2' }}>
           <Box
             sx={{
-              my: 8,
+              my: 2,
               mx: 4,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 3 }}>
+            <Avatar sx={{ m: 1 }}>
               <CalendarMonthIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
@@ -102,7 +150,7 @@ export default function Register() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2, color: 'white', backgroundColor: '#10617a'}}
+                sx={{ mt: 1, mb: 1, color: 'white', backgroundColor: '#10617a'}}
               >
                 Register
               </Button>
@@ -130,7 +178,7 @@ const InputField = ({ label, value, onChange, type, error, helperText }: {
   helperText?: string;
 }) => (
   <Box sx={{ mb: 2 }}>
-    <Typography variant="body2" sx={{ mb: 1 }}>
+    <Typography variant="body2" >
       {label}
     </Typography>
     <input
@@ -138,7 +186,7 @@ const InputField = ({ label, value, onChange, type, error, helperText }: {
       value={value}
       onChange={onChange}
       style={{
-        padding: '10px',
+        padding: '5px',
         fontSize: '16px',
         border: '1px solid #ccc',
         borderRadius: '5px',

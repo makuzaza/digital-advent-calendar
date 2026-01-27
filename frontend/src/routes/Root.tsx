@@ -4,7 +4,7 @@ import Footer from "../components/LandingPage/Footer/Footer";
 
 const Root: React.FC = () => {
   return (
-    <div>
+    <div id="screen">
       <Header />
       <Outlet />
       <Footer />

@@ -68,52 +68,124 @@ const UserInfo: React.FC = () => {
     }
   };
 
-  // Function to upload profile picture to Firebase Storage
-  const uploadProfilePicture = async () => {
-    const user = getAuth().currentUser;
-  
-    if (!selectedFile || !uid) return;
-  
-    const storage = getStorage();
-    const fileRef = ref(storage, `profile_pictures/${uid}`);
-  
-    if (user) {
-      try {
-        const snapshot = await uploadBytes(fileRef, selectedFile);
-        const downloadURL = await getDownloadURL(snapshot.ref); // Get download URL from the snapshot
-        // Update user's profile picture URL
-        await updateProfile(user, { photoURL: downloadURL });
-        setProfilePic(downloadURL);
-        console.log("Profile picture uploaded successfully");
-  
-        // Display success popup
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Profile picture uploaded successfully",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      } catch (error) {
-        console.error("Error uploading profile picture:", error);
+  // Remove Firebase Storage imports
+// import { getDownloadURL, getStorage, ref, uploadBytes, deleteObject } from "firebase/storage";
+
+// Function to upload profile picture to backend
+const uploadProfilePicture = async () => {
+  const user = getAuth().currentUser;
+
+  if (!selectedFile || !uid) return;
+
+  try {
+    // Get fresh token in case it expired
+    const freshToken = await refreshFirebaseToken();
+    const tokenToUse = freshToken || token;
+
+    if (!tokenToUse) {
+      Swal.fire("Error", "Authentication token is missing. Please log in again.", "error");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("image", selectedFile);
+    formData.append("uid", uid);
+
+    const response = await axios.post(
+      "http://localhost:8000/storage/profile_pictures",
+      formData,
+      {
+        headers: {
+          "x-access-token": tokenToUse,
+        },
       }
+    );
+
+    // Update Firebase profile with backend URL
+    const photoURL = `http://localhost:8000/storage/profile_pictures/${selectedFile.name}`;
+    await updateProfile(user!, { photoURL });
+    setProfilePic(photoURL);
+    setSelectedFile(null);
+
+    // Update token in store if it was refreshed
+    if (freshToken && freshToken !== token) {
+      dispatch(setToken(freshToken));
     }
-  };
-  // Function to remove profile picture
-  const removeProfilePicture = async () => {
-    const user = getAuth().currentUser;
 
-    if (!uid || !user) return;
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Profile picture uploaded successfully",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  } catch (error) {
+    if ((error as any).response?.status === 401) {
+      Swal.fire("Error", "Your session has expired. Please log in again.", "error");
+    } else {
+      console.error("Error uploading profile picture:", error);
+      Swal.fire("Error", "Failed to upload profile picture", "error");
+    }
+  }
+};
 
-    try {
-      await deleteObject(ref(getStorage(), `profile_pictures/${uid}`));
-      await updateProfile(user, { photoURL: null }); // Remove profile picture URL
-      setProfilePic(null);
-      console.log("Profile picture removed successfully");
-    } catch (error) {
+// Function to remove profile picture
+const removeProfilePicture = async () => {
+  const user = getAuth().currentUser;
+
+  if (!uid || !user) return;
+
+  try {
+    // Get fresh token in case it expired
+    const freshToken = await refreshFirebaseToken();
+    const tokenToUse = freshToken || token;
+
+    if (!tokenToUse) {
+      Swal.fire("Error", "Authentication token is missing. Please log in again.", "error");
+      return;
+    }
+
+    // Get current profile pic filename
+    if (user.photoURL) {
+      const filename = user.photoURL.split("/").pop();
+      
+      await axios.delete(
+        `http://localhost:8000/storage/profile_pictures/${filename}`,
+        {
+          headers: {
+            "x-access-token": tokenToUse,
+          },
+          data: {
+            uid: uid,
+          },
+        }
+      );
+    }
+
+    await updateProfile(user, { photoURL: null });
+    setProfilePic(profilepic);
+
+    // Update token in store if it was refreshed
+    if (freshToken && freshToken !== token) {
+      dispatch(setToken(freshToken));
+    }
+
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Profile picture removed successfully",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  } catch (error) {
+    if ((error as any).response?.status === 401) {
+      Swal.fire("Error", "Your session has expired. Please log in again.", "error");
+    } else {
       console.error("Error removing profile picture:", error);
+      Swal.fire("Error", "Failed to remove profile picture", "error");
     }
-  };
+  }
+};
 
   // Format date to be more readable
   function formatDate(dateString: string): string {

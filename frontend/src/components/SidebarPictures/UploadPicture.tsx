@@ -53,7 +53,7 @@ const UploadPicture: React.FC<UploadPictureProps> = ({
   const handleBackgroundSelect = (backgroundUrl: string) => {
     setSelectedBackground(backgroundUrl);
   };
-
+  
   return (
     <div>
       <label htmlFor="upload">Upload Image:</label>

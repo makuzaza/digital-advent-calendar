@@ -40,18 +40,25 @@ body {
   background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/105988/banner-background.jpg");
   background-size: cover;
   background-position: center;
+  flex: 1;
+}
+
+#screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .main,
 .register,
 .favourites,
 .calendars {
-  min-height: 83vh;
+  flex: 1;
   text-align: center;
 }
 
 .favourites {
-  align-items: top !important;
+  align-items: flex-start;
   margin: 0;
   background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/105988/banner-background.jpg");
   background-size: cover;
@@ -63,8 +70,38 @@ body {
 }
 
 .parts img {
-  width: 400px;
+  width: 350px;
   margin: 10px;
+}
+
+.panel-data {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #ffffffc1;
+  color: #333;
+}
+
+.panel-data th,
+.panel-data td {
+  padding: 5px 10px;
+}
+
+.panel-data th {
+  background-color: #b2b2b2;
+}
+
+@media screen and (max-width: 728px){
+
+  .panel-data {
+    width: 90%;
+  }
+  .hide {
+    display: none;
+    width: 0;
+  }
 }
 
 @media screen and (max-width: 700px) {

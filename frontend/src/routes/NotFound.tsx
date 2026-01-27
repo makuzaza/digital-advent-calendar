@@ -1,6 +1,3 @@
-// styles
-import "./NotFound.css";
-
 const NotFound: React.FC = () => {
   return (
     <div className="notfound">

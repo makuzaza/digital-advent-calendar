@@ -17,12 +17,33 @@ import MainApp from "./components/Calendar/MainApp";
 // redux
 import { store } from "./store/store";
 import { Provider } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import About from "./routes/About";
 import Admin from "./routes/Admin";
+import { refreshFirebaseToken } from "./utils/tokenUtils";
+import { setupAxiosInterceptors } from "./config/axiosConfig";
 
 function App() {
   const [search, setSearch] = useState("");
+
+  // Setup axios interceptors and auto-refresh token on component mount
+  useEffect(() => {
+    // Setup axios interceptors once
+    setupAxiosInterceptors();
+
+    // Auto-refresh token every 50 minutes (before the 1-hour expiry)
+    const tokenRefreshInterval = setInterval(async () => {
+      try {
+        await refreshFirebaseToken();
+        console.log("Token auto-refreshed");
+      } catch (error) {
+        console.error("Auto-token refresh failed:", error);
+      }
+    }, 50 * 60 * 1000); // 50 minutes in milliseconds
+
+    // Cleanup interval on unmount
+    return () => clearInterval(tokenRefreshInterval);
+  }, []);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) =>
     setSearch(e.target.value);

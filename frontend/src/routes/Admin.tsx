@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Calendars, { Calendar } from "./Calendars";
 import axios from "axios";
 
-import "./Admin.css";
+import "./Home.css";
 
 interface User {
   uid: string;

@@ -58,14 +58,14 @@ const Calendars: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
   }, []);
 
   return (
-    <div style={{ background: "transparent", textAlign: "center" }}>
-      {pathname === "/calendars" && <h1>Public Calendars</h1>}
+    <div style={{ textAlign: "center"}}>
+      <h1>{pathname === "/admin" ? "All Calendars" : "Public Calendars"}</h1>
       {(pathname === "/calendars" ||
         pathname === "/favourites" ||
         pathname == "/admin") && (
         <Search handleSearch={handleSearch} search={search} />
       )}
-      <div className="calendars">
+      <div className="calendars_new">
         {calendars
           .filter((elem) => {
             // If current location is '/calendars', filter out private calendars
@@ -89,6 +89,7 @@ const Calendars: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
             />
           ))}
       </div>
+
     </div>
   );
 };

@@ -129,11 +129,12 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
   };
 
   return (
-    <div style={{ background: "transparent", textAlign: "center" }}>
+    <div style={{ textAlign: "center"}}>
+      <h1>Your saved calendars</h1>
       {(pathname === "/calendars" || pathname === "/favourites") && (
         <Search handleSearch={handleSearch} search={search} />
       )}
-      <h1>Your saved calendars</h1>
+      
       <div className="calendars_new">
         {calendars
           .filter((elem) =>

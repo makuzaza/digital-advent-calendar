@@ -5,12 +5,12 @@ import { getStorage } from "firebase/storage"; // Import Firebase Storage
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_KEY,
-  authDomain: "digital-calendar-team1.firebaseapp.com",
-  projectId: "digital-calendar-team1",
-  storageBucket: "digital-calendar-team1.appspot.com",
-  messagingSenderId: "328666598634",
-  appId: "1:328666598634:web:16a767808f68318c6a1b93",
-  measurementId: "G-VMCR61JVTD",
+  authDomain: "digital-calendar-dev.firebaseapp.com",
+  projectId: "digital-calendar-dev",
+  storageBucket: "digital-calendar-dev.firebasestorage.app",
+  messagingSenderId: "9280650989",
+  appId: "1:9280650989:web:08ba75362778e7ee3256e4",
+  measurementId: "G-Q5KF911ZYN"
 };
 
 initializeApp(firebaseConfig);

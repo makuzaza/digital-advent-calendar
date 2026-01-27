@@ -18,15 +18,21 @@ const CalendarEditor: React.FC<Props> = ({
   useEffect(() => {
     const fetchRandomImages = async () => {
       try {
+        const unsplashKey = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
+        if (!unsplashKey) {
+          console.error("Unsplash API key is missing. Set VITE_UNSPLASH_ACCESS_KEY in .env");
+          return;
+        }
         const response = await axios.get(
           "https://api.unsplash.com/photos/random",
           {
             params: {
-              count: 12,
-              client_id: "A9wMU_lZC4OW9kPTBjQOl6fncG6cTE13hDUtzDZ6xYE",
+              count: 10,
+              client_id: unsplashKey,
             },
           }
         );
+
         const imageUrls = response.data.map((photo: any) => photo.urls.regular);
         setRandomImages(imageUrls);
       } catch (error) {
@@ -38,23 +44,23 @@ const CalendarEditor: React.FC<Props> = ({
   }, []);
 
   const handleImageClick = (imageUrl: string) => {
-    setSelectedBackground(imageUrl);
+    setSelectedBackground(imageUrl);   
     console.log('Selected background:', imageUrl);
   };
 
   useEffect(() => {
-    const container = document.getElementById("preview-container");
-    if (container) {
-      if (selectedBackground) {
-        container.style.backgroundImage = `url(${selectedBackground})`;
-        container.style.backgroundRepeat = "no-repeat";
-        container.style.backgroundSize = "cover";
-        container.style.backgroundPosition = "center";
-        container.style.maxWidth = "100%";
-        container.style.height = "100%";
+      const container = document.getElementById("preview-container");  
+      if (container) {
+        if (selectedBackground) {
+          container.style.backgroundImage = `url(${selectedBackground})`;
+          container.style.backgroundRepeat = "no-repeat";
+          container.style.backgroundSize = "cover";
+          container.style.backgroundPosition = "center";
+          container.style.maxWidth = "100%";
+          container.style.height = "100%";
+        }
       }
-    }
-  }, [selectedBackground]);
+    }, [selectedBackground]);
 
   return (
     <div className="dashboard-container">
@@ -72,8 +78,6 @@ const CalendarEditor: React.FC<Props> = ({
           ))}
         </Grid>
       </div>
-
-      {/* <div className='dashboard-background' style={{ backgroundImage: `url(${selectedBackground})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}></div> */}
     </div>
   );
 };
