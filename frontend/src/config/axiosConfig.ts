@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { refreshFirebaseToken, getValidToken } from '../utils/tokenUtils';
-import { store } from '../store/store';
 
 export const setupAxiosInterceptors = () => {
   axios.interceptors.request.use(
