@@ -87,18 +87,18 @@ exports.Router.get("/images/:imageName", async (req, res) => {
     try {
         const imageName = req.params.imageName;
         let ownerUid = req.query.ownerUid;
-        console.log("=== GET /images/:imageName ===");
-        console.log("imageName:", imageName);
-        console.log("ownerUid:", ownerUid);
-        console.log("uploadsDir:", uploadsDir);
+        // console.log("=== GET /images/:imageName ===");
+        // console.log("imageName:", imageName);
+        // console.log("ownerUid:", ownerUid);
+        // console.log("uploadsDir:", uploadsDir);
         if (!imageName) {
             return res.status(400).json({ error: "Missing imageName" });
         }
         // If ownerUid is provided, try that path first
         if (ownerUid) {
             const imagePath = path.join(uploadsDir, ownerUid, imageName);
-            console.log("Trying path:", imagePath);
-            console.log("Path exists?", fs.existsSync(imagePath));
+            // console.log("Trying path:", imagePath);
+            // console.log("Path exists?", fs.existsSync(imagePath));
             if (fs.existsSync(imagePath)) {
                 console.log("File found!");
                 return res.sendFile(imagePath);
@@ -108,7 +108,7 @@ exports.Router.get("/images/:imageName", async (req, res) => {
                 const userDir = path.join(uploadsDir, ownerUid);
                 if (fs.existsSync(userDir)) {
                     const files = fs.readdirSync(userDir);
-                    console.log("Files in user directory:", files);
+                    // console.log("Files in user directory:", files);
                 }
                 else {
                     console.log("User directory doesn't exist");
@@ -116,10 +116,10 @@ exports.Router.get("/images/:imageName", async (req, res) => {
             }
         }
         // Fallback: search all directories for the file
-        console.log("Fallback: searching all directories for", imageName);
+        // console.log("Fallback: searching all directories for", imageName);
         if (fs.existsSync(uploadsDir)) {
             const allDirs = fs.readdirSync(uploadsDir);
-            console.log("Directories in uploads:", allDirs);
+            // console.log("Directories in uploads:", allDirs);
             for (const dir of allDirs) {
                 const dirPath = path.join(uploadsDir, dir);
                 if (fs.statSync(dirPath).isDirectory()) {
@@ -142,9 +142,9 @@ exports.Router.get("/images/:imageName", async (req, res) => {
 // Endpoint to upload image
 exports.Router.post("/images", verifyToken_1.verifyToken, upload.single("image"), async (req, res) => {
     try {
-        console.log("Image upload request received");
-        console.log("File:", req.file ? req.file.originalname : "NO FILE");
-        console.log("UID:", req.body.uid);
+        // console.log("Image upload request received");
+        // console.log("File:", req.file ? req.file.originalname : "NO FILE");
+        // console.log("UID:", req.body.uid);
         if (!req.file) {
             console.log("Error: No file uploaded");
             return res.status(400).send("No file uploaded");

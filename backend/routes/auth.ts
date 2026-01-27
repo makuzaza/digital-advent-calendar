@@ -5,14 +5,20 @@ export const Router = express.Router();
 
 // create a new user
 Router.post("/signup", async (req, res) => {
-  const user = {
-    email: req.body.email,
-    password: req.body.password,
+  const { email, password, displayName, photoURL } = req.body;
+
+  // Build user payload and only include photoURL when provided
+  const user: any = {
+    email,
+    password,
     emailVerified: false,
-    displayName: req.body.displayName,
-    photoURL: "",
+    displayName,
     disabled: false,
   };
+
+  if (photoURL) {
+    user.photoURL = photoURL;
+  }
 
   auth
     .createUser(user)

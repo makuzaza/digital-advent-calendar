@@ -9,14 +9,18 @@ const firebaseAdmin_1 = require("../db/firebaseAdmin");
 exports.Router = express_1.default.Router();
 // create a new user
 exports.Router.post("/signup", async (req, res) => {
+    const { email, password, displayName, photoURL } = req.body;
+    // Build user payload and only include photoURL when provided
     const user = {
-        email: req.body.email,
-        password: req.body.password,
+        email,
+        password,
         emailVerified: false,
-        displayName: req.body.displayName,
-        photoURL: "",
+        displayName,
         disabled: false,
     };
+    if (photoURL) {
+        user.photoURL = photoURL;
+    }
     firebaseAdmin_1.auth
         .createUser(user)
         .then((userRecord) => {
