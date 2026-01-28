@@ -14,15 +14,13 @@ if (!fs.existsSync(uploadsDir)) {
 
 const storage = multer.diskStorage({
   destination: (req: any, file: any, cb: any) => {
-    const uid = req.body.uid;
-    const userDir = path.join(uploadsDir, uid || "anonymous");
-    if (!fs.existsSync(userDir)) {
-      fs.mkdirSync(userDir, { recursive: true });
-    }
-    cb(null, userDir);
+    // Use temp directory first, we'll move the file after validation
+    cb(null, uploadsDir);
   },
   filename: (req: any, file: any, cb: any) => {
-    cb(null, file.originalname);
+    // Use a temporary filename with timestamp to avoid conflicts
+    const tempFilename = `temp_${Date.now()}_${file.originalname}`;
+    cb(null, tempFilename);
   },
 });
 
@@ -131,25 +129,50 @@ Router.post(
   upload.single("image"),
   async (req, res) => {
     try {
-      // console.log("Image upload request received");
-      // console.log("File:", req.file ? req.file.originalname : "NO FILE");
-      // console.log("UID:", req.body.uid);
+      console.log("Image upload request received");
+      console.log("File:", req.file ? req.file.originalname : "NO FILE");
+      console.log("UID:", req.body.uid);
 
       if (!req.file) {
         console.log("Error: No file uploaded");
-        return res.status(400).send("No file uploaded");
+        return res.status(400).json({ error: "No file uploaded" });
       }
 
       const uid = req.body.uid;
-      if (!uid) {
-        console.log("Error: UID missing from body");
-        return res.status(400).json({ error: "UID is required in request body" });
+      if (!uid || uid.trim() === "") {
+        console.log("Error: UID missing or empty from body");
+        // Delete the temp file
+        if (fs.existsSync(req.file.path)) {
+          fs.unlinkSync(req.file.path);
+        }
+        return res.status(400).json({ error: "UID is required in request body and cannot be empty" });
       }
 
-      console.log("File uploaded successfully to:", req.file.path);
-      return res.status(200).json({ message: "File uploaded successfully", filename: req.file.originalname });
+      // Create user directory if it doesn't exist
+      const userDir = path.join(uploadsDir, uid);
+      if (!fs.existsSync(userDir)) {
+        fs.mkdirSync(userDir, { recursive: true });
+      }
+
+      // Move file from temp location to user directory with original name
+      const originalFilename = req.file.originalname;
+      const finalPath = path.join(userDir, originalFilename);
+      
+      // If file exists, delete it first
+      if (fs.existsSync(finalPath)) {
+        fs.unlinkSync(finalPath);
+      }
+      
+      fs.renameSync(req.file.path, finalPath);
+
+      console.log("File uploaded successfully to:", finalPath);
+      return res.status(200).json({ message: "File uploaded successfully", filename: originalFilename });
     } catch (error) {
       console.error("Error uploading file:", error);
+      // Clean up temp file if it exists
+      if (req.file && fs.existsSync(req.file.path)) {
+        fs.unlinkSync(req.file.path);
+      }
       res.status(500).json({ error: "Internal Server Error", details: (error as Error).message });
     }
   }
@@ -183,13 +206,28 @@ Router.delete("/images/:imageName", verifyToken, async (req, res) => {
 Router.get("/profile_pictures/:profile_picture", async (req, res) => {
   try {
     const imageName = req.params.profile_picture;
-    const imagePath = path.join(uploadsDir, "profile_pictures", imageName);
+    const uid = req.query.uid as string;
 
-    if (!fs.existsSync(imagePath)) {
-      return res.status(404).json({ error: "Profile picture not found" });
+    // If UID is provided, try user directory first
+    if (uid) {
+      const imagePath = path.join(uploadsDir, uid, "profile_pictures", imageName);
+      if (fs.existsSync(imagePath)) {
+        return res.sendFile(imagePath);
+      }
     }
 
-    res.sendFile(imagePath);
+    // Fallback: search all user directories
+    if (fs.existsSync(uploadsDir)) {
+      const allDirs = fs.readdirSync(uploadsDir);
+      for (const dir of allDirs) {
+        const dirPath = path.join(uploadsDir, dir, "profile_pictures", imageName);
+        if (fs.existsSync(dirPath)) {
+          return res.sendFile(dirPath);
+        }
+      }
+    }
+
+    return res.status(404).json({ error: "Profile picture not found" });
   } catch (error) {
     console.error("Error downloading profile picture:", error);
     res.status(500).send("Internal Server Error");
@@ -203,17 +241,53 @@ Router.post(
   upload.single("image"),
   async (req, res) => {
     try {
+      console.log("Profile picture upload request received");
+      console.log("File:", req.file ? req.file.originalname : "NO FILE");
+      console.log("UID:", req.body.uid);
+
       if (!req.file) {
-        return res.status(400).send("No file uploaded");
+        console.log("Error: No file uploaded");
+        return res.status(400).json({ error: "No file uploaded" });
       }
 
       const uid = req.body.uid;
+      if (!uid || uid.trim() === "") {
+        console.log("Error: UID missing or empty from body");
+        // Delete the temp file
+        if (fs.existsSync(req.file.path)) {
+          fs.unlinkSync(req.file.path);
+        }
+        return res.status(400).json({ error: "UID is required in request body and cannot be empty" });
+      }
 
-      console.log("Profile picture uploaded successfully");
-      return res.status(200).send("File uploaded successfully");
+      // Create user profile pictures directory if it doesn't exist
+      const profilePicsDir = path.join(uploadsDir, uid, "profile_pictures");
+      if (!fs.existsSync(profilePicsDir)) {
+        fs.mkdirSync(profilePicsDir, { recursive: true });
+      }
+
+      // Delete old profile picture if it exists
+      const oldFiles = fs.readdirSync(profilePicsDir);
+      for (const file of oldFiles) {
+        const filePath = path.join(profilePicsDir, file);
+        fs.unlinkSync(filePath);
+      }
+
+      // Move file from temp location to profile pictures directory
+      const originalFilename = req.file.originalname;
+      const finalPath = path.join(profilePicsDir, originalFilename);
+      
+      fs.renameSync(req.file.path, finalPath);
+
+      console.log("Profile picture uploaded successfully to:", finalPath);
+      return res.status(200).json({ message: "File uploaded successfully", filename: originalFilename });
     } catch (error) {
       console.error("Error uploading profile picture:", error);
-      res.status(500).send("Internal Server Error");
+      // Clean up temp file if it exists
+      if (req.file && fs.existsSync(req.file.path)) {
+        fs.unlinkSync(req.file.path);
+      }
+      res.status(500).json({ error: "Internal Server Error", details: (error as Error).message });
     }
   }
 );
@@ -225,18 +299,26 @@ Router.delete(
   async (req, res) => {
     try {
       const imageName = req.params.profile_picture;
-      const imagePath = path.join(uploadsDir, "profile_pictures", imageName);
+      const uid = req.body.uid;
+
+      if (!uid || uid.trim() === "") {
+        return res.status(400).json({ error: "UID is required in request body" });
+      }
+
+      const imagePath = path.join(uploadsDir, uid, "profile_pictures", imageName);
 
       if (!fs.existsSync(imagePath)) {
+        console.log("Profile picture not found at:", imagePath);
         return res.status(404).json({ error: "Profile picture not found" });
       }
 
       fs.unlinkSync(imagePath);
+      console.log("Profile picture deleted successfully:", imagePath);
 
-      return res.status(200).send("File deleted successfully");
+      return res.status(200).json({ message: "File deleted successfully" });
     } catch (error) {
       console.error("Error deleting profile picture:", error);
-      res.status(500).send("Internal Server Error");
+      res.status(500).json({ error: "Internal Server Error", details: (error as Error).message });
     }
   }
 );

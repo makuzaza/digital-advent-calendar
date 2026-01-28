@@ -45,7 +45,7 @@ export default function Register() {
       Swal.fire({
         icon: "success",
         title: "Registered!",
-        text: "Your account has been created successfully.",
+        text: "Your account has been created successfully. Please log in.",
         confirmButtonColor: "#10617a",
       }).then(() => navigate("/login"));
     } catch (error) {
@@ -108,7 +108,7 @@ export default function Register() {
           }}
         />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square
-                      sx={{ backgroundColor: '#e1e2e2' }}>
+                      sx={{ backgroundColor: '#e1e2e2', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <Box
             sx={{
               my: 2,

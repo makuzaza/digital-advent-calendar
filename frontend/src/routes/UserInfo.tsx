@@ -1,12 +1,5 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getAuth, updateProfile } from "firebase/auth";
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytes,
-  deleteObject,
-} from "firebase/storage"; // Update import
 import "./UserInfo.css";
 import { Button } from "@mui/material";
 import { useAppSelector, useAppDispatch } from "../hooks/useAppDispatch";
@@ -91,7 +84,7 @@ const uploadProfilePicture = async () => {
     formData.append("image", selectedFile);
     formData.append("uid", uid);
 
-    const response = await axios.post(
+    await axios.post(
       "http://localhost:8000/storage/profile_pictures",
       formData,
       {
@@ -101,8 +94,8 @@ const uploadProfilePicture = async () => {
       }
     );
 
-    // Update Firebase profile with backend URL
-    const photoURL = `http://localhost:8000/storage/profile_pictures/${selectedFile.name}`;
+    // Update Firebase profile with backend URL that includes uid
+    const photoURL = `http://localhost:8000/storage/profile_pictures/${selectedFile.name}?uid=${uid}`;
     await updateProfile(user!, { photoURL });
     setProfilePic(photoURL);
     setSelectedFile(null);
@@ -145,21 +138,24 @@ const removeProfilePicture = async () => {
       return;
     }
 
-    // Get current profile pic filename
+    // Get current profile pic filename and remove query parameters
     if (user.photoURL) {
-      const filename = user.photoURL.split("/").pop();
+      const urlWithoutQuery = user.photoURL.split("?")[0];
+      const filename = urlWithoutQuery.split("/").pop();
       
-      await axios.delete(
-        `http://localhost:8000/storage/profile_pictures/${filename}`,
-        {
-          headers: {
-            "x-access-token": tokenToUse,
-          },
-          data: {
-            uid: uid,
-          },
-        }
-      );
+      if (filename) {
+        await axios.delete(
+          `http://localhost:8000/storage/profile_pictures/${filename}`,
+          {
+            headers: {
+              "x-access-token": tokenToUse,
+            },
+            data: {
+              uid: uid,
+            },
+          }
+        );
+      }
     }
 
     await updateProfile(user, { photoURL: null });
@@ -247,8 +243,15 @@ const removeProfilePicture = async () => {
               uid: uid,
             },
           }
-        )
+        ) // make swal are you sure? to delete
         .then((response) => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Calendar deleted successfully",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           // Update token in store if it was refreshed
           if (freshToken && freshToken !== token) {
             dispatch(setToken(freshToken));
@@ -287,13 +290,25 @@ const removeProfilePicture = async () => {
   // Delete image, music or soundFx file from storage
   const deleteFile = async (file: string) => {
     const name = getFileName(file);
+    const firstFolder = getFirstFolderName(file);
+    const secondFolder = getSecondFolderName(file);
 
-    if (getFirstFolderName(file) === "images") {
+    console.log("Deleting file:", { file, name, firstFolder, secondFolder });
+
+    // Validate that we're not trying to delete a directory
+    if (name === "anonymous" || !name || name.length === 0) {
+      Swal.fire("Error", "Cannot delete directory or invalid file.", "error");
+      return;
+    }
+
+    if (firstFolder === "images") {
       deleteImageFile(name);
-    } else if (getSecondFolderName(file) === "music") {
+    } else if (secondFolder === "music") {
       deleteMusicFile(name);
-    } else {
+    } else if (secondFolder === "soundFx") {
       deleteSoundFxFile(name);
+    } else {
+      Swal.fire("Error", "Unknown file type.", "error");
     }
   };
 
@@ -326,6 +341,17 @@ const removeProfilePicture = async () => {
       if (freshToken && freshToken !== token) {
         dispatch(setToken(freshToken));
       }
+
+      // Refresh the file list
+      await getAllFilesByUid();
+
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "File deleted successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } catch (error) {
       if ((error as any).response?.status === 401) {
         Swal.fire("Error", "Your session has expired. Please log in again.", "error");
@@ -365,6 +391,17 @@ const removeProfilePicture = async () => {
       if (freshToken && freshToken !== token) {
         dispatch(setToken(freshToken));
       }
+
+      // Refresh the file list
+      await getAllFilesByUid();
+
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "File deleted successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } catch (error) {
       if ((error as any).response?.status === 401) {
         Swal.fire("Error", "Your session has expired. Please log in again.", "error");
@@ -404,6 +441,17 @@ const removeProfilePicture = async () => {
       if (freshToken && freshToken !== token) {
         dispatch(setToken(freshToken));
       }
+
+      // Refresh the file list
+      await getAllFilesByUid();
+
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "File deleted successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } catch (error) {
       if ((error as any).response?.status === 401) {
         Swal.fire("Error", "Your session has expired. Please log in again.", "error");
@@ -450,21 +498,43 @@ const removeProfilePicture = async () => {
 
   // Delete user account
   const handleDeleteAccount = () => {
-    const user = getAuth().currentUser;
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone! Your account and all data will be permanently deleted.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete my account",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const user = getAuth().currentUser;
 
-    if (user) {
-      user
-        .delete()
-        .then(() => {
-          console.log("Account deleted successfully");
-          navigate("/login");
-        })
-        .catch((error: Error) => {
-          console.error("Error deleting account:", error);
-        });
-    } else {
-      console.error("No user signed in");
-    }
+        if (user) {
+          user
+            .delete()
+            .then(() => {
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Account deleted successfully",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              console.log("Account deleted successfully");
+              navigate("/login");
+            })
+            .catch((error: Error) => {
+              console.error("Error deleting account:", error);
+              Swal.fire("Error", "Failed to delete account. Please try again.", "error");
+            });
+        } else {
+          console.error("No user signed in");
+          Swal.fire("Error", "No user signed in", "error");
+        }
+      }
+    });
   };
 
   return (

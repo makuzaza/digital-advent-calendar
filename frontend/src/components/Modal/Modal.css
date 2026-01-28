@@ -1,15 +1,19 @@
 .modal {
-  position: relative;
-  top: 10%;
-  left: 25%;
-  margin: 0;
-  max-width: 600px;
-  border-radius: 5px;
-  background-color: white;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99999;
+  overflow-y: auto;
 }
 
 .modal.open {
   display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 70px;
 }
 
 .modal-backdrop {
@@ -19,15 +23,21 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
+  z-index: 99998;
 }
 
 .modal-content {
-  width: 600px !important;
+  position: relative;
   background-color: white;
   padding: 20px;
-  border-radius: 10px;
-  z-index: 100;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-height: 90vh;
   overflow-y: auto;
+  max-width: 600px;
+  width: 90%;
+  z-index: 100000;
+  margin-bottom: 20px;
 }
 
 .modal-final {
@@ -99,11 +109,4 @@
 
 .modal input {
   padding: 5px 10px;
-}
-
-@media screen and (max-width: 900px) {
-  .modal {
-    width: 90%;
-    left: 40%;
-  }
 }

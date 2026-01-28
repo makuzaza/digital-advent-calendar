@@ -12,7 +12,7 @@ export const refreshFirebaseToken = async (): Promise<string | null> => {
     const user = auth.currentUser;
 
     if (!user) {
-      console.error("No authenticated user found");
+      // console.error("No authenticated user found");
       return null;
     }
 

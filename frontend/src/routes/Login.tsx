@@ -33,6 +33,12 @@ const Login: React.FC = () => {
     }
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleLogin();
+    }
+  };
+
   return (
     <div
       className="home login"
@@ -56,6 +62,7 @@ const Login: React.FC = () => {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          onKeyPress={handleKeyPress}
         />
         <Input
           style={{
@@ -68,10 +75,11 @@ const Login: React.FC = () => {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onKeyPress={handleKeyPress}
         />
       </div>
       <Button
-        onClick={handleLogin}
+        onClick={handleLogin} // also submit by pressing Enter
         variant="contained"
         color="primary"
         style={{ margin: "10px" }}

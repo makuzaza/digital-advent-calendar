@@ -5,8 +5,12 @@ import "./Modal.css";
 import { TextField, Button } from "@mui/material";
 
 import CloseIcon from "@mui/icons-material/Close";
-import { useAppSelector } from "../../hooks/useAppDispatch";
+import { useAppSelector, useAppDispatch } from "../../hooks/useAppDispatch";
 import axios from "axios";
+import Swal from "sweetalert2";
+import { refreshFirebaseToken } from "../../utils/tokenUtils";
+import { getAuth } from "firebase/auth";
+import { setUid } from "../../store/uidSlice";
 
 type Props = {
   day: number;
@@ -42,6 +46,7 @@ const Modal: React.FC<Props> = ({
   ownerUid
 }) => {
   const [contentVisible, setContentVisible] = useState<ContentVisibility>({});
+  const dispatch = useAppDispatch();
 
   const uid = useAppSelector((state) => state.uid.uid);
   const token = useAppSelector((state) => state.token.token);
@@ -102,19 +107,63 @@ const Modal: React.FC<Props> = ({
     }));
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
 
     const file = e.target.files[0];
-    console.log("Token:", token);
-    console.log("UID:", uid);
-    console.log("Token exists:", !!token);
-    console.log("UID exists:", !!uid);
-  
-    if (!token || !uid) {
-      console.error("Missing token or uid - cannot upload");
+
+    // Get UID from Redux or Firebase auth
+    let userUid = uid;
+    console.log("Redux UID:", uid);
+    
+    if (!userUid || userUid.trim() === "") {
+      const auth = getAuth();
+      const currentUser = auth.currentUser;
+      console.log("Firebase currentUser:", currentUser);
+      
+      if (currentUser) {
+        userUid = currentUser.uid;
+        console.log("Got UID from Firebase auth:", userUid);
+        // Update Redux store with the UID
+        dispatch(setUid(userUid));
+      } else {
+        console.error("No Firebase user found - user not logged in");
+      }
+    }
+
+    console.log("Final UID for upload:", userUid, "Token exists:", !!token);
+
+    // Check if user is logged in
+    if (!userUid) {
+      await Swal.fire({
+        icon: "warning",
+        title: "Login Required",
+        text: "Please log in to upload images.",
+      });
       return;
     }
+
+    // Refresh token to ensure it's valid
+    let tokenToUse = token;
+    try {
+      const freshToken = await refreshFirebaseToken();
+      if (freshToken) {
+        tokenToUse = freshToken;
+        console.log("Token refreshed successfully");
+      }
+    } catch (error) {
+      console.error("Error refreshing token:", error);
+    }
+
+    if (!tokenToUse) {
+      await Swal.fire({
+        icon: "error",
+        title: "Authentication Error",
+        text: "Authentication token is missing. Please log in again.",
+      });
+      return;
+    }
+
     const reader = new FileReader();
     reader.onloadend = () => {
       const newWindowContent = [...windowContent];
@@ -129,26 +178,53 @@ const Modal: React.FC<Props> = ({
 
     // upload image to database
     const formData = new FormData();
-
     formData.append("image", file);
-    formData.append("uid", uid);
+    formData.append("uid", userUid);
 
-    axios
-      .post(`http://localhost:8000/storage/images/`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          // Send token in request headers
-          "x-access-token": token,
-        },
-      })
-      .then((response) => {
-        console.log(`image`, response.data);
-      })
-      .catch(() => {
-        console.log(
-          `Error uploading image: Login to upload. UID and / or token required. `
-        );
+    console.log("Uploading image with UID:", userUid);
+
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/storage/images/`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "x-access-token": tokenToUse,
+          },
+        }
+      );
+      console.log(`Image uploaded successfully:`, response.data);
+      await Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "Image uploaded successfully.",
+        timer: 2000,
+        showConfirmButton: false,
       });
+    } catch (error: any) {
+      console.error("Error uploading image:", error.response?.data || error.message);
+      
+      if (error.response?.status === 401) {
+        await Swal.fire({
+          icon: "error",
+          title: "Session Expired",
+          text: "Your session has expired. Please log in again.",
+        });
+      } else if (error.response?.status === 403) {
+        await Swal.fire({
+          icon: "error",
+          title: "Authentication Required",
+          text: "Please log in to upload images.",
+        });
+      } else {
+        await Swal.fire({
+          icon: "error",
+          title: "Upload Failed",
+          text: error.response?.data?.error || "Failed to upload image. Please try again.",
+        });
+      }
+    }
   };
 
 
