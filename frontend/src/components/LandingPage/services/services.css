@@ -1,0 +1,60 @@
+.services,
+.projects {
+  color: #fff;
+  background: #000000;
+  margin: 10;
+  padding-top: 10rem;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-bottom: 13rem;
+}
+
+.services .serv-content .card {
+  width: calc(33% - 20px);
+  background: #848282;
+  text-align: center;
+  border-radius: 10px;
+  padding: 50px 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: #fff;
+  max-width: 330px;
+  margin: 10px;
+  box-shadow: 0 4px 8px 0 rgba(230, 225, 225, 0.2);
+}
+
+.services .serv-content .card:hover {
+  background: #626262;
+}
+
+.services .serv-content .card .box {
+  transition: all 0.3s ease;
+}
+
+.services .serv-content .card:hover .box {
+  transform: scale(1.05);
+}
+
+.services .serv-content .card:hover i {
+  color: #fff;
+}
+
+.services .serv-content .card .text {
+  font-size: 25px;
+  font-weight: 500;
+  margin: 10px 0 7px 0;
+}
+
+.services .serv-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.services .title {
+  text-align: center;
+  max-width: 500px;
+  margin: 0 auto;
+}

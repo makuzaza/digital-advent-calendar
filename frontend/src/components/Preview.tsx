@@ -182,21 +182,7 @@ const Preview: React.FC<Props> = ({
         setWindowContent(newWindowContent);
       }
     } 
-  }, [
-    calendarData,
-    title,
-    subtitle,
-    titleFont,
-    subtitleFont,
-    titleFontSize,
-    subTitleFontSize,
-    titleColor,
-    subtitleColor,
-    selectedBackground,
-    musicFile,
-    musicFX,
-    windows,
-  ]);
+  }, [calendarData]);
   
   // console.log(calendarData);
   // console.log(calendarId);

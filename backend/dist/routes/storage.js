@@ -283,9 +283,16 @@ exports.Router.delete("/profile_pictures/:profile_picture", verifyToken_1.verify
         if (!uid || uid.trim() === "") {
             return res.status(400).json({ error: "UID is required in request body" });
         }
-        const imagePath = path.join(uploadsDir, uid, "profile_pictures", imageName);
-        if (!fs.existsSync(imagePath)) {
-            console.log("Profile picture not found at:", imagePath);
+        const candidatePaths = [
+            path.join(uploadsDir, uid, "profile_pictures", imageName),
+            path.join(uploadsDir, uid, imageName),
+            path.join(uploadsDir, "anonymous", "profile_pictures", imageName),
+            path.join(uploadsDir, "anonymous", imageName),
+            path.join(uploadsDir, "profile_pictures", imageName),
+        ];
+        const imagePath = candidatePaths.find((candidate) => fs.existsSync(candidate));
+        if (!imagePath) {
+            console.log("Profile picture not found at any known path. Tried:", candidatePaths);
             return res.status(404).json({ error: "Profile picture not found" });
         }
         fs.unlinkSync(imagePath);
