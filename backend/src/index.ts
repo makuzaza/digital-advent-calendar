@@ -29,6 +29,10 @@ app.get("/", (req, res) => {
   );
 });
 
+app.get("/health", (_req, res) => {
+  res.json({ status: "ok", service: "YODA Calendars API" });
+});
+
 const PORT = process.env.PORT || 8000;
 const HOST = process.env.HOST || "localhost";
 
