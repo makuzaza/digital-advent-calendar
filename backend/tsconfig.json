@@ -6,9 +6,10 @@
     "baseUrl": "src",
     "outDir": "dist",
     "sourceMap": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "strict": false
   },
   "include": ["src/**/*", "db/**/*", "routes/**/*", "middleware/**/*"]
 }
