@@ -24,6 +24,9 @@ app.use("/storage", storage_1.Router);
 app.get("/", (req, res) => {
     res.send("Welcome to YODA Calendars™️ API 🌟 Your Own Digital Advent Calendars!");
 });
+app.get("/health", (_req, res) => {
+    res.json({ status: "ok", service: "YODA Calendars API" });
+});
 const PORT = process.env.PORT || 8000;
 const HOST = process.env.HOST || "localhost";
 app.listen(PORT, () => {

@@ -3,7 +3,7 @@
 ```shell
 Server:
 
-https://caas-deploy.onrender.com
+https://digital-advent-calendar.onrender.com
 ```
 
 ## Endpoints

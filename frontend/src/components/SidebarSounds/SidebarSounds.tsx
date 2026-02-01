@@ -5,6 +5,13 @@ import "./SidebarSounds.css";
 import MusicChoice from "./MusicChoice";
 import UploadFile from "./UploadFile";
 
+import xmasMusic from "../../assets/merry-christmas.mp3";
+import horrorMusic from "../../assets/horror.mp3";
+import fantasyMusic from "../../assets/fantasy.mp3";
+import christmasSound from "../../assets/winter.mp3";
+import horrorSound from "../../assets/horror-sound.mp3";
+import fantasySound from "../../assets/fantasy-sound.mp3";
+
 // types
 type Props = {
   musicFile: string;
@@ -26,21 +33,21 @@ const SidebarSounds: React.FC<Props> = ({
         <MusicChoice
           musicFile={musicFile}
           setMusicFile={setMusicFile}
-          audioSrc={"xmas-music.mp3"}
+          audioSrc={xmasMusic}
           title={"Christmas"}
           type={"music"}
         />
         <MusicChoice
           musicFile={musicFile}
           setMusicFile={setMusicFile}
-          audioSrc={"horror-music.mp3"}
+          audioSrc={horrorMusic}
           title={"Horror"}
           type={"music"}
         />
         <MusicChoice
           musicFile={musicFile}
           setMusicFile={setMusicFile}
-          audioSrc={"fantasy-music.mp3"}
+          audioSrc={fantasyMusic}
           title={"Fantasy"}
           type={"music"}
         />
@@ -55,21 +62,21 @@ const SidebarSounds: React.FC<Props> = ({
         <MusicChoice
           musicFX={musicFX}
           setMusicFX={setMusicFX}
-          audioSrc={"xmas-fx.mp3"}
+          audioSrc={christmasSound}
           title={"Christmas"}
           type={"fx"}
         />
         <MusicChoice
           musicFX={musicFX}
           setMusicFX={setMusicFX}
-          audioSrc={"horror-fx.mp3"}
+          audioSrc={horrorSound}
           title={"Horror"}
           type={"fx"}
         />
         <MusicChoice
           musicFX={musicFX}
           setMusicFX={setMusicFX}
-          audioSrc={"fantasy-fx.mp3"}
+          audioSrc={fantasySound}
           title={"Fantasy"}
           type={"fx"}
         />

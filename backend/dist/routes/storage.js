@@ -309,11 +309,25 @@ exports.Router.delete("/profile_pictures/:profile_picture", verifyToken_1.verify
 exports.Router.get("/sounds/music/:musicName", async (req, res) => {
     try {
         const musicName = req.params.musicName;
-        const musicPath = path.join(uploadsDir, "sounds", "music", musicName);
-        if (!fs.existsSync(musicPath)) {
-            return res.status(404).json({ error: "Music not found" });
+        const uid = req.query.uid;
+        // If UID is provided, try user directory first
+        if (uid) {
+            const musicPath = path.join(uploadsDir, uid, "sounds", "music", musicName);
+            if (fs.existsSync(musicPath)) {
+                return res.sendFile(musicPath);
+            }
         }
-        res.sendFile(musicPath);
+        // Fallback: search all user directories
+        if (fs.existsSync(uploadsDir)) {
+            const allDirs = fs.readdirSync(uploadsDir);
+            for (const dir of allDirs) {
+                const musicPath = path.join(uploadsDir, dir, "sounds", "music", musicName);
+                if (fs.existsSync(musicPath)) {
+                    return res.sendFile(musicPath);
+                }
+            }
+        }
+        return res.status(404).json({ error: "Music not found" });
     }
     catch (error) {
         console.error("Error downloading music:", error);
@@ -326,13 +340,35 @@ exports.Router.post("/sounds/music", verifyToken_1.verifyToken, upload.single("m
         if (!req.file) {
             return res.status(400).send("No file uploaded");
         }
+        const uid = req.body.uid;
+        if (!uid || uid.trim() === "") {
+            // Delete the temp file
+            if (fs.existsSync(req.file.path)) {
+                fs.unlinkSync(req.file.path);
+            }
+            return res.status(400).json({ error: "UID is required in request body" });
+        }
+        // Create user music directory if it doesn't exist
+        const musicDir = path.join(uploadsDir, uid, "sounds", "music");
+        if (!fs.existsSync(musicDir)) {
+            fs.mkdirSync(musicDir, { recursive: true });
+        }
+        // Move file from temp location to music directory
+        const originalFilename = req.file.originalname;
+        const finalPath = path.join(musicDir, originalFilename);
+        fs.renameSync(req.file.path, finalPath);
+        console.log("Music uploaded successfully to:", finalPath);
         return res.status(200).send({
-            musicName: req.file.originalname,
+            musicName: originalFilename,
             message: "File uploaded successfully",
         });
     }
     catch (error) {
         console.error("Error uploading music:", error);
+        // Clean up temp file if it exists
+        if (req.file && fs.existsSync(req.file.path)) {
+            fs.unlinkSync(req.file.path);
+        }
         res.status(500).send("Internal Server Error");
     }
 });
@@ -357,11 +393,25 @@ exports.Router.delete("/sounds/music/:musicName", verifyToken_1.verifyToken, asy
 exports.Router.get("/sounds/soundFx/:soundFxName", async (req, res) => {
     try {
         const soundFxName = req.params.soundFxName;
-        const soundFxPath = path.join(uploadsDir, "sounds", "soundFx", soundFxName);
-        if (!fs.existsSync(soundFxPath)) {
-            return res.status(404).json({ error: "Sound effect not found" });
+        const uid = req.query.uid;
+        // If UID is provided, try user directory first
+        if (uid) {
+            const soundFxPath = path.join(uploadsDir, uid, "sounds", "soundFx", soundFxName);
+            if (fs.existsSync(soundFxPath)) {
+                return res.sendFile(soundFxPath);
+            }
         }
-        res.sendFile(soundFxPath);
+        // Fallback: search all user directories
+        if (fs.existsSync(uploadsDir)) {
+            const allDirs = fs.readdirSync(uploadsDir);
+            for (const dir of allDirs) {
+                const soundFxPath = path.join(uploadsDir, dir, "sounds", "soundFx", soundFxName);
+                if (fs.existsSync(soundFxPath)) {
+                    return res.sendFile(soundFxPath);
+                }
+            }
+        }
+        return res.status(404).json({ error: "Sound effect not found" });
     }
     catch (error) {
         console.error("Error downloading sound effect:", error);
@@ -374,13 +424,35 @@ exports.Router.post("/sounds/soundFx", verifyToken_1.verifyToken, upload.single(
         if (!req.file) {
             return res.status(400).send("No file uploaded");
         }
+        const uid = req.body.uid;
+        if (!uid || uid.trim() === "") {
+            // Delete the temp file
+            if (fs.existsSync(req.file.path)) {
+                fs.unlinkSync(req.file.path);
+            }
+            return res.status(400).json({ error: "UID is required in request body" });
+        }
+        // Create user soundFx directory if it doesn't exist
+        const soundFxDir = path.join(uploadsDir, uid, "sounds", "soundFx");
+        if (!fs.existsSync(soundFxDir)) {
+            fs.mkdirSync(soundFxDir, { recursive: true });
+        }
+        // Move file from temp location to soundFx directory
+        const originalFilename = req.file.originalname;
+        const finalPath = path.join(soundFxDir, originalFilename);
+        fs.renameSync(req.file.path, finalPath);
+        console.log("Sound effect uploaded successfully to:", finalPath);
         return res.status(200).send({
-            soundFxName: req.file.originalname,
+            soundFxName: originalFilename,
             message: "File uploaded successfully",
         });
     }
     catch (error) {
         console.error("Error uploading sound effect:", error);
+        // Clean up temp file if it exists
+        if (req.file && fs.existsSync(req.file.path)) {
+            fs.unlinkSync(req.file.path);
+        }
         res.status(500).send("Internal Server Error");
     }
 });

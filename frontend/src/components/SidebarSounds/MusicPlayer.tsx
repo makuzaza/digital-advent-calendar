@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 // icons
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import StopCircleIcon from "@mui/icons-material/StopCircle";
 import DownloadingIcon from "@mui/icons-material/Downloading";
-
-import { useAppSelector } from "../../hooks/useAppDispatch";
 
 type Props = {
   audioSrc: string | undefined;
@@ -14,7 +14,7 @@ type Props = {
 };
 
 const MusicPlayer: React.FC<Props> = ({ audioSrc, type }) => {
-  const uid = useAppSelector((state) => state.uid.uid);
+  const uid = useSelector((state: RootState) => state.uid.uid);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const audioRef = useRef(new Audio(audioSrc));
@@ -24,6 +24,20 @@ const MusicPlayer: React.FC<Props> = ({ audioSrc, type }) => {
       audioRef.current.pause();
       setIsPlaying(false);
 
+      // Check if it's a local imported asset (blob URL from Vite)
+      const isImportedAsset = audioSrc.startsWith("blob:") || 
+                              audioSrc.includes("/assets/") ||
+                              audioSrc.startsWith("http://") ||
+                              audioSrc.startsWith("https://");
+
+      if (isImportedAsset) {
+        // Play local asset directly
+        audioRef.current = new Audio(audioSrc);
+        console.log("Playing local asset:", audioSrc);
+        return;
+      }
+
+      // Otherwise, it's an uploaded file - fetch from backend
       const urlPart = type === "music" ? "music" : "soundFx";
 
       const getSounds = async () => {
@@ -32,18 +46,17 @@ const MusicPlayer: React.FC<Props> = ({ audioSrc, type }) => {
           const response = await axios.get(
             `http://localhost:8000/storage/sounds/${urlPart}/${audioSrc}`,
             {
-              params: {
-                uid: uid,
-              },
-              responseType: "blob", // Set responseType to 'blob' to receive binary data
+              params: { uid },
+              responseType: "blob",
             }
           );
           const url = URL.createObjectURL(response.data);
           audioRef.current = new Audio(url);
-          setIsLoading(false);
+          console.log("Playing uploaded file:", audioSrc);
         } catch (error) {
+          console.error("Error loading uploaded audio:", error);
+        } finally {
           setIsLoading(false);
-          console.error("Error sending token to backend:", error);
         }
       };
       getSounds();
