@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Search from "../components/Search";
 import Calendar_Card from "../components/Calendar_Card";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export interface Calendar {
   calendarId: string;
@@ -46,7 +47,7 @@ const Calendars: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
 
   const getCalendars = async () => {
     axios
-      .get("http://localhost:8000/firestore/calendars")
+      .get(`${API_URL}/firestore/calendars`)
       .then((response) => {
         // console.log(response.data);
         setCalendars(response.data);

@@ -7,6 +7,7 @@ import PreviewIcon from "@mui/icons-material/Preview";
 // types
 import { WindowContent } from "../Modal/Modal";
 import { useEffect, useState } from "react";
+const API_URL = import.meta.env.VITE_API_URL;
 
 type Props = {
   day: number;
@@ -80,7 +81,7 @@ const Window: React.FC<Props> = ({
       <div
         className="open_door"
         style={{
-          backgroundImage: `url(http://localhost:8000/storage/images/${uploadedImageName}/?ownerUid=${ownerUid})`,
+          backgroundImage: `url(${API_URL}/storage/images/${uploadedImageName}/?ownerUid=${ownerUid})`,
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",

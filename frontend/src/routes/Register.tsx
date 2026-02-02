@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Swal from 'sweetalert2';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const theme = createTheme();
 
@@ -41,7 +42,7 @@ export default function Register() {
     };
 
     try {
-      await axios.post("http://localhost:8000/auth/signup", newUser);
+      await axios.post(`${API_URL}/auth/signup`, newUser);
       Swal.fire({
         icon: "success",
         title: "Registered!",

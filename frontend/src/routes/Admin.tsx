@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Calendars, { Calendar } from "./Calendars";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
 
 import "./Home.css";
 
@@ -18,7 +19,7 @@ const Admin: React.FC = () => {
 
   const getCalendars = async () => {
     axios
-      .get("http://localhost:8000/firestore/calendars")
+      .get(`${API_URL}/firestore/calendars`)
       .then((response) => {
         console.log("calendars", response.data);
         setCalendars(response.data);
@@ -27,7 +28,7 @@ const Admin: React.FC = () => {
 
   const getListUsers = async () => {
     axios
-      .get("http://localhost:8000/auth/users")
+      .get(`${API_URL}/auth/users`)
       .then((response) => {
         console.log("users", response.data.users);
         setUsers(response.data.users);

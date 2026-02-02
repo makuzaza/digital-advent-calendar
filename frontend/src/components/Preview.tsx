@@ -17,6 +17,7 @@ import { WindowContent } from "./Modal/Modal";
 import { Button, Typography } from "@mui/material";
 
 import { useAppSelector } from "../hooks/useAppDispatch";
+const API_URL = import.meta.env.VITE_API_URL;
 
 type Props = {
   title: string;
@@ -133,7 +134,7 @@ const Preview: React.FC<Props> = ({
 
   const fetchCalendarData = async (calendarId: string) => {
     try {
-      const response = await fetch(`http://localhost:8000/firestore/calendars/${calendarId}`);
+      const response = await fetch(`${API_URL}/firestore/calendars/${calendarId}`);
       if (!response.ok) {
         throw new Error("Failed to fetch calendar data");
       }
@@ -169,7 +170,7 @@ const Preview: React.FC<Props> = ({
           text: window.text || "",
           videoURL: window.videoURL || "",
           uploadedImageName: window.uploadedImageName || "",
-          imageURLModal: window.uploadedImageName ? `http://localhost:8000/storage/images/${window.uploadedImageName}` : ""
+          imageURLModal: window.uploadedImageName ? `${API_URL}/storage/images/${window.uploadedImageName}` : ""
         }));
         setWindowContent(newWindowContent);
       } else {
@@ -233,7 +234,7 @@ const Preview: React.FC<Props> = ({
     console.log(json);
 
     axios
-      .post(`http://localhost:8000/firestore/calendars`, {
+      .post(`${API_URL}/firestore/calendars`, {
         token: token,
         uid: uid,
         data: json,

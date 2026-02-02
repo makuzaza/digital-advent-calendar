@@ -4,7 +4,7 @@ import { WindowContent } from "../Modal/Modal";
 import "../Window/Window.css";
 import { useCallback, useEffect, useState } from "react";
 // import { useAppSelector } from "../../hooks/useAppDispatch";
-// import { useAppSelector } from "../../hooks/useAppDispatch";
+const API_URL = import.meta.env.VITE_API_URL;
 
 type Props = {
   day: number;
@@ -55,7 +55,7 @@ const WindowFinal: React.FC<Props> = ({
     const image = windowsContent[day - 1].uploadedImageName;
     if (!image) return;
     axios
-      .get(`http://localhost:8000/storage/images/${image}`, {
+      .get(`${API_URL}/storage/images/${image}`, {
         params: {
           ownerUid: ownerUid,
         },

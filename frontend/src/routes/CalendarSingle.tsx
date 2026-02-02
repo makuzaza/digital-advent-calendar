@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 import PreviewFinal from "../components/FinalPreview/PreviewFinal";
+const API_URL = import.meta.env.VITE_API_URL;
 
 interface CalendarData {
   ownerUid: string;
@@ -43,7 +44,7 @@ const CalendarSingle = () => {
     const getCalendar = () => {
       axios
         .get(
-          `http://localhost:8000/firestore/calendars/${calendarId}`
+          `${API_URL}/firestore/calendars/${calendarId}`
         )
         .then((response) => {
           // console.log(response.data);

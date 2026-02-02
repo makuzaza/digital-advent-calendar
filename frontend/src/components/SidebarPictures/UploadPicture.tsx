@@ -2,6 +2,7 @@ import React from "react";
 import ExistingImageGallery from "./ExistingImageGallery";
 import { useAppSelector } from "../../hooks/useAppDispatch";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
 
 interface UploadPictureProps {
   setSelectedBackground: (backgroundUrl: string) => void;
@@ -33,7 +34,7 @@ const UploadPicture: React.FC<UploadPictureProps> = ({
     formData.append("uid", uid);
 
     axios
-      .post(`http://localhost:8000/storage/images`, formData, {
+      .post(`${API_URL}/storage/images`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           // Send token in request headers

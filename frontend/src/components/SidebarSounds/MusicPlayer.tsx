@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+const API_URL = import.meta.env.VITE_API_URL;
 
 // icons
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
@@ -42,7 +43,7 @@ const MusicPlayer: React.FC<Props> = ({ audioSrc, type }) => {
           setIsLoading(true);
           try {
             const response = await axios.get(
-              `http://localhost:8000/storage/sounds/${urlPart}/${audioSrc}`,
+              `${API_URL}/storage/sounds/${urlPart}/${audioSrc}`,
               {
                 params: { uid },
                 responseType: "blob",

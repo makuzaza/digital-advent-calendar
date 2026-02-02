@@ -3,6 +3,7 @@ import EmbedVideo from "../EmbedVideo/EmbedVideo";
 // import { useState, useEffect } from "react";
 import { WindowContent } from "../Modal/Modal";
 import { useAppSelector } from "../../hooks/useAppDispatch";
+const API_URL = import.meta.env.VITE_API_URL;
 
 type Props = {
   openPreviewModal: boolean;
@@ -47,7 +48,7 @@ const PreviewModal: React.FC<Props> = ({
         {uploadedImageName && (
           <>
             <img
-                src={`http://localhost:8000/storage/images/${uploadedImageName}/?ownerUid=${currentOwnerUid}`}
+                src={`${API_URL}/storage/images/${uploadedImageName}/?ownerUid=${currentOwnerUid}`}
                 alt="Uploaded"
                 style={{ width: "450px" }}
               />

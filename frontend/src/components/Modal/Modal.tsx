@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import { refreshFirebaseToken } from "../../utils/tokenUtils";
 import { getAuth } from "firebase/auth";
 import { setUid } from "../../store/uidSlice";
+const API_URL = import.meta.env.VITE_API_URL;
 
 type Props = {
   day: number;
@@ -185,7 +186,7 @@ const Modal: React.FC<Props> = ({
 
     try {
       const response = await axios.post(
-        `http://localhost:8000/storage/images/`,
+        `${API_URL}/storage/images/`,
         formData,
         {
           headers: {
@@ -276,7 +277,7 @@ const Modal: React.FC<Props> = ({
               <>
                 <p>Your saved image:</p>
                 <img
-                  src={`http://localhost:8000/storage/images/${uploadedImageName}/?ownerUid=${currentOwnerUid}`}
+                  src={`${API_URL}/storage/images/${uploadedImageName}/?ownerUid=${currentOwnerUid}`}
                   alt="Uploaded"
                   style={{ maxHeight: "150px" }}
                 />

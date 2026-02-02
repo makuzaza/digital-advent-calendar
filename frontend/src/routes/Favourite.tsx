@@ -9,6 +9,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import Swal from "sweetalert2";
 import { refreshFirebaseToken } from "../utils/tokenUtils";
 import { setToken } from "../store/tokenSlice";
+const API_URL = import.meta.env.VITE_API_URL;
 
 interface Calendar {
   calendarId: string;
@@ -57,7 +58,7 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
     if (!uid) return;
 
     axios
-      .get("http://localhost:8000/firestore/calendars/user", {
+      .get(`${API_URL}/firestore/calendars/user`, {
         params: {
           uid: uid,
         },
@@ -94,7 +95,7 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
 
           axios
             .delete(
-              `http://localhost:8000/firestore/calendars/${calendarId}`,
+              `${API_URL}/firestore/calendars/${calendarId}`,
               {
                 params: {
                   token: tokenToUse,

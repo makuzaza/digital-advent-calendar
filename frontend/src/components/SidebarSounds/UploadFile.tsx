@@ -4,6 +4,7 @@ import axios from "axios";
 import UploadIcon from "@mui/icons-material/Upload";
 import { useAppSelector } from "../../hooks/useAppDispatch";
 import { refreshFirebaseToken } from "../../utils/tokenUtils";
+const API_URL = import.meta.env.VITE_API_URL;
 
 type Props = {
   soundType: string;
@@ -36,7 +37,7 @@ const UploadFile: React.FC<Props> = ({
 
     try {
       const response = await axios.post(
-        `http://localhost:8000/storage/sounds/${soundType}`,
+        `${API_URL}/storage/sounds/${soundType}`,
         formData,
         {
           headers: {
@@ -70,7 +71,7 @@ const UploadFile: React.FC<Props> = ({
         </div>
         <input
           type="file"
-          name="music"
+          name={soundType}
           onChange={handleUpload}
           style={{ display: "none" }}
         />

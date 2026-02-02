@@ -14,6 +14,7 @@ import editor from "../assets/camera.png";
 import Swal from "sweetalert2";
 import { refreshFirebaseToken } from "../utils/tokenUtils";
 import { setToken } from "../store/tokenSlice";
+const API_URL = import.meta.env.VITE_API_URL;
 
 interface CalendarData {
   text: {
@@ -85,7 +86,7 @@ const uploadProfilePicture = async () => {
     formData.append("uid", uid);
 
     await axios.post(
-      "http://localhost:8000/storage/profile_pictures",
+      `${API_URL}/storage/profile_pictures`,
       formData,
       {
         headers: {
@@ -95,7 +96,7 @@ const uploadProfilePicture = async () => {
     );
 
     // Update Firebase profile with backend URL that includes uid
-    const photoURL = `http://localhost:8000/storage/profile_pictures/${selectedFile.name}?uid=${uid}`;
+    const photoURL = `${API_URL}/storage/profile_pictures/${selectedFile.name}?uid=${uid}`;
     await updateProfile(user!, { photoURL });
     setProfilePic(photoURL);
     setSelectedFile(null);
@@ -145,7 +146,7 @@ const removeProfilePicture = async () => {
       
       if (filename) {
         await axios.delete(
-          `http://localhost:8000/storage/profile_pictures/${filename}`,
+          `${API_URL}/storage/profile_pictures/${filename}`,
           {
             headers: {
               "x-access-token": tokenToUse,
@@ -210,7 +211,7 @@ const removeProfilePicture = async () => {
     if (!uid) return;
     console.log(`user: ${uid} calendars`);
     axios
-      .get("http://localhost:8000/firestore/calendars/user", {
+      .get(`${API_URL}/firestore/calendars/user`, {
         params: {
           // token: token,
           uid: uid,
@@ -236,7 +237,7 @@ const removeProfilePicture = async () => {
 
       axios
         .delete(
-          `http://localhost:8000/firestore/calendars/${calendarId}`,
+          `${API_URL}/firestore/calendars/${calendarId}`,
           {
             params: {
               token: tokenToUse,
@@ -278,7 +279,7 @@ const removeProfilePicture = async () => {
   const getAllFilesByUid = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/storage/files/${uid}`
+        `${API_URL}/storage/files/${uid}`
       );
       console.log(response.data);
       setAllUserFiles(response.data);
@@ -325,7 +326,7 @@ const removeProfilePicture = async () => {
       }
 
       await axios.delete(
-        `http://localhost:8000/storage/images/${fileName}`,
+        `${API_URL}/storage/images/${fileName}`,
         {
           headers: {
             "x-access-token": tokenToUse,
@@ -375,7 +376,7 @@ const removeProfilePicture = async () => {
       }
 
       await axios.delete(
-        `http://localhost:8000/storage/sounds/music/${fileName}`,
+        `${API_URL}/storage/sounds/music/${fileName}`,
         {
           headers: {
             "x-access-token": tokenToUse,
@@ -425,7 +426,7 @@ const removeProfilePicture = async () => {
       }
 
       await axios.delete(
-        `http://localhost:8000/storage/sounds/soundFx/${fileName}`,
+        `${API_URL}/storage/sounds/soundFx/${fileName}`,
         {
           headers: {
             "x-access-token": tokenToUse,

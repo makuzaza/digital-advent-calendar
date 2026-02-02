@@ -5,6 +5,7 @@ import { WindowContent } from "../Modal/Modal";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 // import { useAppSelector } from "../../hooks/useAppDispatch";
+const API_URL = import.meta.env.VITE_API_URL;
 
 type Props = {
   openPreviewModal: boolean;
@@ -29,7 +30,7 @@ const PreviewModalFinal: React.FC<Props> = ({
     const image = windowsContent[day].uploadedImageName;
     if (!image) return;
     axios
-      .get(`http://localhost:8000/storage/images/${image}`, {
+      .get(`${API_URL}/storage/images/${image}`, {
         params: {
           ownerUid: ownerUid,
         },
