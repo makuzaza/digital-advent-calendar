@@ -29,7 +29,7 @@ const Login: React.FC = () => {
         setError("Invalid credentials. Please try again.");
       }
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 

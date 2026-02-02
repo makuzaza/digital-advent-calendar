@@ -29,7 +29,7 @@ const loginWithEmailAndPassword = async (email: string, password: string) => {
     const tokenId = await user.getIdToken();
     return { tokenId, uid: user.uid }; // Return the token and the uid
   } catch (error) {
-    console.error((error as Error).message);
+    // console.error((error as Error).message);
     return { tokenId: "", uid: "" }; // Return an object with empty string values if there's an error
   }
 };
