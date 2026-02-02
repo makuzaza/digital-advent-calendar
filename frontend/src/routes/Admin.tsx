@@ -21,7 +21,7 @@ const Admin: React.FC = () => {
     axios
       .get(`${API_URL}/firestore/calendars`)
       .then((response) => {
-        console.log("calendars", response.data);
+        // console.log("calendars", response.data);
         setCalendars(response.data);
       });
   };
@@ -30,7 +30,7 @@ const Admin: React.FC = () => {
     axios
       .get(`${API_URL}/auth/users`)
       .then((response) => {
-        console.log("users", response.data.users);
+        // console.log("users", response.data.users);
         setUsers(response.data.users);
       });
   };
@@ -45,7 +45,7 @@ const Admin: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log(users);
+    // console.log(users);
   }, [users]);
 
   return (

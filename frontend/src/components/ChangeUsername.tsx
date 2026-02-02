@@ -48,7 +48,7 @@ export const ChangeUsername: React.FC<Props> = ({ setUserName }) => {
                 })
                   .then(() => {
                     setUserName(username as string);
-                    console.log("User name updated successfully");
+                    // console.log("User name updated successfully");
                   })
                   .catch((error: Error) => {
                     console.error("Error updating user name:", error);

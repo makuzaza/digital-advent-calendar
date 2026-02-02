@@ -110,19 +110,19 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
               }
               getUserCalendars();
               Swal.fire("Deleted!", "Your calendar has been deleted", "success");
-              console.log(response);
+              // console.log(response);
             })
             .catch((error) => {
               // Handle 401 error specifically
               if (error.response?.status === 401) {
                 Swal.fire("Error", "Your session has expired. Please log in again.", "error");
               } else {
-                console.error("Error deleting calendar:", error);
+                // console.error("Error deleting calendar:", error);
                 Swal.fire("Error", "Failed to delete calendar. Please try again.", "error");
               }
             });
         } catch (error) {
-          console.error("Error in deleteCalendar:", error);
+          // console.error("Error in deleteCalendar:", error);
           Swal.fire("Error", "An unexpected error occurred. Please try again.", "error");
         }
       }

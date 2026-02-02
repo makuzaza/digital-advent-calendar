@@ -20,7 +20,7 @@ const CalendarEditor: React.FC<Props> = ({
       try {
         const unsplashKey = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
         if (!unsplashKey) {
-          console.error("Unsplash API key is missing. Set VITE_UNSPLASH_ACCESS_KEY in .env");
+          // console.error("Unsplash API key is missing. Set VITE_UNSPLASH_ACCESS_KEY in .env");
           return;
         }
         const response = await axios.get(
@@ -36,7 +36,7 @@ const CalendarEditor: React.FC<Props> = ({
         const imageUrls = response.data.map((photo: any) => photo.urls.regular);
         setRandomImages(imageUrls);
       } catch (error) {
-        console.error("Error fetching random images:", error);
+        // console.error("Error fetching random images:", error);
       }
     };
 
@@ -45,7 +45,7 @@ const CalendarEditor: React.FC<Props> = ({
 
   const handleImageClick = (imageUrl: string) => {
     setSelectedBackground(imageUrl);   
-    console.log('Selected background:', imageUrl);
+    // console.log('Selected background:', imageUrl);
   };
 
   useEffect(() => {

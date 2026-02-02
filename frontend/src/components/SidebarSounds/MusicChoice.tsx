@@ -45,11 +45,11 @@ const MusicChoice: React.FC<Props> = ({
   // this is just to log to console which one is selected (name), and what is the music file path
   useEffect(() => {
     if (isSelected === null || musicFile === null || musicFX === null) return;
-    console.log({
-      selected: isSelected,
-      musicFile: musicFile,
-      musicFX: musicFX,
-    });
+    // console.log({
+    //   selected: isSelected,
+    //   musicFile: musicFile,
+    //   musicFX: musicFX,
+    // });
   }, [isSelected, musicFile, musicFX]);
 
   return (

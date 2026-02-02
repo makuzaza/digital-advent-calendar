@@ -22,7 +22,7 @@ export const refreshFirebaseToken = async (): Promise<string | null> => {
     // Update Redux store with new token
     store.dispatch(setToken(freshToken));
     
-    console.log("Token refreshed successfully");
+    // console.log("Token refreshed successfully");
     return freshToken;
   } catch (error) {
     console.error("Error refreshing token:", error);

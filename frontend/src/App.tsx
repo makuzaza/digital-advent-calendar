@@ -35,7 +35,7 @@ function App() {
     const tokenRefreshInterval = setInterval(async () => {
       try {
         await refreshFirebaseToken();
-        console.log("Token auto-refreshed");
+        // console.log("Token auto-refreshed");
       } catch (error) {
         console.error("Auto-token refresh failed:", error);
       }

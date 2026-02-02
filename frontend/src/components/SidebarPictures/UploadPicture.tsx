@@ -42,7 +42,7 @@ const UploadPicture: React.FC<UploadPictureProps> = ({
         },
       })
       .then((response) => {
-        console.log(`image`, response.data);
+        // console.log(`image`, response.data);
       })
       .catch(() => {
         console.log(

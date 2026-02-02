@@ -8,8 +8,8 @@ type ProtectedRouteProps = {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const [user, loading /* , error */] = useAuthState(auth);
-  console.log("user: ", user);
-  console.log("children: ", children);
+  // console.log("user: ", user);
+  // console.log("children: ", children);
 
   if (loading) {
     return <div>Loading...</div>;

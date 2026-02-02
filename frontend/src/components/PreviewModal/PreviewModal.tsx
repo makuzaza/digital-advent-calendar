@@ -37,7 +37,7 @@ const PreviewModal: React.FC<Props> = ({
   };
 
   const currentOwnerUid = ownerUid !== '' ? ownerUid : uid;
-  console.log('currentOwnerUid', currentOwnerUid);
+  // console.log('currentOwnerUid', currentOwnerUid);
 
   return (
     <div className={`modal ${openPreviewModal ? "open" : ""}`}>

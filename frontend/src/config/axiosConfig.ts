@@ -45,7 +45,7 @@ export const setupAxiosInterceptors = () => {
             return axios(originalRequest);
           }
         } catch (refreshError) {
-          console.error('Token refresh failed:', refreshError);
+          // console.error('Token refresh failed:', refreshError);
           // Token refresh failed, redirect to login
           window.location.href = '/login';
           return Promise.reject(refreshError);

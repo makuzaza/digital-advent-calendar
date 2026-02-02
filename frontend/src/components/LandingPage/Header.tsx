@@ -19,6 +19,7 @@ import { auth } from "../../auth/firebase";
 import { useAppSelector } from "../../hooks/useAppDispatch";
 import MenuIcon from "@mui/icons-material/Menu";
 import { AccountCircle } from "@mui/icons-material";
+import yodaLogo from "../../assets/yoda.png";
 
 const Header: React.FC = () => {
   const [user] = useAuthState(auth);
@@ -86,8 +87,11 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <AppBar position="static" sx={{ backgroundColor: "#10617a" }}>
+      <AppBar position="static" sx={{  backgroundColor: "black", zIndex: 1 }}>
         <Toolbar>
+          <Link to="/" style={{ textDecoration: "none" }}>
+          <img src={yodaLogo} alt="Yoda Logo" style={{ height: "30px", marginRight: "10px", cursor: "pointer" }} />
+          </Link>
           <div className={`${styles.grow} ${styles.leftAlign}`}>
             {isMobileView && location.pathname !== "/panel" ? (
               <>

@@ -27,7 +27,7 @@ const UploadFile: React.FC<Props> = ({
     // Refresh token before upload
     const freshToken = await refreshFirebaseToken();
     if (!freshToken) {
-      console.error("Failed to refresh token");
+      // console.error("Failed to refresh token");
       return;
     }
 
@@ -47,7 +47,7 @@ const UploadFile: React.FC<Props> = ({
         }
       );
 
-      console.log(`${soundType}:`, response.data);
+      // console.log(`${soundType}:`, response.data);
       if (soundType === "music") {
         setMusicFile(response.data.musicName);
       } else {

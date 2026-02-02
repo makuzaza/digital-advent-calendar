@@ -34,7 +34,7 @@ const MusicPlayer: React.FC<Props> = ({ audioSrc, type }) => {
       if (isImportedAsset) {
         // Play local asset directly
         audioRef.current = new Audio(audioSrc);
-        console.log("Playing local asset:", audioSrc);
+        // console.log("Playing local asset:", audioSrc);
       } else {
         // Otherwise, it's an uploaded file - fetch from backend
         const urlPart = type === "music" ? "music" : "soundFx";
@@ -51,7 +51,7 @@ const MusicPlayer: React.FC<Props> = ({ audioSrc, type }) => {
             );
             const url = URL.createObjectURL(response.data);
             audioRef.current = new Audio(url);
-            console.log("Playing uploaded file:", audioSrc);
+            // console.log("Playing uploaded file:", audioSrc);
           } catch (error) {
             console.error("Error loading uploaded audio:", error);
           } finally {

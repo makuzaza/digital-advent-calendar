@@ -117,7 +117,7 @@ const uploadProfilePicture = async () => {
     if ((error as any).response?.status === 401) {
       Swal.fire("Error", "Your session has expired. Please log in again.", "error");
     } else {
-      console.error("Error uploading profile picture:", error);
+      // console.error("Error uploading profile picture:", error);
       Swal.fire("Error", "Failed to upload profile picture", "error");
     }
   }
@@ -178,7 +178,7 @@ const removeProfilePicture = async () => {
     if ((error as any).response?.status === 401) {
       Swal.fire("Error", "Your session has expired. Please log in again.", "error");
     } else {
-      console.error("Error removing profile picture:", error);
+      // console.error("Error removing profile picture:", error);
       Swal.fire("Error", "Failed to remove profile picture", "error");
     }
   }
@@ -209,7 +209,7 @@ const removeProfilePicture = async () => {
   // Get all calendars created by the user
   const getUserCalendars = async () => {
     if (!uid) return;
-    console.log(`user: ${uid} calendars`);
+    // console.log(`user: ${uid} calendars`);
     axios
       .get(`${API_URL}/firestore/calendars/user`, {
         params: {
@@ -218,7 +218,7 @@ const removeProfilePicture = async () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setAllUserCalendars(response.data);
       });
   };
@@ -258,19 +258,19 @@ const removeProfilePicture = async () => {
             dispatch(setToken(freshToken));
           }
           getUserCalendars();
-          console.log(response);
+          // console.log(response);
         })
         .catch((error) => {
           // Handle 401 error specifically
           if (error.response?.status === 401) {
             Swal.fire("Error", "Your session has expired. Please log in again.", "error");
           } else {
-            console.error("Error deleting calendar:", error);
+            // console.error("Error deleting calendar:", error);
             Swal.fire("Error", "Failed to delete calendar. Please try again.", "error");
           }
         });
     } catch (error) {
-      console.error("Error in deleteCalendar:", error);
+      // console.error("Error in deleteCalendar:", error);
       Swal.fire("Error", "An unexpected error occurred. Please try again.", "error");
     }
   };
@@ -281,7 +281,7 @@ const removeProfilePicture = async () => {
       const response = await axios.get(
         `${API_URL}/storage/files/${uid}`
       );
-      console.log(response.data);
+      // console.log(response.data);
       setAllUserFiles(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -294,7 +294,7 @@ const removeProfilePicture = async () => {
     const firstFolder = getFirstFolderName(file);
     const secondFolder = getSecondFolderName(file);
 
-    console.log("Deleting file:", { file, name, firstFolder, secondFolder });
+    // console.log("Deleting file:", { file, name, firstFolder, secondFolder });
 
     // Validate that we're not trying to delete a directory
     if (name === "anonymous" || !name || name.length === 0) {
@@ -336,7 +336,7 @@ const removeProfilePicture = async () => {
           },
         }
       );
-      console.log("Image file deleted:", fileName);
+      // console.log("Image file deleted:", fileName);
 
       // Update token in store if it was refreshed
       if (freshToken && freshToken !== token) {
@@ -386,7 +386,7 @@ const removeProfilePicture = async () => {
           },
         }
       );
-      console.log("Music file deleted:", fileName);
+      // console.log("Music file deleted:", fileName);
 
       // Update token in store if it was refreshed
       if (freshToken && freshToken !== token) {
@@ -407,7 +407,7 @@ const removeProfilePicture = async () => {
       if ((error as any).response?.status === 401) {
         Swal.fire("Error", "Your session has expired. Please log in again.", "error");
       } else {
-        console.error("Error deleting music file:", error);
+        // console.error("Error deleting music file:", error);
         Swal.fire("Error", "Failed to delete music file. Please try again.", "error");
       }
     }
@@ -436,7 +436,7 @@ const removeProfilePicture = async () => {
           },
         }
       );
-      console.log("SoundFx file deleted:", fileName);
+      // console.log("SoundFx file deleted:", fileName);
 
       // Update token in store if it was refreshed
       if (freshToken && freshToken !== token) {
@@ -457,7 +457,7 @@ const removeProfilePicture = async () => {
       if ((error as any).response?.status === 401) {
         Swal.fire("Error", "Your session has expired. Please log in again.", "error");
       } else {
-        console.error("Error deleting sound effects file:", error);
+        // console.error("Error deleting sound effects file:", error);
         Swal.fire("Error", "Failed to delete sound file. Please try again.", "error");
       }
     }
@@ -523,15 +523,15 @@ const removeProfilePicture = async () => {
                 showConfirmButton: false,
                 timer: 1500,
               });
-              console.log("Account deleted successfully");
+              // console.log("Account deleted successfully");
               navigate("/login");
             })
             .catch((error: Error) => {
-              console.error("Error deleting account:", error);
+              // console.error("Error deleting account:", error);
               Swal.fire("Error", "Failed to delete account. Please try again.", "error");
             });
         } else {
-          console.error("No user signed in");
+          // console.error("No user signed in");
           Swal.fire("Error", "No user signed in", "error");
         }
       }

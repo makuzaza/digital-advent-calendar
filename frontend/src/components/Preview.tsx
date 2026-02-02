@@ -141,7 +141,7 @@ const Preview: React.FC<Props> = ({
       const data: Json = await response.json();
       setCalendarData(data);
       setOwnerUid(data.ownerUid);
-      console.log("Calendar data:", data);
+      // console.log("Calendar data:", data);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -231,7 +231,7 @@ const Preview: React.FC<Props> = ({
         uploadedImageName: window.uploadedImageName,
       })),
     };
-    console.log(json);
+    // console.log(json);
 
     axios
       .post(`${API_URL}/firestore/calendars`, {

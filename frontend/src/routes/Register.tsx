@@ -50,7 +50,7 @@ export default function Register() {
         confirmButtonColor: "#10617a",
       }).then(() => navigate("/login"));
     } catch (error) {
-      console.error("Registration failed: ", error);
+      // console.error("Registration failed: ", error);
       Swal.fire({
         icon: "error",
         title: "Registration Failed",
@@ -65,7 +65,7 @@ export default function Register() {
       try {
         const unsplashKey = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
         if (!unsplashKey) {
-          console.error("Unsplash API key is missing. Set VITE_UNSPLASH_ACCESS_KEY in .env");
+          // console.error("Unsplash API key is missing. Set VITE_UNSPLASH_ACCESS_KEY in .env");
           return;
         }
 

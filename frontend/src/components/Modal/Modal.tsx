@@ -115,16 +115,16 @@ const Modal: React.FC<Props> = ({
 
     // Get UID from Redux or Firebase auth
     let userUid = uid;
-    console.log("Redux UID:", uid);
+    // console.log("Redux UID:", uid);
     
     if (!userUid || userUid.trim() === "") {
       const auth = getAuth();
       const currentUser = auth.currentUser;
-      console.log("Firebase currentUser:", currentUser);
+      // console.log("Firebase currentUser:", currentUser);
       
       if (currentUser) {
         userUid = currentUser.uid;
-        console.log("Got UID from Firebase auth:", userUid);
+        // console.log("Got UID from Firebase auth:", userUid);
         // Update Redux store with the UID
         dispatch(setUid(userUid));
       } else {
@@ -132,7 +132,7 @@ const Modal: React.FC<Props> = ({
       }
     }
 
-    console.log("Final UID for upload:", userUid, "Token exists:", !!token);
+    // console.log("Final UID for upload:", userUid, "Token exists:", !!token);
 
     // Check if user is logged in
     if (!userUid) {
@@ -150,7 +150,7 @@ const Modal: React.FC<Props> = ({
       const freshToken = await refreshFirebaseToken();
       if (freshToken) {
         tokenToUse = freshToken;
-        console.log("Token refreshed successfully");
+        // console.log("Token refreshed successfully");
       }
     } catch (error) {
       console.error("Error refreshing token:", error);
@@ -182,7 +182,7 @@ const Modal: React.FC<Props> = ({
     formData.append("image", file);
     formData.append("uid", userUid);
 
-    console.log("Uploading image with UID:", userUid);
+    // console.log("Uploading image with UID:", userUid);
 
     try {
       const response = await axios.post(
@@ -195,7 +195,7 @@ const Modal: React.FC<Props> = ({
           },
         }
       );
-      console.log(`Image uploaded successfully:`, response.data);
+      // console.log(`Image uploaded successfully:`, response.data);
       await Swal.fire({
         icon: "success",
         title: "Success!",
@@ -237,7 +237,7 @@ const Modal: React.FC<Props> = ({
     uploadedImageName: "",
   };
   const currentOwnerUid = ownerUid !== '' ? ownerUid : uid;
-  console.log('currentOwnerUid', currentOwnerUid)
+  // console.log('currentOwnerUid', currentOwnerUid)
 
   return (
     <div className={`modal ${openModal ? "open" : ""}`}>
