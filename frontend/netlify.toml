@@ -1,0 +1,9 @@
+[build]
+  command = "npm install --legacy-peer-deps && npm run build"
+  publish = "frontend/dist"
+
+[secrets_scan]
+  omit_keys = [
+    "VITE_FIREBASE_KEY",
+    "VITE_UNSPLASH_ACCESS_KEY"
+  ]
