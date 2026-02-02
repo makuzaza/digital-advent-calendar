@@ -1,13 +1,16 @@
 import React, { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
+import { useAppSelector } from '../../../hooks/useAppDispatch';
 import './image.css'
 
 const ImageReveal: React.FC = () => {
   const revealRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const navigate = useNavigate();
+  const token = useAppSelector((state) => state.token.token);
 
   useEffect(() => {
     const tl = gsap.timeline({ defaults: { duration: 1.15, ease: 'power3.inOut' } });
@@ -40,9 +43,15 @@ const ImageReveal: React.FC = () => {
         </h1>
         <h2 className='img-reveal__subtitle'>Immerse yourself in the magic of the season as you design and personalize each day's surprise, tailored to delight and inspire.</h2>
 
-        <Link to="/login" className='bannerbutton'>
-          <Button  color="inherit">Login</Button>
-        </Link>
+        {!token ? (
+          <Link to="/login" className='bannerbutton'>
+            <Button color="inherit">Login</Button>
+          </Link>
+        ) : (
+          <Link to="/panel" className='bannerbutton'>
+            <Button color="inherit">Create calendar</Button>
+          </Link>
+        )}
       </div>
     </div>
   );
