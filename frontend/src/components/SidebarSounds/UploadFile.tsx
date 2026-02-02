@@ -54,10 +54,10 @@ const UploadFile: React.FC<Props> = ({
         setMusicFX(response.data.soundFxName);
       }
     } catch (error) {
-      console.log(
-        `Error uploading ${soundType}: Login to upload. UID and / or token required.`,
-        error
-      );
+      // console.log(
+      //   `Error uploading ${soundType}: Login to upload. UID and / or token required.`,
+      //   error
+      // );
     }
   };
 

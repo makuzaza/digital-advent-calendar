@@ -83,7 +83,7 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
       setIsLoading(false);
       clearTimeout(timer);
     } catch (error) {
-      console.error("Error loading calendars:", error);
+      // console.error("Error loading calendars:", error);
       setLoadingMessage("Failed to load calendars. Please refresh the page.");
       clearTimeout(timer);
     }

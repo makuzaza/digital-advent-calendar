@@ -85,7 +85,7 @@ export default function Register() {
           setBackgroundImage(imageUrl);
         }
       } catch (error) {
-        console.error("Error fetching random images:", error);
+        // console.error("Error fetching random images:", error);
       }
     };
 

@@ -37,7 +37,7 @@ function App() {
         await refreshFirebaseToken();
         // console.log("Token auto-refreshed");
       } catch (error) {
-        console.error("Auto-token refresh failed:", error);
+        // console.error("Auto-token refresh failed:", error);
       }
     }, 50 * 60 * 1000); // 50 minutes in milliseconds
 

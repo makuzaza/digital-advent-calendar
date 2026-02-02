@@ -143,7 +143,7 @@ const Preview: React.FC<Props> = ({
       setOwnerUid(data.ownerUid);
       // console.log("Calendar data:", data);
     } catch (error) {
-      console.error("Error:", error);
+      // console.error("Error:", error);
     }
   };
 
@@ -251,7 +251,7 @@ const Preview: React.FC<Props> = ({
         });
       })
       .catch((error) => {
-        console.error("Error saving calendar:", error);
+        // console.error("Error saving calendar:", error);
       });
   };
 

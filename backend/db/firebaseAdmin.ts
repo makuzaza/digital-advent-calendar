@@ -19,7 +19,7 @@ admin.initializeApp({
 // connect to firebase
 function firebase() {
   const db = admin.database();
-  console.log("Connected to Firebase");
+  // console.log("Connected to Firebase");
   return db;
 }
 

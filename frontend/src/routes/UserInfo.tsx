@@ -284,7 +284,7 @@ const removeProfilePicture = async () => {
       // console.log(response.data);
       setAllUserFiles(response.data);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      // console.error("Error fetching data:", error);
     }
   };
 
@@ -357,7 +357,7 @@ const removeProfilePicture = async () => {
       if ((error as any).response?.status === 401) {
         Swal.fire("Error", "Your session has expired. Please log in again.", "error");
       } else {
-        console.error("Error deleting image file:", error);
+        // console.error("Error deleting image file:", error);
         Swal.fire("Error", "Failed to delete image. Please try again.", "error");
       }
     }

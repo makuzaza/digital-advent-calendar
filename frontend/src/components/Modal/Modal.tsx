@@ -128,7 +128,7 @@ const Modal: React.FC<Props> = ({
         // Update Redux store with the UID
         dispatch(setUid(userUid));
       } else {
-        console.error("No Firebase user found - user not logged in");
+        // console.error("No Firebase user found - user not logged in");
       }
     }
 
@@ -153,7 +153,7 @@ const Modal: React.FC<Props> = ({
         // console.log("Token refreshed successfully");
       }
     } catch (error) {
-      console.error("Error refreshing token:", error);
+      // console.error("Error refreshing token:", error);
     }
 
     if (!tokenToUse) {
@@ -204,7 +204,7 @@ const Modal: React.FC<Props> = ({
         showConfirmButton: false,
       });
     } catch (error: any) {
-      console.error("Error uploading image:", error.response?.data || error.message);
+      // console.error("Error uploading image:", error.response?.data || error.message);
       
       if (error.response?.status === 401) {
         await Swal.fire({

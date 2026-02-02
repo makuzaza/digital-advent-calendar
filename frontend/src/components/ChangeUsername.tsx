@@ -51,10 +51,10 @@ export const ChangeUsername: React.FC<Props> = ({ setUserName }) => {
                     // console.log("User name updated successfully");
                   })
                   .catch((error: Error) => {
-                    console.error("Error updating user name:", error);
+                    // console.error("Error updating user name:", error);
                   });
               } else {
-                console.error("No user signed in");
+                // console.error("No user signed in");
               }
             }
             handleClose();

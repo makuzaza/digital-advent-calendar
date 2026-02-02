@@ -53,7 +53,7 @@ const MusicPlayer: React.FC<Props> = ({ audioSrc, type }) => {
             audioRef.current = new Audio(url);
             // console.log("Playing uploaded file:", audioSrc);
           } catch (error) {
-            console.error("Error loading uploaded audio:", error);
+            // console.error("Error loading uploaded audio:", error);
           } finally {
             setIsLoading(false);
           }

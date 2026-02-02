@@ -76,7 +76,7 @@ export const ChangePassword: React.FC = () => {
               } else {
                 Swal.fire("Error", `Error: ${error.message}`, "error");
               }
-              console.error("Error updating password:", error);
+              // console.error("Error updating password:", error);
             }
           },
         }}

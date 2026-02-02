@@ -17,7 +17,7 @@ function loadState(): RootState | undefined {
     }
     return JSON.parse(serializedState); // Deserialize and return the state
   } catch (err) {
-    console.error("Error loading state from sessionStorage:", err);
+    // console.error("Error loading state from sessionStorage:", err);
     return undefined; // If an error occurs, return undefined
   }
 }
@@ -28,7 +28,7 @@ function saveState(state: RootState) {
     const serializedState = JSON.stringify(state);
     sessionStorage.setItem("reduxState", serializedState);
   } catch (err) {
-    console.error("Error saving state to sessionStorage:", err);
+    // console.error("Error saving state to sessionStorage:", err);
   }
 }
 

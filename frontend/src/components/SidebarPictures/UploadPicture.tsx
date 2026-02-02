@@ -45,9 +45,9 @@ const UploadPicture: React.FC<UploadPictureProps> = ({
         // console.log(`image`, response.data);
       })
       .catch(() => {
-        console.log(
-          `Error uploading image: Login to upload. UID and / or token required. `
-        );
+        // console.log(
+        //   `Error uploading image: Login to upload. UID and / or token required. `
+        // );
       });
   };
 

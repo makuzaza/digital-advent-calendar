@@ -82,7 +82,7 @@ Router.get("/images/:imageName", async (req, res) => {
       // console.log("Path exists?", fs.existsSync(imagePath));
 
       if (fs.existsSync(imagePath)) {
-        console.log("File found!");
+        // console.log("File found!");
         return res.sendFile(imagePath);
       } else {
         // List what files exist in this user's directory
@@ -91,7 +91,7 @@ Router.get("/images/:imageName", async (req, res) => {
           const files = fs.readdirSync(userDir);
           // console.log("Files in user directory:", files);
         } else {
-          console.log("User directory doesn't exist");
+          // console.log("User directory doesn't exist");
         }
       }
     }
@@ -107,14 +107,14 @@ Router.get("/images/:imageName", async (req, res) => {
         if (fs.statSync(dirPath).isDirectory()) {
           const filePath = path.join(dirPath, imageName);
           if (fs.existsSync(filePath)) {
-            console.log("Found file at:", filePath);
+            // console.log("Found file at:", filePath);
             return res.sendFile(filePath);
           }
         }
       }
     }
 
-    console.log("File not found anywhere!");
+    // console.log("File not found anywhere!");
     return res.status(404).json({ error: "Image not found" });
   } catch (error) {
     console.error("Error downloading image:", error);
@@ -129,9 +129,9 @@ Router.post(
   upload.single("image"),
   async (req, res) => {
     try {
-      console.log("Image upload request received");
-      console.log("File:", req.file ? req.file.originalname : "NO FILE");
-      console.log("UID:", req.body.uid);
+      // console.log("Image upload request received");
+      // console.log("File:", req.file ? req.file.originalname : "NO FILE");
+      // console.log("UID:", req.body.uid);
 
       if (!req.file) {
         console.log("Error: No file uploaded");
@@ -140,7 +140,7 @@ Router.post(
 
       const uid = req.body.uid;
       if (!uid || uid.trim() === "") {
-        console.log("Error: UID missing or empty from body");
+        // console.log("Error: UID missing or empty from body");
         // Delete the temp file
         if (fs.existsSync(req.file.path)) {
           fs.unlinkSync(req.file.path);
@@ -165,7 +165,7 @@ Router.post(
       
       fs.renameSync(req.file.path, finalPath);
 
-      console.log("File uploaded successfully to:", finalPath);
+      // console.log("File uploaded successfully to:", finalPath);
       return res.status(200).json({ message: "File uploaded successfully", filename: originalFilename });
     } catch (error) {
       console.error("Error uploading file:", error);
@@ -241,18 +241,18 @@ Router.post(
   upload.single("image"),
   async (req, res) => {
     try {
-      console.log("Profile picture upload request received");
-      console.log("File:", req.file ? req.file.originalname : "NO FILE");
-      console.log("UID:", req.body.uid);
+      // console.log("Profile picture upload request received");
+      // console.log("File:", req.file ? req.file.originalname : "NO FILE");
+      // console.log("UID:", req.body.uid);
 
       if (!req.file) {
-        console.log("Error: No file uploaded");
+        // console.log("Error: No file uploaded");
         return res.status(400).json({ error: "No file uploaded" });
       }
 
       const uid = req.body.uid;
       if (!uid || uid.trim() === "") {
-        console.log("Error: UID missing or empty from body");
+        // console.log("Error: UID missing or empty from body");
         // Delete the temp file
         if (fs.existsSync(req.file.path)) {
           fs.unlinkSync(req.file.path);
@@ -316,12 +316,12 @@ Router.delete(
       const imagePath = candidatePaths.find((candidate) => fs.existsSync(candidate));
 
       if (!imagePath) {
-        console.log("Profile picture not found at any known path. Tried:", candidatePaths);
+        // console.log("Profile picture not found at any known path. Tried:", candidatePaths);
         return res.status(404).json({ error: "Profile picture not found" });
       }
 
       fs.unlinkSync(imagePath);
-      console.log("Profile picture deleted successfully:", imagePath);
+      // console.log("Profile picture deleted successfully:", imagePath);
 
       return res.status(200).json({ message: "File deleted successfully" });
     } catch (error) {
@@ -397,7 +397,7 @@ Router.post(
       
       fs.renameSync(req.file.path, finalPath);
 
-      console.log("Music uploaded successfully to:", finalPath);
+      // console.log("Music uploaded successfully to:", finalPath);
       return res.status(200).send({
         musicName: originalFilename,
         message: "File uploaded successfully",
@@ -498,7 +498,7 @@ Router.post(
       
       fs.renameSync(req.file.path, finalPath);
 
-      console.log("Sound effect uploaded successfully to:", finalPath);
+      // console.log("Sound effect uploaded successfully to:", finalPath);
       return res.status(200).send({
         soundFxName: originalFilename,
         message: "File uploaded successfully",

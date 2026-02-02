@@ -25,7 +25,7 @@ export const refreshFirebaseToken = async (): Promise<string | null> => {
     // console.log("Token refreshed successfully");
     return freshToken;
   } catch (error) {
-    console.error("Error refreshing token:", error);
+    // console.error("Error refreshing token:", error);
     return null;
   }
 };
