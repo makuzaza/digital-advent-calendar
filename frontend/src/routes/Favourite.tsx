@@ -4,11 +4,13 @@ import { useAppSelector, useAppDispatch } from "../hooks/useAppDispatch";
 import { Link } from "react-router-dom";
 import Search from "../components/Search";
 import { useLocation } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import Swal from "sweetalert2";
 import { refreshFirebaseToken } from "../utils/tokenUtils";
 import { setToken } from "../store/tokenSlice";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../auth/firebase";
 const API_URL = import.meta.env.VITE_API_URL;
 
 interface Calendar {
@@ -48,24 +50,43 @@ type Props = {
 
 const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
   const [calendars, setCalendars] = useState<Calendar[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadingMessage, setLoadingMessage] = useState("Loading calendars...");
   const { pathname } = useLocation();
   const dispatch = useAppDispatch();
+  const [user] = useAuthState(auth);
 
   const token = useAppSelector((state) => state.token.token);
   const uid = useAppSelector((state) => state.uid.uid);
 
   const getUserCalendars = useCallback(async () => {
-    if (!uid) return;
+    if (!uid) {
+      setIsLoading(false);
+      return;
+    }
 
-    axios
-      .get(`${API_URL}/firestore/calendars/user`, {
+    setIsLoading(true);
+    setLoadingMessage("Loading calendars...");
+    
+    // After 3 seconds, show extended loading message
+    const timer = setTimeout(() => {
+      setLoadingMessage("Server is waking up, please wait... This may take up to 60 seconds.");
+    }, 3000);
+
+    try {
+      const response = await axios.get(`${API_URL}/firestore/calendars/user`, {
         params: {
           uid: uid,
         },
-      })
-      .then((response) => {
-        setCalendars(response.data);
       });
+      setCalendars(response.data);
+      setIsLoading(false);
+      clearTimeout(timer);
+    } catch (error) {
+      console.error("Error loading calendars:", error);
+      setLoadingMessage("Failed to load calendars. Please refresh the page.");
+      clearTimeout(timer);
+    }
   }, [uid]);
 
   useEffect(() => {
@@ -136,12 +157,46 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
         <Search handleSearch={handleSearch} search={search} />
       )}
       
-      <div className="calendars_new">
-        {calendars
-          .filter((elem) =>
-            elem.data.text.title.toLowerCase().includes(search.toLowerCase())
-          )
-          .map((calendar) => (
+      {isLoading ? (
+        <div style={{ 
+          padding: "40px", 
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "20px"
+        }}>
+          <CircularProgress size={60} />
+          <div style={{ 
+            fontSize: "18px", 
+            color: "#ffffff",
+            textAlign: "center" 
+          }}>
+            {loadingMessage}
+          </div>
+        </div>
+      ) : !user ? (
+        <div style={{
+          padding: "60px 20px",
+          textAlign: "center",
+          color: "#ffffff"
+        }}>
+          <h2 style={{ marginBottom: "20px" }}>No Calendars Yet</h2>
+          <p style={{ fontSize: "18px", marginBottom: "30px" }}>
+            Login to create your own advent calendars and share them with others!
+          </p>
+          <Link to="/login" style={{ textDecoration: "none" }}>
+            <Button variant="contained" color="primary" size="large">
+              Go to Login
+            </Button>
+          </Link>
+        </div>
+      ) : (
+        <div className="calendars_new">
+          {calendars
+            .filter((elem) =>
+              elem.data.text.title.toLowerCase().includes(search.toLowerCase())
+            )
+            .map((calendar) => (
             <div key={calendar.calendarId} className="calendar-card">
               <div
                 style={{
@@ -183,7 +238,8 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
               </div>
             </div>
           ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
