@@ -34,33 +34,41 @@ const MusicPlayer: React.FC<Props> = ({ audioSrc, type }) => {
         // Play local asset directly
         audioRef.current = new Audio(audioSrc);
         console.log("Playing local asset:", audioSrc);
-        return;
+      } else {
+        // Otherwise, it's an uploaded file - fetch from backend
+        const urlPart = type === "music" ? "music" : "soundFx";
+
+        const getSounds = async () => {
+          setIsLoading(true);
+          try {
+            const response = await axios.get(
+              `http://localhost:8000/storage/sounds/${urlPart}/${audioSrc}`,
+              {
+                params: { uid },
+                responseType: "blob",
+              }
+            );
+            const url = URL.createObjectURL(response.data);
+            audioRef.current = new Audio(url);
+            console.log("Playing uploaded file:", audioSrc);
+          } catch (error) {
+            console.error("Error loading uploaded audio:", error);
+          } finally {
+            setIsLoading(false);
+          }
+        };
+        getSounds();
       }
-
-      // Otherwise, it's an uploaded file - fetch from backend
-      const urlPart = type === "music" ? "music" : "soundFx";
-
-      const getSounds = async () => {
-        setIsLoading(true);
-        try {
-          const response = await axios.get(
-            `http://localhost:8000/storage/sounds/${urlPart}/${audioSrc}`,
-            {
-              params: { uid },
-              responseType: "blob",
-            }
-          );
-          const url = URL.createObjectURL(response.data);
-          audioRef.current = new Audio(url);
-          console.log("Playing uploaded file:", audioSrc);
-        } catch (error) {
-          console.error("Error loading uploaded audio:", error);
-        } finally {
-          setIsLoading(false);
-        }
-      };
-      getSounds();
     }
+
+    // Cleanup: stop audio when component unmounts or audioSrc changes
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+        setIsPlaying(false);
+      }
+    };
   }, [audioSrc, uid, type]);
 
   const togglePlay = () => {

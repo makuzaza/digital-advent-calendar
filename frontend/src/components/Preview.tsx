@@ -73,7 +73,7 @@ interface Json {
     imageURL: string;
     uploadedImageName: string;
   };
-  windowsContent: WindowContent[];
+  windowsContent?: WindowContent[];
   ownerUid: string;
 }
 
@@ -223,6 +223,7 @@ const Preview: React.FC<Props> = ({
         imageURL: !uploadedImageName ? selectedBackground : "",
         uploadedImageName: uploadedImageName,
       },
+      // @ts-ignore
       windowContent: windowContent.map((window: WindowContent) => ({
         text: window.text,
         videoURL: window.videoURL,
