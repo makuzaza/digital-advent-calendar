@@ -190,6 +190,22 @@ const Favourite: React.FC<Props> = ({ search, handleSearch, setSearch }) => {
             </Button>
           </Link>
         </div>
+      ) : calendars.length === 0 ? (
+        <div style={{
+          padding: "60px 20px",
+          textAlign: "center",
+          color: "#ffffff"
+        }}>
+          <h2 style={{ marginBottom: "20px" }}>No Calendars Yet</h2>
+          <p style={{ fontSize: "18px", marginBottom: "30px" }}>
+            Create your own advent calendars and share them with others!
+          </p>
+          <Link to="/panel" style={{ textDecoration: "none" }}>
+            <Button variant="contained" color="primary" size="large">
+              Go to Create
+            </Button>
+          </Link>
+        </div>
       ) : (
         <div className="calendars_new">
           {calendars

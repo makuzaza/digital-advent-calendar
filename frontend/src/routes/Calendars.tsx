@@ -117,7 +117,27 @@ const Calendars: React.FC<Props> = ({ search, setSearch, handleSearch }) => {
                 elem.data.text.title.toLowerCase().includes(search.toLowerCase())
               );
 
-            if (!user && filteredCalendars.length === 0) {
+            if (filteredCalendars.length === 0) {
+              if (user) {
+                return (
+                  <div style={{
+                    padding: "60px 20px",
+                    textAlign: "center",
+                    color: "#ffffff"
+                  }}>
+                    <h2 style={{ marginBottom: "20px" }}>No Public Calendars Yet</h2>
+                    <p style={{ fontSize: "18px", marginBottom: "30px" }}>
+                      Create your own calendar and make it public!
+                    </p>
+                    <Link to="/panel" style={{ textDecoration: "none" }}>
+                      <Button variant="contained" color="primary" size="large">
+                        Go to Create
+                      </Button>
+                    </Link>
+                  </div>
+                );
+              }
+
               return (
                 <div style={{
                   padding: "60px 20px",

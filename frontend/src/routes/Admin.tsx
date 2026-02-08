@@ -11,6 +11,31 @@ interface User {
   email: string;
 }
 
+const maskAllChars = (value: string) => "*".repeat(value.length);
+
+const maskEmail = (email: string) => {
+  const [local, domain] = email.split("@");
+  if (!local || !domain) return "*@*.ru";
+
+  const parts = domain.split(".");
+  if (parts.length < 2) {
+    return `${maskAllChars(local)}@${maskAllChars(domain)}`;
+  }
+
+  const tld = parts.pop() as string;
+  const maskedDomain = `${maskAllChars(parts.join("."))}.${tld}`;
+
+  return `${maskAllChars(local)}@${maskedDomain}`;
+};
+
+const maskUid = (uid: string, visible = 5) => {
+  if (!uid) return "";
+  const prefix = uid.slice(0, visible);
+  const maskedTail = maskAllChars(uid.slice(visible));
+
+  return `${prefix}${maskedTail}`;
+};
+
 const Admin: React.FC = () => {
   const [search, setSearch] = useState("");
 
@@ -68,7 +93,7 @@ const Admin: React.FC = () => {
               users.map((user: User) => (
                 <tr key={user.uid}>
                   <td>{user.displayName}</td>
-                  <td>{user.email}</td>
+                  <td>{maskEmail(user.email)}</td>
                   <td>
                     {
                       calendars.filter(
@@ -78,7 +103,7 @@ const Admin: React.FC = () => {
                       ).length
                     }
                   </td>
-                  <td className="hide">{user.uid}</td>
+                  <td className="hide">{maskUid(user.uid)}</td>
                 </tr>
               ))}
           </tbody>
